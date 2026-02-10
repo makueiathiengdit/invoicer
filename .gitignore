@@ -1,0 +1,13 @@
+
+# env file
+.env
+
+# db
+*.db
+
+/__pycache__
+
+# virtual env
+/i-env
+
+.vscode
