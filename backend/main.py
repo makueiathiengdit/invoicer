@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
 from db.core import Base, db_engine
-from routes.user_router import router as user_router
-from routes.invoices_router import router as invoice_router
+from routers.user_router import router as user_router
+from routers.invoices_router import router as invoice_router
 
 
 @asynccontextmanager
