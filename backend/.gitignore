@@ -6,8 +6,11 @@
 *.db
 
 /__pycache__
+/__pycache__/*
 
 # virtual env
 /i-env
 
 .vscode
+
+*.pyc

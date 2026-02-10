@@ -10,7 +10,7 @@ class Timed:
     deleted_at:Mapped[datetime.datetime] = mapped_column(DateTime, nullable=True)
 
 
-class Users(Base, Timed):
+class User(Base, Timed):
     __tablename__ = "users"
     id:Mapped[int]=mapped_column(Integer, primary_key=True, autoincrement=True)
     first_name:Mapped[str]=mapped_column(String(40), nullable=False)
@@ -25,7 +25,7 @@ class Users(Base, Timed):
 class Invoice(Base, Timed):
     __tablename__ = "invoices"
     id:Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    invoice_id:Mapped[str] = mapped_column(String(24))
+    invoice_id:Mapped[str] = mapped_column(String(24), nullable=True)
     invoice_date:Mapped[datetime.date]
     description:Mapped[str]=mapped_column(String(255), nullable=True)
     amount:Mapped[float] = mapped_column(Float(precision=2), default=0.0 )    

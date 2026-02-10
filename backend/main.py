@@ -1,7 +1,31 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+
+from db.core import Base, db_engine
+from routes.user_router import router as user_router
 
 
-app = FastAPI(title="Invoice Recorder")
+
+
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    try:
+        print("Creating db tables...")
+        Base.metadata.create_all(bind=db_engine)
+        yield
+        print("App is shuting down...")
+    except:
+        pass    
+        
+
+
+
+app = FastAPI(title="Invoice Recorder",
+              lifespan=lifespan)
+
+app.include_router(user_router)
+
+
 
 @app.get("/")
 def home():
