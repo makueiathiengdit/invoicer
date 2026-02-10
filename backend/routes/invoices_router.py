@@ -13,3 +13,8 @@ def get_invoices():
 @router.post("/")
 def create_invoice(invoice: InvoiceSchema):
     return InvoiceService.create_invoice(invoice)
+
+
+@router.put("/{id}")
+def update_invoice(id: int, invoice: InvoiceSchema):
+    return InvoiceService.update_invoice(id, invoice)
