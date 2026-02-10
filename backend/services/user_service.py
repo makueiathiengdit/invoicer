@@ -8,19 +8,21 @@ class UserService:
     @classmethod
     def create_user(cls, user: UserSchema) -> APIResponse:
         with get_session() as db:
-            db_user = User(**user.dict())
-            db.add(db_user)
-            db.commit()
             response = APIResponse()
-
-            if db_user:
-                response.success = True
-                response.message = "user created successfully"
-                response.data = [db_user]
-            else:
-                response.message = "failed to create user"
-
-            return response
+            try:
+                db_user = User(**user.dict())
+                db.add(db_user)
+                db.commit()
+                if db_user:
+                    response.success = True
+                    response.message = "user created successfully"
+                    response.data = [db_user]
+                else:
+                    response.message = "failed to create user"
+                return response
+            except Exception as e:
+                response.message = str(e)
+                return response
 
     @classmethod
     def update_user(cls, id, user) -> APIResponse:

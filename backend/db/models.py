@@ -30,3 +30,5 @@ class Invoice(Base, Timed):
     amount: Mapped[float] = mapped_column(Float(precision=2), default=0.0)
     currency: Mapped[str] = mapped_column(String(5), nullable=True, default="SSP")
     attachment: Mapped[str] = mapped_column(String(250), nullable=True)
+    processed_by: Mapped[User] = mapped_column(ForeignKey("users.id"), nullable=True)
+    processed_at: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=True)
