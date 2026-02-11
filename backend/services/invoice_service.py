@@ -26,7 +26,7 @@ class InvoiceService:
     @classmethod
     def get_invoices(cls) -> APIResponse:
         with get_session() as db:
-            invoices = db.query(Invoice).all()
+            invoices = db.query(Invoice).order_by(Invoice.created_at.desc()).all()
             return APIResponse(
                 success=True, message="found invoices", data=invoices or []
             )
