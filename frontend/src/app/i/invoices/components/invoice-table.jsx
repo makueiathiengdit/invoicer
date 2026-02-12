@@ -41,7 +41,7 @@ const InvoiceTable = ({ data = [] }) => {
           </div>
           <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 shrink-0">
             <Link
-              href={"/invoicer/invoices/create"}
+              href={"/i/invoices/create"}
               className="flex items-center justify-center text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800"
             >
               <svg
