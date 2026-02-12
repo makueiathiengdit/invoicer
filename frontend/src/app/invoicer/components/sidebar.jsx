@@ -1,6 +1,6 @@
 import React from "react";
 import { FileText, Folder, Home } from "lucide-react";
-const SideBar = ({ children }) => {
+const SideBar = () => {
   return (
     <>
       <aside

@@ -4,7 +4,7 @@ import { sample_invoices } from "@/app/data/invoices";
 const InvoicesHomePage = () => {
   return (
     <div className="bg-gray-50 p-3 sm:p-5">
-      <InvoiceTable data={sample_invoices} />
+      {/* <InvoiceTable data={sample_invoices} /> */}
     </div>
   );
 };
