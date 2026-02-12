@@ -3,19 +3,18 @@ import React from "react";
 const InvoiceTableRow = ({ item = {} }) => {
   return (
     <>
-      <tr className="border-b dark:border-gray-700">
-        <th
-          scope="row"
-          className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-        >
-          {item.created_at}
+      <tr className="border-b dark:border-gray-300">
+        <th scope="row" className="px-4 py-3 font-medium whitespace-nowrap ">
+          {item?.created_at || item.invoice_date}
         </th>
         <td className="px-4 py-3">{item.invoice_id}</td>
+        <td className="px-4 py-3">{item.invoice_date}</td>
+
         <td className="px-4 py-3">{item.description}</td>
         <td className="px-4 py-3 font-semibold">
           {item.currency + " " + item.amount}
         </td>
-        <td className="px-4 py-3">{item?.company}</td>
+        {/* <td className="px-4 py-3">{item?.company}</td> */}
         <td className="px-4 py-3 flex items-center justify-end">
           <button
             id="apple-imac-27-dropdown-button"

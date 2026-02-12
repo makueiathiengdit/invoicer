@@ -227,18 +227,18 @@ const InvoiceTable = ({ data = [] }) => {
         </div>
       </div> */}
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-md shadow-xl">
           <table className="w-full text-sm text-left text-gray-500 ">
             <thead className="text-xs text-white uppercase bg-gray-50 dark:bg-teal-600 ">
               <tr>
                 <th scope="col" className="px-4 py-3">
-                  Date
+                  Ceated At
                 </th>
                 <th scope="col" className="px-4 py-3">
                   Invoice ID
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Description
+                  Invoice Date
                 </th>
                 <th scope="col" className="px-4 py-3">
                   Description
@@ -247,7 +247,7 @@ const InvoiceTable = ({ data = [] }) => {
                   Price
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  <span className="sr-only">Actions</span>
+                  Actions
                 </th>
               </tr>
             </thead>

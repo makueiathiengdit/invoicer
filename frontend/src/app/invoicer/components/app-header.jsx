@@ -47,14 +47,14 @@ const AppHeader = () => {
           <div className="flex items-center lg:order-2">
             <button
               type="button"
-              className="flex mx-3 text-sm bg-teal-600 rounded-full md:mr-0 focus:ring-4  focus:ring-gray-600"
+              className="flex mx-3 text-sm text-white bg-teal-600 rounded-full md:mr-0 focus:ring-4  focus:ring-gray-600"
               id="user-menu-button"
               aria-expanded="false"
               data-dropdown-toggle="dropdown"
             >
               <span className="sr-only">Open user menu</span>
               <img
-                className="w-8 h-8 rounded-full"
+                className="w-8 h-8 rounded-full text-white"
                 src="/globe.svg"
                 alt="user photo"
               />
