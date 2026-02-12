@@ -11,6 +11,8 @@ const Playground = () => {
         <InvoiceForm />
       </BaseFormLayout> */}
       <InvoiceTable data={sample_invoices} />
+
+      {/* <button className="btn btn-primary">Button </button> */}
     </div>
   );
 };

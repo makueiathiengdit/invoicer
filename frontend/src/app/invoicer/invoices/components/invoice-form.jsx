@@ -19,8 +19,10 @@ const InvoiceForm = () => {
       <InputAmount label={"Amount "} placeholder={"e.g 10000"} />
 
       <div className="flex justify-end mt-4 gap-2 ">
-        <button className="btn btn-sm btn-soft">Cancel</button>
-        <button className="btn btn-sm bg-teal-600 text-white">Cancel</button>
+        <button className="btn btn-sm btn-soft rounded">Cancel</button>
+        <button className="btn btn-sm btn-primary text-white rounded">
+          Cancel
+        </button>
       </div>
     </form>
   );
