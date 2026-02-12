@@ -9,7 +9,7 @@ const InvoicerRootLayout = ({ children }) => {
       <SideBar />
 
       {/* main content */}
-      <main className=" ml-56 pt-20  min-h-screen">{children}</main>
+      <main className="ml-56 pt-20  min-h-screen">{children}</main>
     </div>
   );
 };
