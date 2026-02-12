@@ -1,3 +1,4 @@
+import { Menu } from "lucide-react";
 import React from "react";
 
 const AppHeader = () => {
@@ -11,21 +12,9 @@ const AppHeader = () => {
               data-drawer-target="drawer-navigation"
               data-drawer-toggle="drawer-navigation"
               aria-controls="drawer-navigation"
-              className="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden   focus:ring-2 focus:ring-gray-100  hover:bg-gray-700 hover:text-white"
+              className="p-2 mr-2 text-white rounded-lg cursor-pointer md:hidden   focus:ring-2 focus:ring-gray-100  hover:bg-gray-700 hover:text-white"
             >
-              <svg
-                aria-hidden="true"
-                className="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
+              <Menu />
               <svg
                 aria-hidden="true"
                 className="hidden w-6 h-6"
@@ -46,7 +35,7 @@ const AppHeader = () => {
               className="flex items-center justify-between mr-4"
             >
               {/* <img
-              src="https://flowbite.s3.amazonaws.com/logo.svg"
+              src="#"
               className="mr-3 h-8"
               alt="Flowbite Logo"
             /> */}

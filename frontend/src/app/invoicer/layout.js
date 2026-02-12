@@ -4,10 +4,11 @@ import SideBar from "./components/sidebar";
 
 const InvoicerRootLayout = ({ children }) => {
   return (
-    <div>
+    <div className="p-6 mx-auto">
       <AppHeader />
       <SideBar />
-      <main>{children}</main>
+
+      <main className="m-8 mt-12 bg-gray-100">{children}</main>
     </div>
   );
 };

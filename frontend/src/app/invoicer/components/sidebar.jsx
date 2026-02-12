@@ -1,10 +1,10 @@
 import React from "react";
 import { FileText, Folder, Home } from "lucide-react";
-const SideBar = () => {
+const SideBar = ({ children }) => {
   return (
     <>
       <aside
-        className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full  border-r border-teal-200 md:translate-x-0 bg-teal-600 "
+        className="fixed top-0 left-0 z-40 w-56 h-screen pt-14 transition-transform -translate-x-full  border-r border-teal-200 md:translate-x-0 bg-teal-600 "
         aria-label="Sidenav"
         id="drawer-navigation"
       >
