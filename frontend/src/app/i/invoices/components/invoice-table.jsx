@@ -32,8 +32,8 @@ const InvoiceTable = ({ data = [] }) => {
                 <input
                   type="text"
                   id="simple-search"
-                  className="bg-teal-50 border border-teal-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 p-2 "
-                  placeholder="Search"
+                  className="bg-teal-50 border border-teal-600 text-gray-800 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 p-2 "
+                  placeholder="Search invoices"
                   required=""
                 />
               </div>
@@ -99,7 +99,7 @@ const InvoiceTable = ({ data = [] }) => {
                 className="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-teal-600"
               >
                 <h6 className="mb-3 text-sm font-medium text-white dark:text-white">
-                  Choose brand
+                  Status
                 </h6>
                 <ul
                   className="space-y-2 text-sm"
@@ -107,72 +107,30 @@ const InvoiceTable = ({ data = [] }) => {
                 >
                   <li className="flex items-center">
                     <input
-                      id="apple"
+                      id="processed"
                       type="checkbox"
                       value=""
                       className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-teal-600 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
-                      htmlFor="apple"
+                      htmlFor="processed"
                       className="ml-2 text-sm font-medium text-white dark:text-gray-100"
                     >
-                      Apple (56)
+                      Processed (56)
                     </label>
                   </li>
                   <li className="flex items-center">
                     <input
-                      id="fitbit"
+                      id="pending"
                       type="checkbox"
                       value=""
                       className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-teal-600 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
-                      htmlFor="fitbit"
+                      htmlFor="pending"
                       className="ml-2 text-sm font-medium text-white dark:text-gray-100"
                     >
-                      Microsoft (16)
-                    </label>
-                  </li>
-                  <li className="flex items-center">
-                    <input
-                      id="razor"
-                      type="checkbox"
-                      value=""
-                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-teal-600 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                    />
-                    <label
-                      htmlFor="razor"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-100"
-                    >
-                      Razor (49)
-                    </label>
-                  </li>
-                  <li className="flex items-center">
-                    <input
-                      id="nikon"
-                      type="checkbox"
-                      value=""
-                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-teal-600 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                    />
-                    <label
-                      htmlFor="nikon"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-100"
-                    >
-                      Nikon (12)
-                    </label>
-                  </li>
-                  <li className="flex items-center">
-                    <input
-                      id="benq"
-                      type="checkbox"
-                      value=""
-                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-teal-600 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                    />
-                    <label
-                      htmlFor="benq"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-100"
-                    >
-                      BenQ (74)
+                      Pending (56)
                     </label>
                   </li>
                 </ul>

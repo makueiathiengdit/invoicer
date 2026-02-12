@@ -11,7 +11,7 @@ const InvoiceTableRow = ({ item = {} }) => {
         <td className="px-4 py-3">{item.invoice_date}</td>
 
         <td className="px-4 py-3">{item.description}</td>
-        <td className="px-4 py-3 font-semibold">
+        <td className="px-4 py-3 text-gray-700 font-semibold">
           {item.currency + " " + item.amount}
         </td>
         {/* <td className="px-4 py-3">{item?.company}</td> */}

@@ -15,6 +15,12 @@ const SIDEBAR_LINKS = [
     icon: <FileText />,
     submenu: [
       {
+        title: "All",
+        link: "/i/invoices/",
+        icon: "",
+      },
+
+      {
         title: "Pending",
         link: "/i/invoices/pending",
         icon: "",
