@@ -8,7 +8,8 @@ const InvoicerRootLayout = ({ children }) => {
       <AppHeader />
       <SideBar />
 
-      <main className="mt-12 bg-gray-100 z-50 h-screen">{children}</main>
+      {/* main content */}
+      <main className=" ml-56 pt-20  min-h-screen">{children}</main>
     </div>
   );
 };

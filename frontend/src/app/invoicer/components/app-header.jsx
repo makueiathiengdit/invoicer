@@ -55,7 +55,7 @@ const AppHeader = () => {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full text-white"
-                src="/globe.svg"
+                src="/vercel.svg"
                 alt="user photo"
               />
             </button>

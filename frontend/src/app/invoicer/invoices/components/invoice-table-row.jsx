@@ -3,10 +3,10 @@ import React from "react";
 const InvoiceTableRow = ({ item = {} }) => {
   return (
     <>
-      <tr className="border-b dark:border-gray-300">
-        <th scope="row" className="px-4 py-3 font-medium whitespace-nowrap ">
+      <tr className="border-b border-gray-300 hover:bg-emerald-50">
+        {/* <th scope="row" className="px-4 py-3 font-medium whitespace-nowrap ">
           {item?.created_at || item.invoice_date}
-        </th>
+        </th> */}
         <td className="px-4 py-3">{item.invoice_id}</td>
         <td className="px-4 py-3">{item.invoice_date}</td>
 
