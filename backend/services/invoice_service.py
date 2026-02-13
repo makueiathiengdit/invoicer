@@ -1,5 +1,4 @@
 from schemas.invoice_schema import InvoiceDetailSchema, InvoiceListSchema
-from schemas.attachment_schema import AttachmentSchema
 from db.core import get_session
 from db.models import Invoice, Attachment
 from utils.api_response import APIResponse
@@ -15,19 +14,18 @@ class InvoiceService:
         """
         with get_session() as db:
             try:
-                # 1. Handle Attachment creation first if it exists in the schema
+                # create attachment
                 db_attachment = None
                 if invoice_data.attachment:
                     db_attachment = Attachment(
                         name=invoice_data.attachment.name,
                         size=invoice_data.attachment.size,
-                        file=invoice_data.attachment.file,  # Stores Base64 bytes as BLOB
+                        file=invoice_data.attachment.file,
                     )
                     db.add(db_attachment)
-                    db.flush()  # Flush to get the attachment ID before committing
+                    db.flush()
 
-                # 2. Create the Invoice record
-                # We exclude 'attachment' from the dict to manually link the ID
+                #  create invoice
                 invoice_dict = invoice_data.model_dump(exclude={"attachment", "id"})
                 db_invoice = Invoice(**invoice_dict)
 
@@ -58,7 +56,6 @@ class InvoiceService:
         the linked 'attachment' metadata due to the relationship setup.
         """
         with get_session() as db:
-            # We use order_by on created_at (inherited from Timed mixin)
             invoices = db.query(Invoice).order_by(Invoice.created_at.desc()).all()
             return APIResponse(
                 success=True,
@@ -123,3 +120,9 @@ class InvoiceService:
                     message=f"Error updating invoice: {str(e)}",
                     status_code=500,
                 )
+
+    @classmethod
+    def get_invoice_by_id(cls, id: int) -> APIResponse:
+        with get_session() as db:
+            invoice = db.query(Invoice).filter_by(id=id)
+            return APIResponse(success=True, message="invoice fetched", data=[invoice])

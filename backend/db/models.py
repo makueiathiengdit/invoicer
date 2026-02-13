@@ -34,7 +34,7 @@ class Attachment(Base, Timed):
     size: Mapped[float] = mapped_column(Float)
     file = mapped_column(BLOB)
 
-    # Optional: Back-reference to find the invoice from an attachment
+    # backpopulate to find the invoice from an attachment
     invoice: Mapped["Invoice"] = relationship(back_populates="attachment")
 
 
