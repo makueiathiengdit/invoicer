@@ -2,6 +2,7 @@ from sqlalchemy import String, Integer, DateTime, ForeignKey, Text, Float, BLOB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db.core import Base
 import datetime
+from typing import Optional
 
 
 class Timed:
@@ -19,11 +20,6 @@ class User(Base, Timed):
     email: Mapped[str] = mapped_column(String(60), nullable=False)
     role: Mapped[str] = mapped_column(String(10), default="USER")
     password: Mapped[str] = mapped_column(String(255), nullable=False)
-
-
-from typing import Optional
-from sqlalchemy import ForeignKey, Integer, String, Float, BLOB, DateTime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class Attachment(Base, Timed):
