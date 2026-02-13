@@ -47,7 +47,7 @@ const AppHeader = () => {
           <div className="flex items-center lg:order-2">
             <button
               type="button"
-              className="flex mx-3 text-sm text-white bg-teal-600 rounded-full md:mr-0 focus:ring-4  focus:ring-gray-600"
+              className="flex mx-3 text-sm text-white bg-teal-600 rounded-full md:mr-0 focus:ring-4  focus:ring-gray-100"
               id="user-menu-button"
               aria-expanded="false"
               data-dropdown-toggle="dropdown"
@@ -55,7 +55,7 @@ const AppHeader = () => {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full text-white"
-                src="/vercel.svg"
+                src="/awet.jpeg"
                 alt="user photo"
               />
             </button>
