@@ -11,3 +11,5 @@
 /i-env
 
 .vscode
+
+.DS_Store
