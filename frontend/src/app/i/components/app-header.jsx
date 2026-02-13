@@ -1,7 +1,9 @@
+"use client";
 import { Menu } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 const AppHeader = () => {
+  const [show, setShow] = useState(false);
   return (
     <>
       {/* app header */}
@@ -51,6 +53,7 @@ const AppHeader = () => {
               id="user-menu-button"
               aria-expanded="false"
               data-dropdown-toggle="dropdown"
+              onClick={() => setShow(!show)}
             >
               <span className="sr-only">Open user menu</span>
               <img
@@ -61,7 +64,7 @@ const AppHeader = () => {
             </button>
             {/* <!-- Dropdown menu --> */}
             <div
-              className="hidden z-50 my-4 w-56 text-base list-none  rounded divide-y  shadow bg-gray-700 divide-gray-600 "
+              className={`${show ? "" : "hidden"} z-50 my-4 w-56 text-base list-none  rounded divide-y  shadow bg-gray-700 divide-gray-600 `}
               id="dropdown"
             >
               <div className="py-3 px-4">

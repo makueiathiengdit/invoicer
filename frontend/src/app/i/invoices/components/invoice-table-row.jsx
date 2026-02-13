@@ -1,6 +1,9 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 const InvoiceTableRow = ({ item = {} }) => {
+  const [show, setShow] = useState(false);
+
   return (
     <>
       <tr className="border-b border-gray-300 hover:bg-emerald-50">
@@ -12,7 +15,12 @@ const InvoiceTableRow = ({ item = {} }) => {
 
         <td className="px-4 py-3">{item.description}</td>
         <td className="px-4 py-3 text-gray-700 font-semibold">
-          {item.currency + " " + item.amount}
+          <span
+            className={`${item.currency === "SSP" ? "text-teal-600" : "text-blue-600"} mr-1 `}
+          >
+            {item.currency}
+          </span>
+          <span>{parseFloat(item.amount).toFixed(2)}</span>
         </td>
         {/* <td className="px-4 py-3">{item?.company}</td> */}
         <td className="px-4 py-3 flex items-center justify-end">
@@ -21,6 +29,7 @@ const InvoiceTableRow = ({ item = {} }) => {
             data-dropdown-toggle="apple-imac-27-dropdown"
             className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
             type="button"
+            // onClick={() => setShow(!show)}
           >
             <svg
               className="w-5 h-5"
@@ -34,7 +43,7 @@ const InvoiceTableRow = ({ item = {} }) => {
           </button>
           <div
             id="apple-imac-27-dropdown"
-            className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            className={`${show ? "" : "hidden"} z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600`}
           >
             <ul
               className="py-1 text-sm text-gray-700 dark:text-gray-200"
