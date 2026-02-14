@@ -4,6 +4,7 @@ import InvoiceForm from "../i/invoices/components/invoice-form";
 import InvoiceTable from "../i/invoices/components/invoice-table";
 import { sample_invoices } from "../data/invoices";
 import InputFile from "../i/components/inputs/input-file";
+import InvoiceDetail from "../i/invoices/components/invoice-detail";
 
 const Playground = () => {
   return (
@@ -11,10 +12,12 @@ const Playground = () => {
       {/* <BaseFormLayout title={"Invoice Form"}>
         <InvoiceForm />
       </BaseFormLayout> */}
-      <InvoiceTable data={sample_invoices} />
+      {/* <InvoiceTable data={sample_invoices} /> */}
 
       {/* <button className="btn btn-primary">Button </button> */}
-      <InputFile />
+      {/* <InputFile /> */}
+
+      <InvoiceDetail />
     </div>
   );
 };

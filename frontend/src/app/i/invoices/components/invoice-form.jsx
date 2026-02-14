@@ -95,9 +95,6 @@ const InvoiceForm = () => {
         });
 
         router.push("/i/invoices");
-
-        //
-        // e.target.reset();
       } else {
         console.log("API Error:", result.message || "Unknown error occurred");
       }

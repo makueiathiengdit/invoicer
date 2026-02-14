@@ -71,3 +71,30 @@ export function convertAmountToWords(num) {
 
   return word.trim();
 }
+
+export function formatCurrentDate(date = null) {
+  const now = date || new Date();
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const month = monthNames[now.getMonth()];
+  const day = now.getDate().toString().padStart(2, "0");
+  const year = now.getFullYear().toString();
+  const hours = now.getHours() % 12 || 12;
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const period = now.getHours() >= 12 ? "PM" : "AM";
+
+  return `${month} ${day}, ${year}  ${hours}:${minutes} ${period}`;
+}

@@ -139,13 +139,13 @@ const InvoiceTable = ({ data = [] }) => {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-md shadow-md">
+        <div className="overflow-x-auto rounded-md shadow">
           <table className="w-full text-sm text-left text-gray-500 ">
             <thead className="text-xs text-white uppercase bg-teal-600 ">
               <tr>
-                {/* <th scope="col" className="px-4 py-3">
+                <th scope="col" className="px-4 py-3">
                   Ceated At
-                </th> */}
+                </th>
                 <th scope="col" className="px-4 py-3">
                   Invoice ID
                 </th>
