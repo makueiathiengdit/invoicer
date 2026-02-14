@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 const InvoiceTableRow = ({ item = {} }) => {
-  const [show, setShow] = useState(false);
+  const url = "/i/invoices/view/" + item.id;
 
   return (
     <>
@@ -25,7 +25,7 @@ const InvoiceTableRow = ({ item = {} }) => {
         </td>
         {/* <td className="px-4 py-3">{item?.company}</td> */}
         <td className="px-4 py-3 flex items-center justify-end">
-          <Link href={"#"}>
+          <Link href={url}>
             <span className="text-blue-600 font-semibold hover:underline">
               View
             </span>
