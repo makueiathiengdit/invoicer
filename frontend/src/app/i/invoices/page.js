@@ -1,10 +1,13 @@
-import React from "react";
+import React, { Suspense } from "react";
 import InvoiceTable from "./components/invoice-table";
 import { sample_invoices } from "@/app/data/invoices";
+import InvoiceWrapper from "./components/invoice-wrapper";
 const InvoicesHomePage = () => {
   return (
     <div className="">
-      <InvoiceTable data={sample_invoices} />
+      <Suspense fallback={<p>loading...</p>}>
+        <InvoiceWrapper />
+      </Suspense>
     </div>
   );
 };

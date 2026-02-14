@@ -4,6 +4,7 @@ import InputText from "../../components/inputs/input-text";
 import InputAmount from "../../components/inputs/input-amount";
 import InputFile from "../../components/inputs/input-file";
 import InputSelectBox from "../../components/inputs/input-select-box";
+import { useRouter } from "next/navigation";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +13,12 @@ const InvoiceForm = () => {
     description: "",
     amount: 0,
     currency: "SSP",
+    vendor: "",
     attachment: null,
   });
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -75,11 +79,9 @@ const InvoiceForm = () => {
         body: JSON.stringify(payload),
       });
 
-      console.log("response", response);
-
       const result = await response.json();
 
-      if (response.ok && result.success) {
+      if (result.success) {
         console.log("Success:", result.message);
 
         // reset
@@ -92,8 +94,10 @@ const InvoiceForm = () => {
           attachment: null,
         });
 
+        router.push("/i/invoices");
+
         //
-        e.target.reset();
+        // e.target.reset();
       } else {
         console.log("API Error:", result.message || "Unknown error occurred");
       }
@@ -106,6 +110,15 @@ const InvoiceForm = () => {
 
   return (
     <form className="p-4" method="POST">
+      <InputText
+        label="Vendor"
+        name={"vendor"}
+        value={formData.vendor}
+        placeholder={"vendor name"}
+        onChange={handleInputChange}
+      />
+      <br />
+
       <InputText
         label="Invoice ID"
         name={"invoice_id"}
