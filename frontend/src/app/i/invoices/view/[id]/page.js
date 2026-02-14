@@ -15,11 +15,17 @@ const ViewInvoicePage = async ({ params }) => {
     if (res.success) {
       invoice = res.data[0];
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <div>
-      <InvoiceDetail invoice={invoice} />
+      {invoice ? (
+        <InvoiceDetail invoice={invoice} />
+      ) : (
+        <p>Something went wrong</p>
+      )}
     </div>
   );
 };
