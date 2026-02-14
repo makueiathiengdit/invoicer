@@ -20,7 +20,8 @@ const InputFile = ({
           type="file"
           className="file-input file-input-primary w-full rounded-md border border-[#e0e0e0]  py-1 px-2 text-sm placeholder:text-sm md:py-2 md:px-4 md:text-base md:font-medium text-[#6B7280] outline-none  focus:border-teal-600 focus:shadow-md"
           name={name}
-          value={value}
+          // value={value}
+          onChange={onChange}
         />
         <label className="text-gray-400 text-xs">Max size 2MB</label>
       </fieldset>

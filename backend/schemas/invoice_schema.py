@@ -18,14 +18,14 @@ class InvoiceBase(BaseModel):
 
 
 class InvoiceListSchema(InvoiceBase):
-    """Schema for returning a LIST of invoices (fast)."""
+    """Schema for returning a list of invoices (fast)."""
 
     id: int
-    attachment: Optional[AttachmentRead] = None  # Shows Name and Size, NO file
+    attachment: Optional[AttachmentRead] = None
 
 
 class InvoiceDetailSchema(InvoiceBase):
-    """Schema for returning a SINGLE invoice with its file."""
+    """Schema for returning a single invoice with its file."""
 
     id: int
-    attachment: Optional[AttachmentFull] = None  # Shows Name, Size, AND the Base64 file
+    attachment: Optional[AttachmentFull] = None

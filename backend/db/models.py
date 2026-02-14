@@ -36,10 +36,9 @@ class Attachment(Base, Timed):
 
 class Invoice(Base, Timed):
     __tablename__ = "invoices"
-
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     invoice_id: Mapped[Optional[str]] = mapped_column(String(24))
-    invoice_date: Mapped[datetime.date]
+    invoice_date: Mapped[str] = mapped_column(String(25))
     description: Mapped[Optional[str]] = mapped_column(String(255))
     amount: Mapped[float] = mapped_column(Float(precision=2), default=0.0)
     currency: Mapped[Optional[str]] = mapped_column(String(5), default="SSP")

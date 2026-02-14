@@ -1,30 +1,156 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import InputText from "../../components/inputs/input-text";
 import InputAmount from "../../components/inputs/input-amount";
 import InputFile from "../../components/inputs/input-file";
+import InputSelectBox from "../../components/inputs/input-select-box";
 
 const InvoiceForm = () => {
+  const [formData, setFormData] = useState({
+    invoice_id: "",
+    invoice_date: new Date(),
+    description: "",
+    amount: 0,
+    currency: "",
+    attachment: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleInputChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      setFormData({ ...formData, attachment: null });
+      return;
+    }
+
+    // max file size: 10MB
+    if (file.size > 10 * 1024 * 1024) {
+      console.error("File is too large. Please select a file under 5MB.");
+      event.target.value = null; // Reset input
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      // Extract the raw Base64 data from the DataURL
+      const base64String = reader.result.split(",")[1];
+
+      setFormData({
+        ...formData,
+        attachment: {
+          name: file.name,
+          size: file.size,
+          file: base64String,
+        },
+      });
+    };
+
+    reader.onerror = () => {
+      console.error("Error reading file.");
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  // post data to backend
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    console.log("form data", formData);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/invoices", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        console.log("Success:", result.message);
+
+        // reset
+        setFormData({
+          invoice_id: "",
+          invoice_date: new Date().getDate(),
+          description: "",
+          amount: 0,
+          currency: "SSP",
+          attachment: null,
+        });
+
+        //
+        e.target.reset();
+      } else {
+        console.log("API Error:", result.message || "Unknown error occurred");
+      }
+    } catch (error) {
+      console.log("Network or Server error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="p-4">
+    <form className="p-4" method="POST">
       <InputText
         label="Invoice ID"
+        name={"invoice_id"}
+        value={formData.invoice_id}
         placeholder={"invoice id e.g INV-2026-001"}
+        onChange={handleInputChange}
       />
       <br />
       <InputText
         label="Description"
+        name={"description"}
+        value={formData.description}
         placeholder={"e.g purchase of spare parts"}
+        onChange={handleInputChange}
       />
       <br />
 
-      <InputAmount label={"Amount "} placeholder={"e.g 10000"} />
+      <InputAmount
+        label={"Amount "}
+        name={"amount"}
+        value={formData.amount}
+        placeholder={"e.g 10000"}
+        onChange={handleInputChange}
+      />
+      <InputSelectBox
+        label="Currency"
+        name="currency"
+        value={formData.currency}
+        onChange={handleInputChange}
+      >
+        <option>SSP</option>
+        <option>USD</option>
+      </InputSelectBox>
+
       <br />
-      <InputFile label="Attachment" />
+      <InputFile
+        label="Attachment"
+        name={"attachment"}
+        value={formData.attachment?.name}
+        onChange={handleFileInputChange}
+      />
 
       <div className="flex justify-end mt-4 gap-2 ">
         <button className="btn btn-sm btn-soft rounded">Cancel</button>
-        <button className="btn btn-sm btn-primary text-white rounded">
-          Cancel
+        <button
+          className="btn btn-sm btn-primary text-white rounded"
+          onClick={handleSubmit}
+        >
+          {loading ? "Creating" : "Create"}
         </button>
       </div>
     </form>
