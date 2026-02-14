@@ -14,6 +14,7 @@ class InvoiceBase(BaseModel):
     currency: str = "SSP"
     invoice_date: date
     processed_at: Optional[datetime] = None
+    vendor: Optional[str] = Field(None, max_length=60)
     model_config = ConfigDict(from_attributes=True)
 
 
