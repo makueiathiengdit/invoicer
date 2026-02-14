@@ -53,6 +53,7 @@ class Invoice(Base, Timed):
     processed_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
     attachment_id: Mapped[Optional[int]] = mapped_column(ForeignKey("attachments.id"))
     attachment: Mapped[Optional["Attachment"]] = relationship(back_populates="invoice")
+    vendor: Mapped[Optional[str]] = mapped_column(String(60), nullable=True)
 
     def to_dict(self):
         return {
