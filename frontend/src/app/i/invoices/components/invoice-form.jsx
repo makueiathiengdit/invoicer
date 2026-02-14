@@ -8,13 +8,12 @@ import InputSelectBox from "../../components/inputs/input-select-box";
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
     invoice_id: "",
-    invoice_date: new Date(),
+    invoice_date: new Date().toISOString().split("T")[0],
     description: "",
     amount: 0,
-    currency: "",
-    attachment: "",
+    currency: "SSP",
+    attachment: null,
   });
-
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
@@ -62,16 +61,21 @@ const InvoiceForm = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log("form data", formData);
+    const payload = {
+      ...formData,
+      amount: parseFloat(formData.amount),
+    };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/invoices", {
+      const response = await fetch("http://127.0.0.1:8000/invoices/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
+
+      console.log("response", response);
 
       const result = await response.json();
 
@@ -81,7 +85,7 @@ const InvoiceForm = () => {
         // reset
         setFormData({
           invoice_id: "",
-          invoice_date: new Date().getDate(),
+          invoice_date: new Date().toISOString().split("T")[0],
           description: "",
           amount: 0,
           currency: "SSP",

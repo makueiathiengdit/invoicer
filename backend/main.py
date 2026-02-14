@@ -8,6 +8,7 @@ from typing import Union
 from db.core import Base, db_engine
 from routers.user_router import router as user_router
 from routers.invoices_router import router as invoice_router
+from routers.attachment_router import router as attachment_router
 
 
 class EntityException(Exception):
@@ -82,6 +83,7 @@ async def exception_handler(
 
 app.include_router(user_router)
 app.include_router(invoice_router)
+app.include_router(attachment_router)
 
 
 @app.get("/")

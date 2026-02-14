@@ -33,6 +33,14 @@ class Attachment(Base, Timed):
     # backpopulate to find the invoice from an attachment
     invoice: Mapped["Invoice"] = relationship(back_populates="attachment")
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "size": self.size,
+            "file": str(self.file),
+        }
+
 
 class Invoice(Base, Timed):
     __tablename__ = "invoices"
@@ -45,3 +53,13 @@ class Invoice(Base, Timed):
     processed_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
     attachment_id: Mapped[Optional[int]] = mapped_column(ForeignKey("attachments.id"))
     attachment: Mapped[Optional["Attachment"]] = relationship(back_populates="invoice")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "invoice_id": self.invoice_date,
+            "invoice_date": self.invoice_date,
+            "amount": self.amount,
+            "currency": self.currency,
+            "attachment_id": self.attachment_id,
+        }

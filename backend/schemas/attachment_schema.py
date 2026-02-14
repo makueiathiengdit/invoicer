@@ -10,7 +10,7 @@ class AttachmentBase(BaseModel):
 class AttachmentRead(AttachmentBase):
     """Used in Invoice lists: Metadata only."""
 
-    id: int
+    id: int | None = None
 
 
 class AttachmentFull(AttachmentRead):

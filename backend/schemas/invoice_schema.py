@@ -20,12 +20,12 @@ class InvoiceBase(BaseModel):
 class InvoiceListSchema(InvoiceBase):
     """Schema for returning a list of invoices (fast)."""
 
-    id: int
+    id: int | None = None
     attachment: Optional[AttachmentRead] = None
 
 
 class InvoiceDetailSchema(InvoiceBase):
     """Schema for returning a single invoice with its file."""
 
-    id: int
+    id: int | None = None
     attachment: Optional[AttachmentFull] = None
