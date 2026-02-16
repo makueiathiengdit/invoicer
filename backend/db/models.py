@@ -65,6 +65,7 @@ class Invoice(Base, Timed):
             "amount": self.amount,
             "currency": self.currency,
             "attachment_id": self.attachment_id,
+            "description": self.description,
             "vendor": self.vendor,
             "processed_at": datetime.datetime.now(),
             "pr_number": self.pr_number,
