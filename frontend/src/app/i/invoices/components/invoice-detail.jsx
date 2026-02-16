@@ -37,8 +37,8 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
   return (
     <div className="min-h-screen  print:bg-white print:p-0 p-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-xl print:shadow-none rounded-2xl print:rounded-none border border-teal-100 print:border-none">
-        <div className="bg-teal-600 text-white print:bg-white print:text-black p-6 border-b border-teal-200 print:border-gray-300">
+      <div className="max-w-4xl mx-auto bg-white shadow-xl print:shadow-none rounded-2xl print:rounded-none  print:border-none">
+        <div className="bg-teal-600 text-white print:bg-white print:text-black p-6  print:border-gray-300">
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">INVOICE</h1>
