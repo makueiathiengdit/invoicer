@@ -10,8 +10,6 @@ const ViewInvoicePage = async ({ params }) => {
     let res = await fetch(base_url);
     res = await res.json();
 
-    console.log("response", res);
-
     if (res.success) {
       invoice = res.data[0];
     }

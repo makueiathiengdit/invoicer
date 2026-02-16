@@ -122,9 +122,12 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
                 </div>
 
                 <div className="flex justify-end items-end">
-                  <button className="btn btn-primary btn-sm rounded-md text-white">
+                  <a
+                    href="#"
+                    className="btn btn-primary btn-sm rounded-md text-white"
+                  >
                     View
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
