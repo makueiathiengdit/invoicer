@@ -149,9 +149,9 @@ const InvoiceTable = ({ data = [] }) => {
                 <th scope="col" className="px-4 py-3">
                   Invoice ID
                 </th>
-                <th scope="col" className="px-4 py-3">
+                {/* <th scope="col" className="px-4 py-3">
                   Invoice Date
-                </th>
+                </th> */}
                 <th scope="col" className="px-4 py-3">
                   Description
                 </th>

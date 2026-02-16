@@ -12,7 +12,7 @@ const InvoiceTableRow = ({ item = {} }) => {
           {new Date(item?.created_at).toLocaleDateString() || item.invoice_date}
         </th>
         <td className="px-4 py-3">{item.invoice_id}</td>
-        <td className="px-4 py-3">{item.invoice_date}</td>
+        {/* <td className="px-4 py-3">{item.invoice_date}</td> */}
 
         <td className="px-4 py-3">{item.description}</td>
         <td className="px-4 py-3 text-gray-700 font-semibold">
