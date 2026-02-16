@@ -3,6 +3,7 @@ from db.core import get_session
 from db.models import Invoice, Attachment
 from utils.api_response import APIResponse
 from typing import Union
+from sqlalchemy.orm import joinedload
 
 
 class InvoiceService:
@@ -124,5 +125,20 @@ class InvoiceService:
     @classmethod
     def get_invoice_by_id(cls, id: int) -> APIResponse:
         with get_session() as db:
-            invoice = db.query(Invoice).filter_by(id=id)
-            return APIResponse(success=True, message="invoice fetched", data=[invoice])
+            invoice = (
+                db.query(Invoice)
+                .filter_by(id=id)
+                .options(joinedload(Invoice.attachment))
+                .first()
+            )
+
+            if invoice:
+                inv = invoice.to_dict()
+                inv["attachment"] = {
+                    "id": invoice.attachment.id,
+                    "name": invoice.attachment.name,
+                    "size": invoice.attachment.size,
+                }
+            # invoice = db.query(Invoice).filter_by(id=id).first()
+
+            return APIResponse(success=True, message="invoice fetched", data=[inv])

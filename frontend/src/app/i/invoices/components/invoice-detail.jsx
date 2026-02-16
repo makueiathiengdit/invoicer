@@ -36,7 +36,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     }).format(amount);
 
   return (
-    <div className="min-h-screen bg-gray-50 print:bg-white print:p-0 p-6">
+    <div className="min-h-screen  print:bg-white print:p-0 p-6">
       <div className="max-w-4xl mx-auto bg-white shadow-xl print:shadow-none rounded-2xl print:rounded-none border border-teal-100 print:border-none">
         <div className="bg-teal-600 text-white print:bg-white print:text-black p-6 border-b border-teal-200 print:border-gray-300">
           <div className="flex justify-between items-start">
@@ -108,12 +108,24 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-3">
                 Attachment
               </h3>
-              <div className="flex items-center gap-3 border border-gray-200 rounded-xl p-4">
-                <Paperclip
-                  size={18}
-                  className="text-teal-600 print:text-black"
-                />
-                <span>{invoice.attachment.file_name}</span>
+              <div className="flex justify-between gap-3 border border-gray-200 rounded-xl p-4">
+                <div className="flex justify-center gap-3">
+                  <Paperclip
+                    size={18}
+                    className="text-teal-600 print:text-black"
+                  />
+                  <span>{invoice.attachment.name}</span>
+
+                  <span className="text-gray-400 ">
+                    {(invoice.attachment.size / (1040 * 1040)).toFixed(1)}MB
+                  </span>
+                </div>
+
+                <div className="flex justify-end items-end">
+                  <button className="btn btn-primary btn-sm rounded-md text-white">
+                    View
+                  </button>
+                </div>
               </div>
             </div>
           )}
