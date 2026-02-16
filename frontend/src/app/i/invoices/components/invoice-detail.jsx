@@ -123,7 +123,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
                 <div className="flex justify-end items-end">
                   <a
-                    href="#"
+                    href={`/i/attachments/${invoice?.attachment.id}`}
                     className="btn btn-primary btn-sm rounded-md text-white"
                   >
                     View
