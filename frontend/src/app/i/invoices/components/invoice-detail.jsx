@@ -128,7 +128,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
                   <span>{invoice.attachment.name}</span>
 
                   <span className="text-gray-400 ">
-                    {(invoice.attachment.size / (1040 * 1040)).toFixed(1)}MB
+                    {(invoice.attachment.size / (1024 * 1024)).toFixed(1)}MB
                   </span>
                 </div>
 

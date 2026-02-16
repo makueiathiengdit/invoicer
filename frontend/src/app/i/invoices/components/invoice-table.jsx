@@ -114,7 +114,7 @@ const InvoiceTable = ({ data = [] }) => {
                       htmlFor="processed"
                       className="ml-2 text-sm font-medium text-white dark:text-gray-100"
                     >
-                      Processed (56)
+                      Processed (10)
                     </label>
                   </li>
                   <li className="flex items-center">
@@ -128,7 +128,7 @@ const InvoiceTable = ({ data = [] }) => {
                       htmlFor="pending"
                       className="ml-2 text-sm font-medium text-white dark:text-gray-100"
                     >
-                      Pending (56)
+                      Pending (6)
                     </label>
                   </li>
                 </ul>

@@ -21,6 +21,14 @@ class User(Base, Timed):
     role: Mapped[str] = mapped_column(String(10), default="USER")
     password: Mapped[str] = mapped_column(String(255), nullable=False)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+        }
+
 
 class Attachment(Base, Timed):
     __tablename__ = "attachments"
@@ -38,7 +46,7 @@ class Attachment(Base, Timed):
             "id": self.id,
             "name": self.name,
             "size": self.size,
-            "file": str(self.file),
+            # "file": str(self.file),
         }
 
 
@@ -62,10 +70,10 @@ class Invoice(Base, Timed):
             "id": self.id,
             "invoice_id": self.invoice_id,
             "invoice_date": self.invoice_date,
+            "description": self.description,
             "amount": self.amount,
             "currency": self.currency,
             "attachment_id": self.attachment_id,
-            "description": self.description,
             "vendor": self.vendor,
             "processed_at": datetime.datetime.now(),
             "pr_number": self.pr_number,

@@ -36,7 +36,7 @@ class AttachmentService:
                 return APIResponse(
                     success=True,
                     message="found attacment",
-                    data=[attachment],
+                    data=[attachment.to_dict()],
                 )
             else:
                 return APIResponse(message="Could not find attachment with given id")
