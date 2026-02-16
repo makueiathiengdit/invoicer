@@ -36,13 +36,24 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     }).format(amount);
 
   return (
-    <div className="min-h-screen  print:bg-white print:p-0 p-6">
+    <div className="min-h-screen print:bg-white print:p-0 p-6">
+      <div className="flex  gap-3 justify-end mb-2 max-w-4xl mx-auto">
+        <span className="text-gray-500">Actions:</span>
+        <span className="text-blue-600 hover:underline hover:cursor-pointer">
+          Edit
+        </span>
+        |
+        <span className="text-red-600 hover:underline hover:cursor-pointer">
+          Delete
+        </span>
+      </div>
+
       <div className="max-w-4xl mx-auto bg-white shadow-xl print:shadow-none rounded-2xl print:rounded-none  print:border-none">
         <div className="bg-teal-600 text-white print:bg-white print:text-black p-6  print:border-gray-300">
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">INVOICE</h1>
-              <p className="text-sm mt-1 opacity-90 print:opacity-100">
+              <p className="bg-amber-50 text-gray-700 px-1 font-mono text-sm mt-1 opacity-90 print:opacity-100">
                 Invoice ID: {invoice.invoice_id || "N/A"}
               </p>
             </div>

@@ -60,7 +60,7 @@ class Invoice(Base, Timed):
     def to_dict(self):
         return {
             "id": self.id,
-            "invoice_id": self.invoice_date,
+            "invoice_id": self.invoice_id,
             "invoice_date": self.invoice_date,
             "amount": self.amount,
             "currency": self.currency,
