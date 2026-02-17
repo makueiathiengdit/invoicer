@@ -38,6 +38,8 @@ class User(Base, Timed):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
+            "assigned_invoices": self.assigned_invoices,
+            "proccessed_invoices": self.processed_invoices,
         }
 
 
