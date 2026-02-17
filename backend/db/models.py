@@ -106,4 +106,8 @@ class Invoice(Base, Timed):
             "processed_at": datetime.datetime.now(),
             "pr_number": self.pr_number,
             "po_number": self.po_number,
+            "assigned_user_id": self.assigned_user_id,
+            "assigned_user": self.assigned_user,
+            "proccessed_by_id": self.processed_by_id,
+            "procceessed_by": self.processed_by,
         }
