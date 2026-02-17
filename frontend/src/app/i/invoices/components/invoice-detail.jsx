@@ -1,14 +1,7 @@
 "use client";
 
 import { formatCurrentDate } from "@/app/utils/utils";
-import {
-  FileText,
-  Calendar,
-  User,
-  Hash,
-  Paperclip,
-  Printer,
-} from "lucide-react";
+import { Calendar, User, Hash, Paperclip } from "lucide-react";
 
 export const sampleInvoice = {
   id: 1,
