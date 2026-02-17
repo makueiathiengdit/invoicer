@@ -30,7 +30,15 @@ class UserService:
 
     @classmethod
     def get_user_by_id(cls, id) -> APIResponse:
-        pass
+        with get_session() as db:
+            user = db.query(User).filter_by(id=id).first()
+            response = APIResponse()
+            if user:
+                response.message = "fetched user"
+                response.data = [user.to_dict()]
+            else:
+                response.message = "cannot find user with given id"
+            return response
 
     @classmethod
     def get_user_all(cls) -> APIResponse:

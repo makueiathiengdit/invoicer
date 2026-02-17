@@ -98,6 +98,11 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               label="Processed At"
               value={invoice.processed_at ? formatCurrentDate() : "Pending"}
             />
+            {/* <InfoItem
+              icon={<User size={18} />}
+              label="Assigned to"
+              value={"Nyibol Deng"}
+            /> */}
             <InfoItem
               icon={<User size={18} />}
               label="Processed By"
