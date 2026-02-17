@@ -154,7 +154,7 @@ const InvoiceTable = ({ data = [] }) => {
                   Description
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Price
+                  Amount
                 </th>
                 <th scope="col" className="px-4 py-3">
                   Actions
