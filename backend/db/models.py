@@ -65,6 +65,23 @@ class Invoice(Base, Timed):
     po_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     pr_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
+    assigned_user_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("users.id"), nullable=True
+    )
+    assigned_user: Mapped[Optional["User"]] = relationship(
+        "User",
+        back_populates="assigned_invoices",
+        foreign_keys=[assigned_user_id],
+    )
+    processed_by_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("users.id"), nullable=True
+    )
+    processed_by: Mapped[Optional["User"]] = relationship(
+        "User",
+        back_populates="processed_invoices",
+        foreign_keys=[processed_by_id],
+    )
+
     def to_dict(self):
         return {
             "id": self.id,
