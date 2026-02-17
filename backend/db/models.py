@@ -20,6 +20,17 @@ class User(Base, Timed):
     email: Mapped[str] = mapped_column(String(60), nullable=False)
     role: Mapped[str] = mapped_column(String(10), default="USER")
     password: Mapped[str] = mapped_column(String(255), nullable=False)
+    assigned_invoices: Mapped[list["Invoice"]] = relationship(
+        "Invoice",
+        back_populates="assigned_user",
+        foreign_keys="[Invoice.assigned_user_id]",
+    )
+
+    processed_invoices: Mapped[list["Invoice"]] = relationship(
+        "Invoice",
+        back_populates="processed_by",
+        foreign_keys="[Invoice.processed_by_id]",
+    )
 
     def to_dict(self):
         return {
