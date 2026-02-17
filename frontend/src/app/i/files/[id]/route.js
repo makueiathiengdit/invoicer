@@ -27,7 +27,7 @@ export async function GET(request, { params }) {
       return new Response("No file data", { status: 500 });
     }
 
-    const filename = `${doc.file_name}.pdf` || "file.pdf";
+    const filename = `${doc.name}.pdf` || "file.pdf";
     const contentType = doc.file_type || "application/pdf";
     const contentLength = doc.size || fileBuffer.length;
 
