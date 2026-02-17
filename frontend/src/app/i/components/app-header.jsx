@@ -53,7 +53,7 @@ const AppHeader = () => {
               id="user-menu-button"
               aria-expanded="false"
               data-dropdown-toggle="dropdown"
-              onClick={() => setShow(!show)}
+              // onClick={() => setShow(!show)}
             >
               <span className="sr-only">Open user menu</span>
               <img
