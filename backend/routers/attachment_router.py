@@ -11,4 +11,4 @@ def get_attachments():
 
 @router.get("/{id}")
 def get_single_attachment(id: int):
-    return AttachmentService.get_attachment_by_id(id)
+    return AttachmentService.get_attachment_pdf(id)

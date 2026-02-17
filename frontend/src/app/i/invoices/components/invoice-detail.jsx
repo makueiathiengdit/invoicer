@@ -134,7 +134,8 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
                 <div className="flex justify-end items-end">
                   <a
-                    href={`/i/attachments/${invoice?.attachment.id}`}
+                    href={`/i/files/${invoice?.attachment.id}`}
+                    target="_blank"
                     className="btn btn-primary btn-sm rounded-md text-white"
                   >
                     View
