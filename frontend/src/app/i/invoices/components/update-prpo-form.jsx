@@ -77,7 +77,7 @@ const UpdatePRPOForm = () => {
               </button>
               <button
                 className="btn btn-sm rounded bg-teal-600 text-white"
-                onCanPlay={handleSubmit}
+                onClick={handleSubmit}
                 type="button"
               >
                 Save
