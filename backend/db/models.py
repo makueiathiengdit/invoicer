@@ -114,4 +114,5 @@ class Invoice(Base, Timed):
             "assigned_user": self.assigned_user,
             "proccessed_by_id": self.processed_by_id,
             "procceessed_by": self.processed_by,
+            "status": self.status,
         }
