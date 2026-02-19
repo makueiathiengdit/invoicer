@@ -8,6 +8,7 @@ from db.models import Invoice, Attachment
 from utils.api_response import APIResponse
 from typing import Union
 from sqlalchemy.orm import joinedload
+from constants.constants import INVOICE_STATUS
 
 
 class InvoiceService:
@@ -166,6 +167,9 @@ class InvoiceService:
                     db_inv.pr_number = prpo.pr_number
                 if hasattr(prpo, "po_number") and prpo.po_number:
                     db_inv.po_number = prpo.po_number
+
+                    # make invoice processed
+                    db_inv.status = INVOICE_STATUS["PROCESSED"]
 
                 db.add(db_inv)
                 db.flush()
