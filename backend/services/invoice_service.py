@@ -165,6 +165,9 @@ class InvoiceService:
             else:
                 if hasattr(prpo, "pr_number") and prpo.pr_number:
                     db_inv.pr_number = prpo.pr_number
+
+                    # make invoice as partially proccessed
+                    db_inv.status = INVOICE_STATUS["PARTIAL"]
                 if hasattr(prpo, "po_number") and prpo.po_number:
                     db_inv.po_number = prpo.po_number
 
@@ -176,6 +179,22 @@ class InvoiceService:
                 db.commit()
 
                 return APIResponse(success=True, message="invoice updated successfully")
+
+    @classmethod
+    def mark_invoice_complete(cls, id: int) -> APIResponse:
+        with get_session() as db:
+            db_inv = db.query(Invoice).filter_by(id=id).first()
+
+            if db_inv is None:
+                return APIResponse(
+                    success=False, message="Could not find invoice with given id"
+                )
+            else:
+                db_inv.status = INVOICE_STATUS["COMPLETED"]
+                db.add(db_inv)
+                db.flush()
+                db.commit()
+                return APIResponse(success=True, message="invoice marked completed")
 
     @staticmethod
     def get_assigned_user_id() -> int:
