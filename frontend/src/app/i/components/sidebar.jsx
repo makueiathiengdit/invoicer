@@ -1,5 +1,5 @@
 import React from "react";
-import { FileText, Folder, Home } from "lucide-react";
+import { FileText, Folder, FolderInput, Home } from "lucide-react";
 import SideBarItem from "./sidebar-item";
 
 const SIDEBAR_LINKS = [
@@ -32,10 +32,16 @@ const SIDEBAR_LINKS = [
       },
     ],
   },
+  // {
+  //   title: "Purchase Order",
+  //   link: "/i/purchase-orders",
+  //   icon: <Folder />,
+  //   submenu: [],
+  // },
   {
-    title: "Purchase Order",
-    link: "/i/purchase-orders",
-    icon: <Folder />,
+    title: "Receiving",
+    link: "/i/receiving",
+    icon: <FolderInput />,
     submenu: [],
   },
 ];

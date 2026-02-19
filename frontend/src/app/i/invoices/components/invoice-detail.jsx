@@ -20,6 +20,7 @@ export const sampleInvoice = {
     id: 23,
     file_name: "network_upgrade_invoice.pdf",
   },
+  status: "PENDING",
 };
 
 export default function InvoiceDetail({ invoice = sampleInvoice }) {
