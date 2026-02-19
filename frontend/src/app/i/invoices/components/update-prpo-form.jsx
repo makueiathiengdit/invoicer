@@ -67,12 +67,15 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
         >
           Update PR
         </button>
-        <button
-          className={`btn btn-sm rounded bg-green-600 text-white ${selected === "po" ? "outline-2 outline-green-600" : ""}`}
-          onClick={() => setSelected("po")}
-        >
-          Update PO
-        </button>
+
+        {invoice.pr_number && (
+          <button
+            className={`btn btn-sm rounded bg-green-600 text-white ${selected === "po" ? "outline-2 outline-green-600" : ""}`}
+            onClick={() => setSelected("po")}
+          >
+            Update PO
+          </button>
+        )}
       </div>
 
       <form>
