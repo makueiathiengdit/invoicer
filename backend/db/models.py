@@ -116,3 +116,29 @@ class Invoice(Base, Timed):
             "procceessed_by": self.processed_by,
             "status": self.status,
         }
+
+
+# for proccessed invoices that need to be sent to finance for payment
+class ReceivedInvoice(Base, Timed):
+    __tablename__ = "received_invoices"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    invoice_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    pr_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    po_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    receipt_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    received_by_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("users.id"), nullable=True
+    )
+    received_by: Mapped[Optional["User"]] = relationship(
+        "User", back_populates="received_invoices", foreign_keys=[received_by_id]
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "invoice_id": self.invoice_id,
+            "pr_number": self.pr_number,
+            "po_number": self.po_number,
+            "receipt_id": self.receipt_id,
+            "received_by": self.received_by,
+        }
