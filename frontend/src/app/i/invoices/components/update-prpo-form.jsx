@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputText from "../../components/inputs/input-text";
-const UpdatePRPOForm = () => {
+const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const [selected, setSelected] = useState("");
 
   const [formData, setFormData] = useState({
@@ -21,10 +21,38 @@ const UpdatePRPOForm = () => {
     if (invoice_modal) {
       invoice_modal.close();
     }
+
+    setSelected("");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const base_url = "http://127.0.0.1:8000/invoices/" + invoice.id + "/prpo";
+
+    console.log(base_url);
+
+    try {
+      let res = await fetch(base_url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      res = await res.json();
+
+      if (res.success) {
+        console.log("success");
+
+        handleCancel();
+      } else {
+        console.log("nuts!!!");
+      }
+    } catch (error) {
+      console.log("nutsss", error);
+    }
   };
 
   return (

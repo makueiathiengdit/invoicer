@@ -158,7 +158,15 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
           <h3 className="text-gray-600 font-semibold text-lg border-b border-gray-300">
             Update Invoice
           </h3>
-          <UpdatePRPOForm />
+          <button
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={() => {
+              document.getElementById("edit_invoice_modal").close();
+            }}
+          >
+            ✕
+          </button>
+          <UpdatePRPOForm invoice={invoice} />
         </div>
       </dialog>
     </div>

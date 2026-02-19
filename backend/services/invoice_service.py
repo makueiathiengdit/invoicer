@@ -1,4 +1,8 @@
-from schemas.invoice_schema import InvoiceDetailSchema, InvoiceListSchema
+from schemas.invoice_schema import (
+    InvoiceDetailSchema,
+    InvoiceListSchema,
+    UpdatePRPOSchema,
+)
 from db.core import get_session
 from db.models import Invoice, Attachment
 from utils.api_response import APIResponse
@@ -142,3 +146,24 @@ class InvoiceService:
             # invoice = db.query(Invoice).filter_by(id=id).first()
 
             return APIResponse(success=True, message="invoice fetched", data=[inv])
+
+    @classmethod
+    def update_prpo(cls, id, prpo: UpdatePRPOSchema) -> APIResponse:
+        with get_session() as db:
+            db_inv = db.query(Invoice).filter_by(id=id).first()
+
+            if db_inv is None:
+                return APIResponse(
+                    success=False, message="could not find invoice with given id"
+                )
+            else:
+                if hasattr(prpo, "pr_number") and prpo.pr_number:
+                    db_inv.pr_number = prpo.pr_number
+                if hasattr(prpo, "po_number") and prpo.po_number:
+                    db_inv.po_number = prpo.po_number
+
+                db.add(db_inv)
+                db.flush()
+                db.commit()
+
+                return APIResponse(success=True, message="invoice updated successfully")

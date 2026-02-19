@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from schemas.invoice_schema import InvoiceDetailSchema
+from schemas.invoice_schema import InvoiceDetailSchema, UpdatePRPOSchema
 from services.invoice_service import InvoiceService
 
 router = APIRouter(prefix="/invoices", tags=["Invoices"])
@@ -18,6 +18,11 @@ def create_invoice(invoice: InvoiceDetailSchema):
 @router.put("/{id}")
 def update_invoice(id: int, invoice: InvoiceDetailSchema):
     return InvoiceService.update_invoice(id, invoice)
+
+
+@router.put("/{id}/prpo")
+def update_prpo(id: int, prpo: UpdatePRPOSchema):
+    return InvoiceService.update_prpo(id, prpo)
 
 
 @router.get("/{id}")

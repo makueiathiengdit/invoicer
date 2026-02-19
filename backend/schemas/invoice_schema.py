@@ -30,3 +30,8 @@ class InvoiceDetailSchema(InvoiceBase):
 
     id: int | None = None
     attachment: Optional[AttachmentFull] = None
+
+
+class UpdatePRPOSchema(BaseModel):
+    pr_number: str | None = None
+    po_number: str | None = None
