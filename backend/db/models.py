@@ -129,9 +129,9 @@ class ReceivedInvoice(Base, Timed):
     received_by_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("users.id"), nullable=True
     )
-    received_by: Mapped[Optional["User"]] = relationship(
-        "User", back_populates="received_invoices", foreign_keys=[received_by_id]
-    )
+    # received_by: Mapped[Optional["User"]] = relationship(
+    #     "User", back_populates="received_invoices", foreign_keys=[received_by_id]
+    # )
 
     def to_dict(self):
         return {
