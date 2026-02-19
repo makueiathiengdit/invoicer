@@ -34,13 +34,13 @@ const InvoiceForm = () => {
     // max file size: 10MB
     if (file.size > 10 * 1024 * 1024) {
       console.error("File is too large. Please select a file under 5MB.");
-      event.target.value = null; // Reset input
+      event.target.value = null;
       return;
     }
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      // Extract the raw Base64 data from the DataURL
+      // extra base64 data
       const base64String = reader.result.split(",")[1];
 
       setFormData({

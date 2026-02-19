@@ -95,6 +95,8 @@ class Invoice(Base, Timed):
         foreign_keys=[processed_by_id],
     )
 
+    status: Mapped[Optional[str]] = mapped_column(String(25), default="PENDING")
+
     def to_dict(self):
         return {
             "id": self.id,

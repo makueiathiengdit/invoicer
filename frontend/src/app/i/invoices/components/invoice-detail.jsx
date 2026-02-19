@@ -82,14 +82,14 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
             <InfoItem
               icon={<Hash size={18} />}
-              label="PO Number"
-              value={invoice.po_number || "—"}
+              label="PR Number"
+              value={invoice.pr_number || "—"}
             />
 
             <InfoItem
               icon={<Hash size={18} />}
-              label="PR Number"
-              value={invoice.pr_number || "—"}
+              label="PO Number"
+              value={invoice.po_number || "—"}
             />
 
             <InfoItem

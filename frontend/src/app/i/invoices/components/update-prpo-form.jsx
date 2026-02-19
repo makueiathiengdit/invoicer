@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InputText from "../../components/inputs/input-text";
+import { useRouter } from "next/navigation";
 const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const [selected, setSelected] = useState("");
 
@@ -14,6 +15,8 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
       [event.target.name]: event.target.value,
     });
   };
+
+  const router = useRouter();
 
   const handleCancel = () => {
     const invoice_modal = document.getElementById("edit_invoice_modal");
@@ -30,8 +33,6 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
 
     const base_url = "http://127.0.0.1:8000/invoices/" + invoice.id + "/prpo";
 
-    console.log(base_url);
-
     try {
       let res = await fetch(base_url, {
         method: "PUT",
@@ -47,6 +48,8 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
         console.log("success");
 
         handleCancel();
+
+        router.refresh();
       } else {
         console.log("nuts!!!");
       }
