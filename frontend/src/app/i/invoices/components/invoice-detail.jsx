@@ -2,7 +2,6 @@
 
 import { formatCurrentDate } from "@/app/utils/utils";
 import { Calendar, User, Hash, Paperclip } from "lucide-react";
-import InputText from "../../components/inputs/input-text";
 import UpdatePRPOForm from "./update-prpo-form";
 
 export const sampleInvoice = {
