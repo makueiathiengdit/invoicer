@@ -15,6 +15,18 @@ const UpdatePRPOForm = () => {
     });
   };
 
+  const handleCancel = () => {
+    const invoice_modal = document.getElementById("edit_invoice_modal");
+
+    if (invoice_modal) {
+      invoice_modal.close();
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
       <div className="flex gap-2 mt-4">
@@ -33,7 +45,7 @@ const UpdatePRPOForm = () => {
       </div>
 
       <form>
-        <div className="mt-2">
+        <div className="mt-6">
           {selected === "pr" && (
             <InputText
               label="PR Number"
@@ -56,8 +68,18 @@ const UpdatePRPOForm = () => {
 
           {selected && (
             <div className="mt-2 flex justify-end gap-2">
-              <button className="btn btn-sm rounded">Cancel</button>
-              <button className="btn btn-sm rounded bg-teal-600 text-white">
+              <button
+                className="btn btn-sm rounded"
+                type="button"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-sm rounded bg-teal-600 text-white"
+                onCanPlay={handleSubmit}
+                type="button"
+              >
                 Save
               </button>
             </div>
