@@ -2,6 +2,8 @@
 
 import { formatCurrentDate } from "@/app/utils/utils";
 import { Calendar, User, Hash, Paperclip } from "lucide-react";
+import InputText from "../../components/inputs/input-text";
+import UpdatePRPOForm from "./update-prpo-form";
 
 export const sampleInvoice = {
   id: 1,
@@ -32,9 +34,14 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     <div className="min-h-screen print:bg-white print:p-0 p-6">
       <div className="flex  gap-3 justify-end mb-2 max-w-4xl mx-auto">
         <span className="text-gray-500">Actions:</span>
-        <span className="text-blue-600 hover:underline hover:cursor-pointer">
-          Edit
-        </span>
+        <button
+          className="text-blue-600 hover:underline hover:cursor-pointer"
+          onClick={() =>
+            document.getElementById("edit_invoice_modal").showModal()
+          }
+        >
+          Process
+        </button>
         |
         <span className="text-red-600 hover:underline hover:cursor-pointer">
           Delete
@@ -144,6 +151,16 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
           )}
         </div>
       </div>
+
+      {/* update invoice modal */}
+      <dialog id="edit_invoice_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="text-gray-600 font-semibold text-lg border-b border-gray-300">
+            Update Invoice
+          </h3>
+          <UpdatePRPOForm />
+        </div>
+      </dialog>
     </div>
   );
 }
