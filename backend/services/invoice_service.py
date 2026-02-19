@@ -128,6 +128,9 @@ class InvoiceService:
 
     @classmethod
     def get_invoice_by_id(cls, id: int) -> APIResponse:
+        """
+        fetch single invoice
+        """
         with get_session() as db:
             invoice = (
                 db.query(Invoice)
@@ -143,12 +146,14 @@ class InvoiceService:
                     "name": invoice.attachment.name,
                     "size": invoice.attachment.size,
                 }
-            # invoice = db.query(Invoice).filter_by(id=id).first()
 
             return APIResponse(success=True, message="invoice fetched", data=[inv])
 
     @classmethod
     def update_prpo(cls, id, prpo: UpdatePRPOSchema) -> APIResponse:
+        """
+        used to update PR and PO numbers after invoice is processed
+        """
         with get_session() as db:
             db_inv = db.query(Invoice).filter_by(id=id).first()
 
@@ -167,3 +172,7 @@ class InvoiceService:
                 db.commit()
 
                 return APIResponse(success=True, message="invoice updated successfully")
+
+    @staticmethod
+    def get_assigned_user_id() -> int:
+        pass
