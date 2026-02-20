@@ -43,6 +43,7 @@ class User(Base, Timed):
             "email": self.email,
             "assigned_invoices": self.assigned_invoices,
             "proccessed_invoices": self.processed_invoices,
+            "updated_at": self.updated_at,
         }
 
 
@@ -118,6 +119,7 @@ class Invoice(Base, Timed):
             "proccessed_by_id": self.processed_by_id,
             "procceessed_by": self.processed_by,
             "status": self.status,
+            "updated_at": self.updated_at,
         }
 
 
@@ -144,4 +146,5 @@ class ReceivedInvoice(Base, Timed):
             "po_number": self.po_number,
             "receipt_id": self.receipt_id,
             "received_by": self.received_by,
+            "updated_at": self.updated_at,
         }

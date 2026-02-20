@@ -10,6 +10,8 @@ from typing import Union
 from sqlalchemy.orm import joinedload
 from constants.constants import INVOICE_STATUS
 
+import datetime
+
 
 class InvoiceService:
     @classmethod
@@ -110,7 +112,7 @@ class InvoiceService:
                         db.add(new_attachment)
                         db.flush()
                         db_invoice.attachment_id = new_attachment.id
-
+                db_invoice.updated_at = datetime.datetime.now()
                 db.commit()
                 db.refresh(db_invoice)
 
@@ -174,6 +176,7 @@ class InvoiceService:
                     # make invoice processed
                     db_inv.status = INVOICE_STATUS["PROCESSED"]
 
+                db_inv.updated_at = datetime.datetime.now()
                 db.add(db_inv)
                 db.flush()
                 db.commit()
@@ -191,6 +194,8 @@ class InvoiceService:
                 )
             else:
                 db_inv.status = INVOICE_STATUS["COMPLETED"]
+                db_inv.updated_at = datetime.datetime.now()
+
                 db.add(db_inv)
                 db.flush()
                 db.commit()
