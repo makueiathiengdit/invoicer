@@ -1,3 +1,6 @@
+import { INVOICE_STATUS } from "../constants/constants";
+import InvoiceDetail from "../i/invoices/components/invoice-detail";
+
 export function convertAmountToWords(num) {
   if (num === 0) return "zero";
 
@@ -97,4 +100,30 @@ export function formatCurrentDate(date = null) {
   const period = now.getHours() >= 12 ? "PM" : "AM";
 
   return `${month} ${day}, ${year}  ${hours}:${minutes} ${period}`;
+}
+
+export function getInvoiceStatusColor(status) {
+  let color = "";
+
+  switch (status) {
+    case INVOICE_STATUS.PENDING:
+      color = "text-yellow-600";
+
+      break;
+    case INVOICE_STATUS.PARTIAL:
+      color = "text-orange-600";
+      break;
+    case INVOICE_STATUS.PROCESSED:
+      color = "text-green-600";
+      break;
+    case INVOICE_STATUS.COMPLETED:
+      color = "text-blue-600";
+      break;
+
+    default:
+      color = "text-gray-600";
+      break;
+  }
+
+  return color;
 }

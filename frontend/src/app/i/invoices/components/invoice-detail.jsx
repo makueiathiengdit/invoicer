@@ -1,7 +1,7 @@
 "use client";
 
-import { formatCurrentDate } from "@/app/utils/utils";
-import { Calendar, User, Hash, Paperclip } from "lucide-react";
+import { formatCurrentDate, getInvoiceStatusColor } from "@/app/utils/utils";
+import { Calendar, User, Hash, Paperclip, BadgeCheck } from "lucide-react";
 import UpdatePRPOForm from "./update-prpo-form";
 
 export const sampleInvoice = {
@@ -68,7 +68,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
         </div>
 
         <div className="p-8 space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
             <InfoItem
               icon={<Calendar size={18} />}
               label="Invoice Date"
@@ -93,20 +93,22 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               value={invoice.po_number || "—"}
             />
 
-            <InfoItem
+            {/* <InfoItem
               icon={<Calendar size={18} />}
               label="Processed At"
               value={invoice.processed_at ? formatCurrentDate() : "Pending"}
-            />
-            {/* <InfoItem
-              icon={<User size={18} />}
-              label="Assigned to"
-              value={"Nyibol Deng"}
             /> */}
+
             <InfoItem
               icon={<User size={18} />}
               label="Processed By"
               value={"Nyibol Deng"}
+            />
+            <InfoItem
+              icon={<BadgeCheck size={18} />}
+              label="Status"
+              value={invoice.status || "Unknown"}
+              text_color={getInvoiceStatusColor(invoice.status)}
             />
           </div>
 
@@ -173,13 +175,13 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
   );
 }
 
-function InfoItem({ icon, label, value }) {
+function InfoItem({ icon, label, value, text_color = "text-gray-800" }) {
   return (
     <div className="flex items-start gap-3">
       <div className="text-teal-600 print:text-black mt-1">{icon}</div>
       <div>
         <p className="text-xs uppercase tracking-wide text-gray-500">{label}</p>
-        <p className="text-gray-800 font-medium">{value}</p>
+        <p className={`${text_color} font-medium`}>{value}</p>
       </div>
     </div>
   );

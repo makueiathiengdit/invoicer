@@ -28,3 +28,8 @@ def update_prpo(id: int, prpo: UpdatePRPOSchema):
 @router.get("/{id}")
 def get_invoice_by_id(id: int):
     return InvoiceService.get_invoice_by_id(id)
+
+
+@router.put("/{id}/complete")
+def mark_invoice_complete(id: int):
+    return InvoiceService.mark_invoice_complete(id)
