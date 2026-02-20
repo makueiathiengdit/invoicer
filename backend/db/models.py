@@ -120,6 +120,7 @@ class Invoice(Base, Timed):
             "procceessed_by": self.processed_by,
             "status": self.status,
             "updated_at": self.updated_at,
+            "created_at": self.created_at,
         }
 
 
