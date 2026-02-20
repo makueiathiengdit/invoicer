@@ -1,4 +1,5 @@
 "use client";
+import { getInvoiceStatusColor } from "@/app/utils/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -14,7 +15,9 @@ const InvoiceTableRow = ({ item = {} }) => {
         <td className="px-4 py-3">{item.invoice_id}</td>
         {/* <td className="px-4 py-3">{item.invoice_date}</td> */}
 
-        <td className="px-4 py-3">{item.description}</td>
+        <td className="px-4 py-3">
+          <span className="mr-1">{item.description}</span>
+        </td>
         <td className="px-4 py-3 text-gray-700 font-semibold">
           <span
             className={`${item.currency === "SSP" ? "text-teal-600" : "text-blue-600"} mr-1 `}
@@ -22,6 +25,12 @@ const InvoiceTableRow = ({ item = {} }) => {
             {item.currency}
           </span>
           <span>{parseFloat(item.amount).toFixed(2)}</span>
+        </td>
+
+        <td className="px-2 py-3 text-gray-700 font-semibold">
+          <span className={`${getInvoiceStatusColor(item.status)} text-xs`}>
+            {item.status || "Unknown"}
+          </span>
         </td>
         {/* <td className="px-4 py-3">{item?.company}</td> */}
         <td className="px-4 py-3 flex items-center justify-end">
