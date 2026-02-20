@@ -18,3 +18,8 @@ def get_user_by_id(id: int):
 @router.post("/")
 def create_user(user: UserSchema):
     return UserService.create_user(user)
+
+
+@router.put("/{id}/make-processor")
+def make_process(id: int):
+    return UserService.make_proccessor(id)

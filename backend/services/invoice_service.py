@@ -8,7 +8,8 @@ from db.models import Invoice, Attachment, User
 from utils.api_response import APIResponse
 from typing import Union
 from sqlalchemy.orm import joinedload
-from constants.constants import INVOICE_STATUS
+from constants.constants import INVOICE_STATUS, USER_ROLES
+
 
 import datetime
 
@@ -40,19 +41,28 @@ class InvoiceService:
                 if db_attachment:
                     db_invoice.attachment_id = db_attachment.id
 
-                # get assigned user
-                # assigned_user_id = cls.get_assigned_user_id(db)
-                # if assigned_user_id:
-                #     db_invoice.assigned_user_id = assigned_user_id
+                """
+                 assign invoice to proccessor
+                
+                """
 
-                users = db.query(User).all()
+                # get all proccessors
+                users = db.query(User).filter_by(role=USER_ROLES["PROCCESSOR"]).all()
 
-                db_invoice.assigned_user_id = users[0].id
-                db_invoice.assigned_user = users[0]
+                last_invoice = (
+                    db.query(Invoice).order_by(Invoice.created_at.desc()).first()
+                )
+
+                assigned_user = cls.get_assigned_user_id(
+                    last_invoice.assigned_user, users
+                )
+
+                db_invoice.assigned_user_id = assigned_user.id
+                db_invoice.assigned_user = assigned_user
 
                 db.add(db_invoice)
+                db.flush()
                 db.commit()
-                db.refresh(db_invoice)
 
                 return APIResponse(
                     success=True,
@@ -150,7 +160,9 @@ class InvoiceService:
             invoice = (
                 db.query(Invoice)
                 .filter_by(id=id)
-                .options(joinedload(Invoice.attachment))
+                .options(
+                    joinedload(Invoice.attachment), joinedload(Invoice.assigned_user)
+                )
                 .first()
             )
 
@@ -214,34 +226,15 @@ class InvoiceService:
                 return APIResponse(success=True, message="invoice marked completed")
 
     @staticmethod
-    def get_assigned_user_id(db) -> int:
+    def get_assigned_user_id(last_assigned_user: dict, users: list) -> int:
         """
         assign user to invoices in round-robin
-
         """
+        assigned_user = last_assigned_user
 
-        with db:
-
-            # fetch all users
-            db_users = db.query(User).all()[:2]
-
-            if db_users is None:
-                return None
-
-            elif len(db_users) == 1:
-                return db_users[0].id
-
-            else:
-
-                # do some round-robin stuff
-                id = 1
-
-                # get last invoice processor
-                last_inv = db.query(Invoice).order_by(Invoice.created_at.desc()).first()
-                if last_inv:
-                    id = None
-                    for user in db_users:
-                        if user["id"] == last_inv["id"]:
-                            continue
-                        id = user["id"]
-                return id
+        print("users ", users)
+        for user in users:
+            if last_assigned_user and user.id == last_assigned_user.id:
+                continue
+            assigned_user = user
+        return assigned_user

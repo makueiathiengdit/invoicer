@@ -4,3 +4,5 @@ INVOICE_STATUS = {
     "PROCESSED": "PROCESSED",  # has pr and po number but not received/submitted to finance
     "COMPLETED": "COMPLETED",  # received and submitted to finance
 }
+
+USER_ROLES = {"USER": "USER", "PROCCESSOR": "PROCCESSOR", "ADMIN": "ADMIN"}

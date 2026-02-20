@@ -2,6 +2,7 @@ from schemas.user_schema import UserSchema
 from db.core import get_session
 from db.models import User
 from utils.api_response import APIResponse
+from constants.constants import USER_ROLES
 
 
 class UserService:
@@ -55,3 +56,23 @@ class UserService:
                 response.message = "could not find users"
 
             return response
+
+    @classmethod
+    def make_proccessor(cls, id: int) -> APIResponse:
+        with get_session() as db:
+            db_user = db.query(User).filter_by(id=id).first()
+
+            if db_user is None:
+                return APIResponse(
+                    success=False, message="cannot find user with givven id"
+                )
+
+            else:
+                db_user.role = USER_ROLES["PROCCESSOR"]
+                db.add(db_user)
+                db.flush()
+                db.commit()
+
+                return APIResponse(
+                    success=True, message="user marked as invocie proccessor"
+                )
