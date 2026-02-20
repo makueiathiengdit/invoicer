@@ -9,6 +9,9 @@ class Timed:
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.now
     )
+    updated_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime, default=datetime.datetime.now, nullable=True
+    )
     deleted_at: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=True)
 
 
