@@ -30,6 +30,10 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
       currency: invoice.currency || "SSP",
     }).format(amount);
 
+  const assigned_user = invoice?.assigned_user
+    ? invoice.assigned_user.first_name + " " + invoice.assigned_user.last_name
+    : "Not assigned";
+
   return (
     <div className="min-h-screen print:bg-white print:p-0 p-6">
       <div className="flex  gap-3 justify-end mb-2 max-w-4xl mx-auto">
@@ -101,8 +105,8 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
             <InfoItem
               icon={<User size={18} />}
-              label="Processed By"
-              value={"Nyibol Deng"}
+              label="Assigned to"
+              value={assigned_user}
             />
             <InfoItem
               icon={<BadgeCheck size={18} />}

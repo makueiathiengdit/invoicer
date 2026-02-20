@@ -1,4 +1,3 @@
-import { Reem_Kufi } from "next/font/google";
 import React from "react";
 import ReceivedInvoiceList from "./received-invoice-list";
 
