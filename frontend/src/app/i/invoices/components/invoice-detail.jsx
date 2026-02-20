@@ -75,8 +75,8 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
             <InfoItem
               icon={<Calendar size={18} />}
-              label="Invoice Date"
-              value={invoice.invoice_date}
+              label="Date"
+              value={invoice.created_at.split("T")[0]}
             />
 
             <InfoItem
