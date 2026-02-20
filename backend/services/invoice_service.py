@@ -4,7 +4,7 @@ from schemas.invoice_schema import (
     UpdatePRPOSchema,
 )
 from db.core import get_session
-from db.models import Invoice, Attachment
+from db.models import Invoice, Attachment, User
 from utils.api_response import APIResponse
 from typing import Union
 from sqlalchemy.orm import joinedload
@@ -40,6 +40,16 @@ class InvoiceService:
                 if db_attachment:
                     db_invoice.attachment_id = db_attachment.id
 
+                # get assigned user
+                # assigned_user_id = cls.get_assigned_user_id(db)
+                # if assigned_user_id:
+                #     db_invoice.assigned_user_id = assigned_user_id
+
+                users = db.query(User).all()
+
+                db_invoice.assigned_user_id = users[0].id
+                db_invoice.assigned_user = users[0]
+
                 db.add(db_invoice)
                 db.commit()
                 db.refresh(db_invoice)
@@ -50,6 +60,8 @@ class InvoiceService:
                     data=[db_invoice],
                 )
             except Exception as e:
+
+                print("error", e)
                 db.rollback()
                 return APIResponse(
                     success=False,
@@ -202,5 +214,34 @@ class InvoiceService:
                 return APIResponse(success=True, message="invoice marked completed")
 
     @staticmethod
-    def get_assigned_user_id() -> int:
-        pass
+    def get_assigned_user_id(db) -> int:
+        """
+        assign user to invoices in round-robin
+
+        """
+
+        with db:
+
+            # fetch all users
+            db_users = db.query(User).all()[:2]
+
+            if db_users is None:
+                return None
+
+            elif len(db_users) == 1:
+                return db_users[0].id
+
+            else:
+
+                # do some round-robin stuff
+                id = 1
+
+                # get last invoice processor
+                last_inv = db.query(Invoice).order_by(Invoice.created_at.desc()).first()
+                if last_inv:
+                    id = None
+                    for user in db_users:
+                        if user["id"] == last_inv["id"]:
+                            continue
+                        id = user["id"]
+                return id
