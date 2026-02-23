@@ -127,3 +127,7 @@ export function getInvoiceStatusColor(status) {
 
   return color;
 }
+
+export async function delayRequest(time = 6000) {
+  await new Promise((resolve) => setTimeout(resolve, time));
+}

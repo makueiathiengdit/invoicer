@@ -9,10 +9,8 @@ const ReceivedInvoiceItem = ({ item = {} }) => {
           <span>PO : {item?.po_number || "N/A"}</span>
         </div>
         <div className="text-gray-600 flex gap-2 text-sm">
-          <span className="">
-            Submited: {new Date(item.created_at).toDateString()}
-          </span>{" "}
-          -<span>{item.description}</span>
+          <span className="">{new Date(item.created_at).toDateString()}</span> -
+          <span>{item.description}</span>
         </div>
       </div>
       <div className="flex gap-2 text-gray-700 ">
