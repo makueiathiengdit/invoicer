@@ -1,4 +1,5 @@
 import React from "react";
+import ReceivedInvoiceItem from "./received-invoice-item";
 
 const ReceivedInvoiceList = ({ data = [] }) => {
   return (
@@ -42,6 +43,15 @@ const ReceivedInvoiceList = ({ data = [] }) => {
       </div>
 
       {/* table */}
+      {data.length > 0 ? (
+        data.map((invoice, id) => (
+          <>
+            <ReceivedInvoiceItem item={invoice} />
+          </>
+        ))
+      ) : (
+        <p>No received invoices</p>
+      )}
     </div>
   );
 };
