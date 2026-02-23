@@ -252,3 +252,8 @@ class InvoiceService:
                 return APIResponse(
                     success=True, message="found inovice", data=[db_inv.to_dict()]
                 )
+
+    @classmethod
+    def get_received_invoices(cls)->APIResponse:
+        with get_session() as db:
+            receieved_invoices = db.query(Invoice).filter_by()

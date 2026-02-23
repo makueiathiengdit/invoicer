@@ -103,6 +103,8 @@ class Invoice(Base, Timed):
 
     status: Mapped[Optional[str]] = mapped_column(String(25), default="PENDING")
 
+    receipt_id: Mapped[Optional[str]] = mapped_column(nullable=True)
+
     def to_dict(self):
         return {
             "id": self.id,
