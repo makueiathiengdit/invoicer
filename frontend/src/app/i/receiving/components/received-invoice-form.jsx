@@ -59,8 +59,8 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
 
         {loading ? (
           <div className="flex gap-2">
-            <span className="loading loading-sm loading-spinner"></span>
-            <span>searching...</span>
+            <span className="loading loading-sm loading-spinner text-teal-600"></span>
+            <span className="text-teal-600">searching...</span>
           </div>
         ) : s_invoice ? (
           <>
