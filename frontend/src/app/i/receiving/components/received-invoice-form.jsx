@@ -15,10 +15,12 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
     setPoNumber(event.target.value);
   };
   const handleSearch = async (event) => {
+    setInvoice(null);
+
     try {
       setLoading(true);
 
-      await delayRequest();
+      await delayRequest(2000);
 
       let res = await fetch(`http://127.0.0.1:8000/invoices/po/${po_number}`);
 

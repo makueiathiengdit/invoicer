@@ -1,5 +1,4 @@
 import { INVOICE_STATUS } from "../constants/constants";
-import InvoiceDetail from "../i/invoices/components/invoice-detail";
 
 export function convertAmountToWords(num) {
   if (num === 0) return "zero";
