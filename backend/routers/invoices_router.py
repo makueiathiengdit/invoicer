@@ -15,6 +15,11 @@ def create_invoice(invoice: InvoiceDetailSchema):
     return InvoiceService.create_invoice(invoice)
 
 
+@router.get("/received")
+def get_received_invoices():
+    return InvoiceService.get_invoices()
+
+
 @router.put("/{id}")
 def update_invoice(id: int, invoice: InvoiceDetailSchema):
     return InvoiceService.update_invoice(id, invoice)
