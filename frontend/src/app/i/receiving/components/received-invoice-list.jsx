@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import ReceivedInvoiceItem from "./received-invoice-item";
+import ReceivedInvoiceForm from "./received-invoice-form";
 
 const ReceivedInvoiceList = ({ data = [] }) => {
   return (
@@ -36,7 +39,12 @@ const ReceivedInvoiceList = ({ data = [] }) => {
           </div>
         </form>
         <div>
-          <button className="btn btn-sm rounded bg-teal-600 text-white">
+          <button
+            className="btn btn-sm rounded bg-teal-600 text-white"
+            onClick={() => {
+              document.getElementById("received_invoice_modal").showModal();
+            }}
+          >
             Receive
           </button>
         </div>
@@ -45,13 +53,30 @@ const ReceivedInvoiceList = ({ data = [] }) => {
       {/* table */}
       {data.length > 0 ? (
         data.map((invoice, id) => (
-          <>
-            <ReceivedInvoiceItem item={invoice} />
-          </>
+          <ReceivedInvoiceItem item={invoice} key={id} />
         ))
       ) : (
         <p>No received invoices</p>
       )}
+
+      {/* received invoice modal */}
+
+      <dialog id="received_invoice_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="text-gray-600 font-semibold text-lg border-b border-gray-300">
+            Receive Invoice
+          </h3>
+          <button
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={() => {
+              document.getElementById("received_invoice_modal").close();
+            }}
+          >
+            ✕
+          </button>
+          <ReceivedInvoiceForm />
+        </div>
+      </dialog>
     </div>
   );
 };
