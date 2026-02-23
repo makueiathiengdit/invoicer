@@ -23,7 +23,7 @@ const InputFile = ({
           // value={value}
           onChange={onChange}
         />
-        <label className="text-gray-400 text-xs">Max size 2MB</label>
+        <label className="text-gray-400 text-xs">Max size 4MB</label>
       </fieldset>
     </>
   );
