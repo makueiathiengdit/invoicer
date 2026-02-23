@@ -79,7 +79,9 @@ class Invoice(Base, Timed):
     attachment_id: Mapped[Optional[int]] = mapped_column(ForeignKey("attachments.id"))
     attachment: Mapped[Optional["Attachment"]] = relationship(back_populates="invoice")
     vendor: Mapped[Optional[str]] = mapped_column(String(60), nullable=True)
-    po_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    po_number: Mapped[Optional[str]] = mapped_column(
+        String(20), nullable=True, index=True
+    )
     pr_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
 
     assigned_user_id: Mapped[Optional[int]] = mapped_column(
