@@ -56,7 +56,7 @@ const ReceivedInvoiceList = ({ data = [] }) => {
           <ReceivedInvoiceItem item={invoice} key={id} />
         ))
       ) : (
-        <div className="border border-teal-200 p-6 ">
+        <div className="border border-teal-600 p-6 mt-4 rounded">
           <p className="text-teal-800">No received invoices</p>
         </div>
       )}

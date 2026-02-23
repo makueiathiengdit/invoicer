@@ -77,7 +77,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
             <InfoItem
               icon={<Calendar size={18} />}
               label="Date"
-              value={invoice.created_at.split("T")[0]}
+              value={formatCurrentDate(new Date(invoice.created_at))}
             />
 
             <InfoItem
