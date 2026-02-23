@@ -1,11 +1,15 @@
 import React from "react";
 import ReceivedInvoiceList from "./received-invoice-list";
+import { delayRequest } from "@/app/utils/utils";
 
 const ReceivedInvoiceWrapper = async () => {
   let received_invoices = [];
 
   try {
     const url = "http://127.0.0.1:8000/invoices/received";
+
+    await delayRequest();
+
     let res = await fetch(url);
     res = await res.json();
 
@@ -15,9 +19,9 @@ const ReceivedInvoiceWrapper = async () => {
   } catch (error) {}
 
   return (
-    <div>
+    <>
       <ReceivedInvoiceList data={received_invoices} />
-    </div>
+    </>
   );
 };
 

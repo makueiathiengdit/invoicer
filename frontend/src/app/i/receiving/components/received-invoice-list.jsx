@@ -56,7 +56,9 @@ const ReceivedInvoiceList = ({ data = [] }) => {
           <ReceivedInvoiceItem item={invoice} key={id} />
         ))
       ) : (
-        <p>No received invoices</p>
+        <div className="border border-teal-200 p-6 ">
+          <p className="text-teal-800">No received invoices</p>
+        </div>
       )}
 
       {/* received invoice modal */}
