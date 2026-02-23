@@ -125,6 +125,7 @@ class Invoice(Base, Timed):
             "status": self.status,
             "updated_at": self.updated_at,
             "created_at": self.created_at,
+            "receipt_id": self.receipt_id,
         }
 
 

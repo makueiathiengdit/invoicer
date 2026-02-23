@@ -254,6 +254,17 @@ class InvoiceService:
                 )
 
     @classmethod
-    def get_received_invoices(cls)->APIResponse:
+    def get_received_invoices(cls) -> APIResponse:
         with get_session() as db:
-            receieved_invoices = db.query(Invoice).filter_by()
+            receieved_invoices = (
+                db.query(Invoice).where(Invoice.receipt_id.is_not(None)).all()
+            )
+
+            if receieved_invoices:
+                return APIResponse(
+                    success=True,
+                    message="found received invoices",
+                    data=receieved_invoices,
+                )
+            else:
+                return APIResponse(message="no received invoices found")
