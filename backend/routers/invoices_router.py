@@ -33,3 +33,8 @@ def get_invoice_by_id(id: int):
 @router.put("/{id}/complete")
 def mark_invoice_complete(id: int):
     return InvoiceService.mark_invoice_complete(id)
+
+
+@router.get("/po/{po_number}")
+def get_inovice_by_po_number(po_number):
+    return InvoiceService.get_invoice_by_po_number(po_number)

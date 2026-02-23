@@ -238,3 +238,17 @@ class InvoiceService:
                 continue
             assigned_user = user
         return assigned_user
+
+    @classmethod
+    def get_invoice_by_po_number(cls, po_number: str):
+        with get_session() as db:
+            db_inv = db.query(Invoice).filter_by(po_number=po_number).first()
+
+            if db_inv is None:
+                return APIResponse(
+                    success=False, message="could not find invoice with given PO number"
+                )
+            else:
+                return APIResponse(
+                    success=True, message="found inovice", data=[db_inv.to_dict()]
+                )
