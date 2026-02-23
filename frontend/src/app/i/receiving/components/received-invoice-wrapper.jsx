@@ -9,8 +9,6 @@ const ReceivedInvoiceWrapper = async () => {
     let res = await fetch(url);
     res = await res.json();
 
-    console.log("response ", res);
-
     if (res.success) {
       received_invoices = res.data;
     }
