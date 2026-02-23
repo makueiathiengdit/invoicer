@@ -16,6 +16,7 @@ export const sampleInvoice = {
   vendor: "NileTech Solutions Ltd",
   po_number: "PO-45892",
   pr_number: "PR-77451",
+  created_at: new Date(),
   attachment: {
     id: 23,
     file_name: "network_upgrade_invoice.pdf",
