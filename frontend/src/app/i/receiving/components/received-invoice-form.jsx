@@ -6,8 +6,10 @@ import ReceivedInvoiceItem from "./received-invoice-item";
 import { Search } from "lucide-react";
 import { delayRequest } from "@/app/utils/utils";
 import LoadingSpinner from "../../components/spinner/loading-spinner";
+import InputAmount from "../../components/inputs/input-amount";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
+  const [formData, setFormData] = useState({});
   const [s_invoice, setInvoice] = useState(null);
   const [po_number, setPoNumber] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,8 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
       setLoading(false);
     }
   };
+
+  const handleSubmit = async (event) => {};
 
   return (
     <div className="mt-4">
@@ -70,6 +74,41 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
           <p className="text-red-600">No invoice found</p>
         )}
       </div>
+
+      <br />
+      {/* recevied invoice form */}
+      {s_invoice && (
+        <div className="border border-gray-300 p-4 rounded">
+          <InputText
+            label="Invoice ID"
+            name={"invoice_id"}
+            placeholder={"e.g INV-2026-01"}
+          />
+          <br />
+
+          
+          <InputAmount
+            label={"Amount"}
+            name={"amount"}
+            placeholder={"e.g 1000"}
+          />
+          <br />
+          <InputText
+            label="Receipt ID"
+            name={"receipt_id"}
+            placeholder={"e.g 4759"}
+          />
+          <div className="flex justify-end gap-2 mt-4">
+            <button className="btn btn-sm rounded">Cancel</button>
+            <button
+              className="btn btn-sm rounded bg-teal-600 text-white"
+              onClick={handleSubmit}
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
