@@ -1,3 +1,6 @@
+
+
+
 class ReceivedInvoiceService:
     @classmethod
     def create_received_invoice(cls, invoice):

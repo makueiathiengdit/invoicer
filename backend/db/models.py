@@ -134,12 +134,16 @@ class ReceivedInvoice(Base, Timed):
     __tablename__ = "received_invoices"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     invoice_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
-    pr_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    # pr_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     po_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     receipt_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     received_by_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("users.id"), nullable=True
     )
+    original_invoice_id: Mapped[Optional["Invoice"]] = mapped_column(
+        ForeignKey("invoices.id")
+    )
+
     # received_by: Mapped[Optional["User"]] = relationship(
     #     "User", back_populates="received_invoices", foreign_keys=[received_by_id]
     # )
