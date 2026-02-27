@@ -35,3 +35,13 @@ class InvoiceDetailSchema(InvoiceBase):
 class UpdatePRPOSchema(BaseModel):
     pr_number: str | None = None
     po_number: str | None = None
+
+
+class ReceivedInvoiceSchema(BaseModel):
+    invoice_id: str
+    pr_number: str | None = None
+    po_number: str | None = None
+    receipt_id: str
+    received_by_id: int | None = None
+    original_invoice_id: int
+    amount: int

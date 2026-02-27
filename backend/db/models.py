@@ -137,12 +137,13 @@ class ReceivedInvoice(Base, Timed):
     pr_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     po_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     receipt_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    received_by_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("users.id"), nullable=True
-    )
-    original_invoice_id: Mapped[Optional["Invoice"]] = mapped_column(
-        ForeignKey("invoices.id")
-    )
+    amount: Mapped[Optional[int]] = mapped_column(Integer, default=0)
+    # received_by_id: Mapped[Optional[int]] = mapped_column(
+    #     ForeignKey("users.id"), nullable=True
+    # )
+    # original_invoice_id: Mapped[Optional["Invoice"]] = mapped_column(
+    #     ForeignKey("invoices.id")
+    # )
 
     # received_by: Mapped[Optional["User"]] = relationship(
     #     "User", back_populates="received_invoices", foreign_keys=[received_by_id]
