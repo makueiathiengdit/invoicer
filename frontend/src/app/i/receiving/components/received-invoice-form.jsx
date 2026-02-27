@@ -5,14 +5,13 @@ import InputText from "../../components/inputs/input-text";
 import ReceivedInvoiceItem from "./received-invoice-item";
 import { Search } from "lucide-react";
 import { delayRequest } from "@/app/utils/utils";
-import LoadingSpinner from "../../components/spinner/loading-spinner";
 import InputAmount from "../../components/inputs/input-amount";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [formData, setFormData] = useState({
     invoice_id: "",
-    pr_number: null,
-    po_number: null,
+    pr_number: "",
+    po_number: "",
     receipt_id: "",
     amount: 0,
   });
