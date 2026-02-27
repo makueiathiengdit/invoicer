@@ -9,7 +9,13 @@ import LoadingSpinner from "../../components/spinner/loading-spinner";
 import InputAmount from "../../components/inputs/input-amount";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    invoice_id: "",
+    pr_number: null,
+    po_number: null,
+    receipt_id: "",
+    amount: 0,
+  });
   const [s_invoice, setInvoice] = useState(null);
   const [po_number, setPoNumber] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -82,20 +88,22 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
           <InputText
             label="Invoice ID"
             name={"invoice_id"}
+            value={formData.invoice_id}
             placeholder={"e.g INV-2026-01"}
           />
           <br />
 
-          
           <InputAmount
             label={"Amount"}
             name={"amount"}
+            value={formData.amount}
             placeholder={"e.g 1000"}
           />
           <br />
           <InputText
             label="Receipt ID"
             name={"receipt_id"}
+            value={formData.receipt_id}
             placeholder={"e.g 4759"}
           />
           <div className="flex justify-end gap-2 mt-4">
