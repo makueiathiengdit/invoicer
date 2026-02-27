@@ -19,8 +19,13 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [s_invoice, setInvoice] = useState(null);
   const [po_number, setPoNumber] = useState(null);
   const [loading, setLoading] = useState(false);
-  const handleInputChange = (event) => {
+
+  const handleSearchInputChange = (event) => {
     setPoNumber(event.target.value);
+  };
+
+  const handleInputChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleSearch = async (event) => {
     setInvoice(null);
@@ -53,7 +58,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
           name={"po_number"}
           value={po_number}
           placeholder={"e.g 2026798"}
-          onChange={handleInputChange}
+          onChange={handleSearchInputChange}
         />
         <button
           className="btn btn-sm bg-teal-600 text-white rounded mt-8"
@@ -90,6 +95,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
             name={"invoice_id"}
             value={formData.invoice_id}
             placeholder={"e.g INV-2026-01"}
+            onChange={handleInputChange}
           />
           <br />
 
@@ -98,6 +104,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
             name={"amount"}
             value={formData.amount}
             placeholder={"e.g 1000"}
+            onChange={handleInputChange}
           />
           <br />
           <InputText
@@ -105,6 +112,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
             name={"receipt_id"}
             value={formData.receipt_id}
             placeholder={"e.g 4759"}
+            onChange={handleInputChange}
           />
           <div className="flex justify-end gap-2 mt-4">
             <button className="btn btn-sm rounded">Cancel</button>
