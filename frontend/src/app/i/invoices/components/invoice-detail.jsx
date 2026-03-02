@@ -150,6 +150,16 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               </div>
             </div>
           )}
+
+          <div>
+            {/* progress timeline from date invoice was created to date ivoice pr was created to po to receiving date to date it is finally completed */}
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-3">
+              Progress timeline
+            </h3>
+            <div className="border border-gray-200 rounded-xl p-5 leading-relaxed text-gray-700 h-18">
+              {/* {invoice.description || "No description provided."} */}
+            </div>
+          </div>
         </div>
       </div>
 
