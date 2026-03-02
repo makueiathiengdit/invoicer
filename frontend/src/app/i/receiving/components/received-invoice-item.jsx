@@ -6,7 +6,7 @@ const ReceivedInvoiceItem = ({ item = {} }) => {
     <div className="flex justify-between gap-2 border border-gray-300 rounded p-4 mt-1 hover:bg-teal-300 hover:cursor-pointer">
       <div>
         <div className="flex gap-2 text-sm text-gray-700 font-semibold">
-          <span>PR : {item?.pr_number || "N/A"}</span> |
+          {/* <span>PR : {item?.pr_number || "N/A"}</span> | */}
           <span>PO : {item?.po_number || "N/A"}</span>
         </div>
         <div className="text-gray-600 flex gap-2 text-sm">

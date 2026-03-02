@@ -138,6 +138,7 @@ class ReceivedInvoice(Base, Timed):
     po_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     receipt_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     amount: Mapped[Optional[int]] = mapped_column(Integer, default=0)
+    description: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     # received_by_id: Mapped[Optional[int]] = mapped_column(
     #     ForeignKey("users.id"), nullable=True
     # )
@@ -156,6 +157,7 @@ class ReceivedInvoice(Base, Timed):
             "pr_number": self.pr_number,
             "po_number": self.po_number,
             "receipt_id": self.receipt_id,
+            "description": self.description,
             # "received_by": self.received_by,
             "updated_at": self.updated_at,
         }
