@@ -156,6 +156,6 @@ class ReceivedInvoice(Base, Timed):
             "pr_number": self.pr_number,
             "po_number": self.po_number,
             "receipt_id": self.receipt_id,
-            "received_by": self.received_by,
+            # "received_by": self.received_by,
             "updated_at": self.updated_at,
         }
