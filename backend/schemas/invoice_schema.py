@@ -45,3 +45,4 @@ class ReceivedInvoiceSchema(BaseModel):
     # received_by_id: int | None = None
     # original_invoice_id: int
     amount: int = 0
+    description: str | None = None

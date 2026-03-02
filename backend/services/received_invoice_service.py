@@ -19,7 +19,11 @@ class ReceivedInvoiceService:
     @classmethod
     def get_received_invoices(cls):
         with get_session() as db:
-            r_invoices = db.query(ReceivedInvoice).all()
+            r_invoices = (
+                db.query(ReceivedInvoice)
+                .order_by(ReceivedInvoice.created_at.desc())
+                .all()
+            )
 
             return APIResponse(
                 success=True, message="found received invoices", data=r_invoices
