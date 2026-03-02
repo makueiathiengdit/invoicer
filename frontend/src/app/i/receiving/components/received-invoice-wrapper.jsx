@@ -6,7 +6,7 @@ const ReceivedInvoiceWrapper = async () => {
   let received_invoices = [];
 
   try {
-    const url = "http://127.0.0.1:8000/invoices/received";
+    const url = "http://127.0.0.1:8000/received/invoices";
 
     await delayRequest(1200);
 

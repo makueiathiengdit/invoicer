@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputText from "../../components/inputs/input-text";
 import ReceivedInvoiceItem from "./received-invoice-item";
 import { Search } from "lucide-react";
 import { delayRequest } from "@/app/utils/utils";
 import InputAmount from "../../components/inputs/input-amount";
+import { useRouter } from "next/navigation";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [formData, setFormData] = useState({
     invoice_id: "",
-    pr_number: "",
     po_number: "",
     receipt_id: "",
     amount: 0,
@@ -18,6 +18,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [s_invoice, setInvoice] = useState(null);
   const [po_number, setPoNumber] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSearchInputChange = (event) => {
     setPoNumber(event.target.value);
@@ -51,13 +52,49 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
     event.preventDefault();
 
     try {
-      const url = "http://127.0.0.1:8000/";
+      setLoading(true);
+
+      const payload = {
+        ...formData,
+        amount: parseInt(formData.amount),
+      };
+
+      console.log("payload", payload);
+
+      const url = "http://127.0.0.1:8000/received/invoices/";
       let res = await fetch(url, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
-    } catch (error) {}
+
+      console.log("response", res);
+
+      res = await res.json();
+
+      if (res.success) {
+        console.log("success");
+
+        router.push("/i/receiving/");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (s_invoice) {
+      setFormData({
+        ...formData,
+
+        ["po_number"]: po_number,
+      });
+    }
+  }, [s_invoice]);
 
   return (
     <div className="mt-4">
@@ -129,7 +166,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
               className="btn btn-sm rounded bg-teal-600 text-white"
               onClick={handleSubmit}
             >
-              Create
+              {loading ? <span>Creating...</span> : <span>Create</span>}
             </button>
           </div>
         </div>
