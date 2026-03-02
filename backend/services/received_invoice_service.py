@@ -11,7 +11,6 @@ class ReceivedInvoiceService:
             received_invoice = ReceivedInvoice(**invoice.dict())
             db.add(received_invoice)
             db.commit()
-            db.close()
 
             return APIResponse(
                 success=True, message="received invoice recorded successfully"

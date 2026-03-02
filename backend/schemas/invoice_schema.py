@@ -44,4 +44,4 @@ class ReceivedInvoiceSchema(BaseModel):
     receipt_id: str
     # received_by_id: int | None = None
     # original_invoice_id: int
-    amount: int
+    amount: int = 0
