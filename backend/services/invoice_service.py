@@ -191,11 +191,13 @@ class InvoiceService:
             else:
                 if hasattr(prpo, "pr_number") and prpo.pr_number:
                     db_inv.pr_number = prpo.pr_number
+                    db_inv.pr_date = datetime.datetime.now()
 
                     # make invoice as partially proccessed
                     db_inv.status = INVOICE_STATUS["PARTIAL"]
                 if hasattr(prpo, "po_number") and prpo.po_number:
                     db_inv.po_number = prpo.po_number
+                    db_inv.po_date = datetime.datetime.now()
 
                     # make invoice processed
                     db_inv.status = INVOICE_STATUS["PROCESSED"]
