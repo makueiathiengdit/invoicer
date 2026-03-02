@@ -128,6 +128,8 @@ class Invoice(Base, Timed):
             "updated_at": self.updated_at,
             "created_at": self.created_at,
             "receipt_id": self.receipt_id,
+            "pr_date": self.pr_date,
+            "po_date": self.po_date,
         }
 
 
