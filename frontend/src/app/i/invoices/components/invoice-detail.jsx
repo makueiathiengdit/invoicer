@@ -98,12 +98,6 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               value={invoice.po_number || "—"}
             />
 
-            {/* <InfoItem
-              icon={<Calendar size={18} />}
-              label="Processed At"
-              value={invoice.processed_at ? formatCurrentDate() : "Pending"}
-            /> */}
-
             <InfoItem
               icon={<User size={18} />}
               label="Assigned to"
