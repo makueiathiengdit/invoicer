@@ -3,6 +3,7 @@
 import React from "react";
 import ReceivedInvoiceItem from "./received-invoice-item";
 import ReceivedInvoiceForm from "./received-invoice-form";
+import Link from "next/link";
 
 const ReceivedInvoiceList = ({ data = [] }) => {
   return (
@@ -39,14 +40,12 @@ const ReceivedInvoiceList = ({ data = [] }) => {
           </div>
         </form>
         <div>
-          <button
+          <Link
+            href={"/i/receiving/create"}
             className="btn btn-sm rounded bg-teal-600 text-white"
-            onClick={() => {
-              document.getElementById("received_invoice_modal").showModal();
-            }}
           >
             Receive
-          </button>
+          </Link>
         </div>
       </div>
 

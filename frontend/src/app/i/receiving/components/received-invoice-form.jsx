@@ -92,6 +92,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
         ...formData,
 
         ["po_number"]: po_number,
+        ["description"]: s_invoice?.description,
       });
     }
   }, [s_invoice]);
