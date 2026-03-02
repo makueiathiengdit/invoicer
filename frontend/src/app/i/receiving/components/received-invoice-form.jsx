@@ -47,7 +47,17 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
     }
   };
 
-  const handleSubmit = async (event) => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const url = "http://127.0.0.1:8000/";
+      let res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {}
+  };
 
   return (
     <div className="mt-4">
