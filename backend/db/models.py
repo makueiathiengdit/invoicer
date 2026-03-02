@@ -83,6 +83,8 @@ class Invoice(Base, Timed):
         String(20), nullable=True, index=True
     )
     pr_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    pr_date: Mapped[Optional[datetime.datetime]] = mapped_column(nullable=True)
+    po_date: Mapped[Optional[datetime.datetime]] = mapped_column(nullable=True)
 
     assigned_user_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("users.id"), nullable=True
