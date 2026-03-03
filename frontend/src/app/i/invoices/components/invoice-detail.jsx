@@ -39,8 +39,8 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
   // timeline
   const timeline = {
     created_at: invoice.created_at,
-    pr_date: invoice.pr_date || new Date(),
-    po_date: invoice.po_date || new Date(),
+    pr_date: invoice.pr_date,
+    po_date: invoice.po_date,
     received_date: "",
     completed_at: "",
   };

@@ -131,7 +131,7 @@ const InvoiceTimeline = ({
                       </span>
                     )}
 
-                    <p className="mt-2 text-xs text-slate-500 leading-relaxed max-w-[240px]">
+                    <p className="mt-2 text-xs text-slate-500 leading-relaxed max-w-60">
                       {step.description}
                     </p>
                   </div>
