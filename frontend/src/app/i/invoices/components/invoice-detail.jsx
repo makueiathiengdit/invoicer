@@ -45,6 +45,33 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     completed_at: "",
   };
 
+  const received_invoices = [
+    {
+      invoice_id: "in-203",
+      po_number: "23988748123",
+      receipt_id: "214132",
+      amount: "134134",
+      description: "Supply of air conditioners",
+      created_at: new Date(),
+    },
+    {
+      invoice_id: "in-203",
+      po_number: "23988748123",
+      receipt_id: "214132",
+      amount: "134134",
+      description: "Supply of air conditioners",
+      created_at: new Date(),
+    },
+    {
+      invoice_id: "in-203",
+      po_number: "23988748123",
+      receipt_id: "214132",
+      amount: "134134",
+      description: "Supply of air conditioners",
+      created_at: new Date(),
+    },
+  ];
+
   return (
     <div className="min-h-screen print:bg-white print:p-0 p-6">
       <div className="flex  gap-3 justify-end mb-2 max-w-4xl mx-auto">
@@ -161,13 +188,20 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
                 </div>
               </div>
             )}
+
+            {/* received invoices */}
+            <ul className="list  rounded-box ">
+              <li className="p-4 pb-2 text-xs text-gray-500 tracking-wide">
+                Received invoices
+              </li>
+              {received_invoices.map((item, id) => (
+                <ReceivedItem item={item} key={id} />
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* timeline */}
         <div>
-          {/* progress timeline from date invoice was created to date ivoice pr was created to po to receiving date to date it is finally completed */}
-
           <InvoiceTimeline timeline={timeline} />
         </div>
       </div>
@@ -202,5 +236,25 @@ function InfoItem({ icon, label, value, text_color = "text-gray-800" }) {
         <p className={`${text_color} font-medium`}>{value}</p>
       </div>
     </div>
+  );
+}
+
+function ReceivedItem({ item = {} }) {
+  return (
+    <li className="list-row">
+      <div>
+        <div className="text-gray-700 font-semibold">
+          {" "}
+          {new Date(item.created_at).toDateString()}
+          {" . "}
+          {item.invoice_id}
+        </div>
+        <div className="text-xs  text-gray-600">{item.description}</div>
+      </div>
+
+      <div className="flex justify-end">
+        <span className="text-gray-600 font-bold">{item.amount}</span>
+      </div>
+    </li>
   );
 }

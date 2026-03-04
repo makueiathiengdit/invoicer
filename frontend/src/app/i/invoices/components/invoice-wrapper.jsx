@@ -16,9 +16,9 @@ const InvoiceWrapper = async () => {
   } catch (error) {}
 
   return (
-    <div>
+    <>
       <InvoiceTable data={invoices} />
-    </div>
+    </>
   );
 };
 
