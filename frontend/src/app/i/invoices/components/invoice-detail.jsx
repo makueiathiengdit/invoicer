@@ -9,6 +9,7 @@ import { Calendar, User, Hash, Paperclip, BadgeCheck } from "lucide-react";
 import UpdatePRPOForm from "./update-prpo-form";
 import InvoiceTimeline from "./invoice-timeline";
 import { useEffect, useState } from "react";
+import { BASE_API_URL } from "@/app/constants/constants";
 
 export const sampleInvoice = {
   id: 1,
@@ -55,8 +56,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
   useEffect(() => {
     const getReceivedInvoices = async () => {
       try {
-        const url =
-          "http://127.0.0.1:8000/received/invoices/po/" + invoice.po_number;
+        const url = BASE_API_URL + "/received/invoices/po/" + invoice.po_number;
         let res = await fetch(url);
         res = await res.json();
 

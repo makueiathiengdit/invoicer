@@ -36,7 +36,8 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
 
       await delayRequest(2000);
 
-      let res = await fetch(`http://127.0.0.1:8000/invoices/po/${po_number}`);
+      const url = BASE_API_URL + `/invoices/po/${po_number}`;
+      let res = await fetch(url);
 
       res = await res.json();
 
