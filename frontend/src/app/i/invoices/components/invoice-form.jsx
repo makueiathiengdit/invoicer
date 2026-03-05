@@ -19,6 +19,7 @@ const InvoiceForm = () => {
     attachment: null,
   });
   const [loading, setLoading] = useState(false);
+  const [fileError, setFileError] = useState("");
 
   const router = useRouter();
 
@@ -35,7 +36,9 @@ const InvoiceForm = () => {
 
     // max file size: 10MB
     if (file.size > 10 * 1024 * 1024) {
-      console.error("File is too large. Please select a file under 5MB.");
+      setFileError("File is too large. Please select a file under 10MB.");
+      console.error("File is too large. Please select a file under 10MB.");
+
       event.target.value = null;
       return;
     }
@@ -160,6 +163,7 @@ const InvoiceForm = () => {
         name={"attachment"}
         value={formData.attachment?.name}
         onChange={handleFileInputChange}
+        error_message={fileError}
       />
 
       <div className="flex justify-end mt-4 gap-2 ">
