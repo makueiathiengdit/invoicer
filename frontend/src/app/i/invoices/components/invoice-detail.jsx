@@ -50,7 +50,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
       invoice_id: "in-203",
       po_number: "23988748123",
       receipt_id: "214132",
-      amount: "134134",
+      amount: 10000,
       description: "Supply of air conditioners",
       created_at: new Date(),
     },
@@ -58,7 +58,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
       invoice_id: "in-203",
       po_number: "23988748123",
       receipt_id: "214132",
-      amount: "134134",
+      amount: 10000,
       description: "Supply of air conditioners",
       created_at: new Date(),
     },
@@ -66,7 +66,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
       invoice_id: "in-203",
       po_number: "23988748123",
       receipt_id: "214132",
-      amount: "134134",
+      amount: 10000,
       description: "Supply of air conditioners",
       created_at: new Date(),
     },
@@ -95,7 +95,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
           <div className="bg-teal-600 text-white print:bg-white print:text-black p-6  print:border-gray-300">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-3xl font-bold tracking-tight">INVOICE</h1>
+                <h1 className="text-3xl font-bold tracking-tight">RFQ</h1>
                 <p className="bg-amber-50 text-gray-700 px-1 font-mono text-sm mt-1 opacity-90 print:opacity-100">
                   Invoice ID: {invoice.invoice_id || "N/A"}
                 </p>
@@ -243,7 +243,7 @@ function ReceivedItem({ item = {} }) {
   return (
     <li className="list-row">
       <div>
-        <div className="text-gray-700 font-semibold">
+        <div className="text-gray-700 text-xs font-semibold">
           {" "}
           {new Date(item.created_at).toDateString()}
           {" . "}
