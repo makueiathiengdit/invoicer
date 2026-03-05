@@ -43,8 +43,8 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     created_at: invoice.created_at,
     pr_date: invoice.pr_date,
     po_date: invoice.po_date,
-    received_date: "",
-    completed_at: "",
+    received_date: invoice?.completed_date,
+    completed_at: invoice?.completed_date,
   };
 
   // auto fetch received invoices
