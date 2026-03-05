@@ -1,4 +1,4 @@
-import { formatCurrentDate } from "@/app/utils/utils";
+import { formatCurrency, formatCurrentDate } from "@/app/utils/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -22,7 +22,7 @@ const ReceivedInvoiceItem = ({ item = {} }) => {
         </div>
         <div className="flex gap-2 text-gray-700 ">
           <span>{item.currency}</span>
-          <span className="font-semibold">{item.amount}</span>
+          <span className="font-semibold">{formatCurrency(item.amount)}</span>
         </div>
       </div>
     </Link>

@@ -1,6 +1,10 @@
 "use client";
 
-import { formatCurrentDate, getInvoiceStatusColor } from "@/app/utils/utils";
+import {
+  formatCurrency,
+  formatCurrentDate,
+  getInvoiceStatusColor,
+} from "@/app/utils/utils";
 import { Calendar, User, Hash, Paperclip, BadgeCheck } from "lucide-react";
 import UpdatePRPOForm from "./update-prpo-form";
 import InvoiceTimeline from "./invoice-timeline";
@@ -252,8 +256,8 @@ function ReceivedItem({ item = {} }) {
       </div>
 
       <div className="flex justify-end gap-2 text-gray-600 font-bold">
-        <span>{item?.currency}</span>
-        <span>{item.amount}</span>
+        {/* <span>{item?.currency}</span> */}
+        <span>{formatCurrency(item.amount, item?.currency || "SSP")}</span>
       </div>
     </li>
   );

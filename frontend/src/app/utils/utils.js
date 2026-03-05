@@ -130,3 +130,10 @@ export function getInvoiceStatusColor(status) {
 export async function delayRequest(time = 6000) {
   await new Promise((resolve) => setTimeout(resolve, time));
 }
+
+export function formatCurrency(amount, currency = "SSP") {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+  }).format(amount);
+}
