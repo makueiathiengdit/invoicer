@@ -57,6 +57,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
       const payload = {
         ...formData,
         amount: parseInt(formData.amount),
+        currency: s_invoice?.currency,
       };
 
       const url = "http://127.0.0.1:8000/received/invoices/";
