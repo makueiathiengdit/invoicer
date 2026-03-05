@@ -6,6 +6,8 @@ import InputFile from "../../components/inputs/input-file";
 import InputSelectBox from "../../components/inputs/input-select-box";
 import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "@/app/constants/constants";
+import { InvoiceFormSchema } from "@/app/schema/form-schema";
+import { convertZodErrorsToJSON } from "@/app/utils/utils";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +22,15 @@ const InvoiceForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const [fileError, setFileError] = useState("");
+  const [formErrors, setFormErrors] = useState({
+    invoice_id: "",
+    invoice_date: "",
+    description: "",
+    amount: "",
+    currency: "SSP",
+    balance: "",
+    vendor: "",
+  });
 
   const router = useRouter();
 
@@ -68,6 +79,16 @@ const InvoiceForm = () => {
   // post data to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validated_data = InvoiceFormSchema.safeParse(formData);
+
+    if (!validated_data.success) {
+      const errors = convertZodErrorsToJSON(validated_data.error.issues);
+
+      setFormErrors(errors);
+      return;
+    }
+
     setLoading(true);
 
     const payload = {
@@ -120,6 +141,7 @@ const InvoiceForm = () => {
         value={formData.vendor}
         placeholder={"vendor name"}
         onChange={handleInputChange}
+        error_message={formErrors.vendor}
       />
       <br />
 
@@ -129,6 +151,7 @@ const InvoiceForm = () => {
         value={formData.invoice_id}
         placeholder={"invoice id e.g INV-2026-001"}
         onChange={handleInputChange}
+        error_message={formErrors.invoice_id}
       />
       <br />
       <InputText
@@ -137,6 +160,7 @@ const InvoiceForm = () => {
         value={formData.description}
         placeholder={"e.g purchase of spare parts"}
         onChange={handleInputChange}
+        error_message={formErrors.description}
       />
       <br />
 
@@ -146,12 +170,14 @@ const InvoiceForm = () => {
         value={formData.amount}
         placeholder={"e.g 10000"}
         onChange={handleInputChange}
+        error_message={formErrors.amount}
       />
       <InputSelectBox
         label="Currency"
         name="currency"
         value={formData.currency}
         onChange={handleInputChange}
+        error_message={formErrors.currency}
       >
         <option>SSP</option>
         <option>USD</option>

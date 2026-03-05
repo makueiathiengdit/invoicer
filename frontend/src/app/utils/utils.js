@@ -138,5 +138,11 @@ export function formatCurrency(amount, currency = "SSP") {
   }).format(amount);
 }
 
+export function convertZodErrorsToJSON(errors) {
+  let err_obj = {};
+  errors.map((issue) => {
+    err_obj[issue.path[0]] = issue.message;
+  });
 
-
+  return err_obj;
+}
