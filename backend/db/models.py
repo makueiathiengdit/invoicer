@@ -75,6 +75,7 @@ class Invoice(Base, Timed):
     description: Mapped[Optional[str]] = mapped_column(String(255))
     amount: Mapped[float] = mapped_column(Float(precision=2), default=0.0)
     currency: Mapped[Optional[str]] = mapped_column(String(5), default="SSP")
+    balance: Mapped[Optional[float]] = mapped_column(nullable=True, default=0.0)
     processed_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
     attachment_id: Mapped[Optional[int]] = mapped_column(ForeignKey("attachments.id"))
     attachment: Mapped[Optional["Attachment"]] = relationship(back_populates="invoice")
@@ -115,6 +116,7 @@ class Invoice(Base, Timed):
             "description": self.description,
             "amount": self.amount,
             "currency": self.currency,
+            "balance": self.balance,
             "attachment_id": self.attachment_id,
             "vendor": self.vendor,
             "processed_at": self.processed_at,
