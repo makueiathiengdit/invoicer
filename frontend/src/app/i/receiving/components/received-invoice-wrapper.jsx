@@ -8,7 +8,7 @@ const ReceivedInvoiceWrapper = async () => {
   try {
     const url = "http://127.0.0.1:8000/received/invoices";
 
-    await delayRequest(1200);
+    await delayRequest(100);
 
     let res = await fetch(url);
     res = await res.json();

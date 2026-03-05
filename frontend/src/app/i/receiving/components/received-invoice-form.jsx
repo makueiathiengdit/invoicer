@@ -59,8 +59,6 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
         amount: parseInt(formData.amount),
       };
 
-      console.log("payload", payload);
-
       const url = "http://127.0.0.1:8000/received/invoices/";
       let res = await fetch(url, {
         method: "POST",
@@ -69,8 +67,6 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
         },
         body: JSON.stringify(formData),
       });
-
-      console.log("response", res);
 
       res = await res.json();
 
