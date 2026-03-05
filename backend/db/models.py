@@ -145,6 +145,9 @@ class ReceivedInvoice(Base, Timed):
     po_number: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     receipt_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     amount: Mapped[Optional[int]] = mapped_column(Integer, default=0)
+    currency: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True, default="SSP"
+    )
     description: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     # received_by_id: Mapped[Optional[int]] = mapped_column(
     #     ForeignKey("users.id"), nullable=True
