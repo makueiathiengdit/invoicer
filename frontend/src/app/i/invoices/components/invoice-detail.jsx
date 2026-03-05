@@ -251,8 +251,9 @@ function ReceivedItem({ item = {} }) {
         <div className="text-xs  text-gray-600">{item.description}</div>
       </div>
 
-      <div className="flex justify-end">
-        <span className="text-gray-600 font-bold">{item.amount}</span>
+      <div className="flex justify-end gap-2 text-gray-600 font-bold">
+        <span>{item?.currency}</span>
+        <span>{item.amount}</span>
       </div>
     </li>
   );
