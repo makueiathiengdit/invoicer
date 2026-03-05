@@ -13,6 +13,7 @@ const InvoiceForm = () => {
     description: "",
     amount: 0,
     currency: "SSP",
+    balance: 0,
     vendor: "",
     attachment: null,
   });
@@ -68,6 +69,7 @@ const InvoiceForm = () => {
     const payload = {
       ...formData,
       amount: parseFloat(formData.amount),
+      balance: parseFloat(formData.amount),
     };
 
     try {
