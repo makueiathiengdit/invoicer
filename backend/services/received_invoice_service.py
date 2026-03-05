@@ -1,5 +1,5 @@
 from db.core import get_session
-from db.models import ReceivedInvoice
+from db.models import ReceivedInvoice, Invoice
 from schemas.invoice_schema import ReceivedInvoiceSchema
 from utils.api_response import APIResponse
 
@@ -8,8 +8,17 @@ class ReceivedInvoiceService:
     @classmethod
     def create_received_invoice(cls, invoice: ReceivedInvoiceSchema):
         with get_session() as db:
+
+            original_invoice = (
+                db.query(Invoice).filter_by(po_number=invoice.po_number).first()
+            )
+
             received_invoice = ReceivedInvoice(**invoice.dict())
             db.add(received_invoice)
+
+            original_invoice.balance -= invoice.amount
+
+            db.add(original_invoice)
             db.commit()
 
             return APIResponse(

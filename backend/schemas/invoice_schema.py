@@ -12,6 +12,7 @@ class InvoiceBase(BaseModel):
     description: Optional[str] = Field(None, max_length=255)
     amount: float = Field(default=0.0, ge=0)
     currency: str = "SSP"
+    balance: Optional[float] = Field(default=0.0)
     invoice_date: date
     processed_at: Optional[datetime] = None
     vendor: Optional[str] = Field(None, max_length=60)
