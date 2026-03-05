@@ -149,7 +149,7 @@ const InvoiceForm = () => {
         label="Invoice ID"
         name={"invoice_id"}
         value={formData.invoice_id}
-        placeholder={"invoice id e.g INV-2026-001"}
+        placeholder={"e.g INV-2026-001"}
         onChange={handleInputChange}
         error_message={formErrors.invoice_id}
       />
