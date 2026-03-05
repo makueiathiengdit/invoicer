@@ -244,7 +244,6 @@ function ReceivedItem({ item = {} }) {
     <li className="list-row">
       <div>
         <div className="text-gray-700 text-xs font-semibold">
-          {" "}
           {new Date(item.created_at).toDateString()}
           {" . "}
           {item.invoice_id}
