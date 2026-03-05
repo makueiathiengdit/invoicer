@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from typing import Union
 
+from starlette.middleware.cors import CORSMiddleware
 
 from db.core import Base, db_engine
 from routers.user_router import router as user_router
@@ -19,13 +20,10 @@ class EntityException(Exception):
         self.exception = exception
 
 
-from starlette.middleware.cors import CORSMiddleware
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        print("Creating db tables...")
+        print("App starting...")
         Base.metadata.create_all(bind=db_engine)
         yield
         print("App is shuting down...")
@@ -33,11 +31,11 @@ async def lifespan(app: FastAPI):
         pass
 
 
-app = FastAPI(title="Invoice Recorder", lifespan=lifespan)
+app: FastAPI = FastAPI(title="Invoice Recorder", lifespan=lifespan)
 
 
 # CORS middleware
-allowed_origins = ["*"]
+allowed_origins: list[str] = ["*"]
 
 app.add_middleware(
     CORSMiddleware,

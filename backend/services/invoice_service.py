@@ -233,7 +233,6 @@ class InvoiceService:
         assign user to invoices in round-robin
         """
         assigned_user = last_assigned_user
-
         for user in users:
             if last_assigned_user and user.id == last_assigned_user.id:
                 continue
