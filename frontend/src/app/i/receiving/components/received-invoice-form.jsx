@@ -71,8 +71,6 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
       res = await res.json();
 
       if (res.success) {
-        console.log("success");
-
         router.push("/i/receiving/");
       }
     } catch (error) {
