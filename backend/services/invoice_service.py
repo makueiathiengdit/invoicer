@@ -234,7 +234,6 @@ class InvoiceService:
         """
         assigned_user = last_assigned_user
 
-        print("users ", users)
         for user in users:
             if last_assigned_user and user.id == last_assigned_user.id:
                 continue
