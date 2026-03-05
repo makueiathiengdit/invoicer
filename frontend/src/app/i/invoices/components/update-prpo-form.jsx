@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputText from "../../components/inputs/input-text";
 import { useRouter } from "next/navigation";
+import { BASE_API_URL } from "@/app/constants/constants";
 const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const [selected, setSelected] = useState("");
 
@@ -31,7 +32,7 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const base_url = "http://127.0.0.1:8000/invoices/" + invoice.id + "/prpo";
+    const base_url = BASE_API_URL + "/invoices/" + invoice.id + "/prpo";
 
     try {
       let res = await fetch(base_url, {
