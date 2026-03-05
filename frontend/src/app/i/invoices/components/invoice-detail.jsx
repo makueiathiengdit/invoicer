@@ -4,6 +4,7 @@ import { formatCurrentDate, getInvoiceStatusColor } from "@/app/utils/utils";
 import { Calendar, User, Hash, Paperclip, BadgeCheck } from "lucide-react";
 import UpdatePRPOForm from "./update-prpo-form";
 import InvoiceTimeline from "./invoice-timeline";
+import { useEffect, useState } from "react";
 
 export const sampleInvoice = {
   id: 1,
@@ -31,6 +32,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
       style: "currency",
       currency: invoice.currency || "SSP",
     }).format(amount);
+  const [receivedInvoices, setReceivedInvoices] = useState([]);
 
   const assigned_user = invoice?.assigned_user
     ? invoice.assigned_user.first_name + " " + invoice.assigned_user.last_name
@@ -45,32 +47,25 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     completed_at: "",
   };
 
-  const received_invoices = [
-    {
-      invoice_id: "in-203",
-      po_number: "23988748123",
-      receipt_id: "214132",
-      amount: 10000,
-      description: "Supply of air conditioners",
-      created_at: new Date(),
-    },
-    {
-      invoice_id: "in-203",
-      po_number: "23988748123",
-      receipt_id: "214132",
-      amount: 10000,
-      description: "Supply of air conditioners",
-      created_at: new Date(),
-    },
-    {
-      invoice_id: "in-203",
-      po_number: "23988748123",
-      receipt_id: "214132",
-      amount: 10000,
-      description: "Supply of air conditioners",
-      created_at: new Date(),
-    },
-  ];
+  // auto fetch received invoices
+  useEffect(() => {
+    const getReceivedInvoices = async () => {
+      try {
+        const url =
+          "http://127.0.0.1:8000/received/invoices/po/" + invoice.po_number;
+        let res = await fetch(url);
+        res = await res.json();
+
+        console.log("response", res);
+
+        if (res.success) {
+          setReceivedInvoices(res.data);
+        }
+      } catch (error) {}
+    };
+
+    getReceivedInvoices();
+  }, []);
 
   return (
     <div className="min-h-screen print:bg-white print:p-0 p-6">
@@ -194,9 +189,14 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               <li className="p-4 pb-2 text-xs text-gray-500 tracking-wide">
                 Received invoices
               </li>
-              {received_invoices.map((item, id) => (
-                <ReceivedItem item={item} key={id} />
-              ))}
+
+              {receivedInvoices.length > 0 ? (
+                receivedInvoices.map((item, id) => (
+                  <ReceivedItem item={item} key={id} />
+                ))
+              ) : (
+                <p className="p-4 text-gray-500">No received invoices yet...</p>
+              )}
             </ul>
           </div>
         </div>
