@@ -1,11 +1,12 @@
 import React from "react";
 import InvoiceDetail from "../../components/invoice-detail";
+import { BASE_API_URL } from "@/app/constants/constants";
 
 const ViewInvoicePage = async ({ params }) => {
   const { id } = await params;
   let invoice = null;
 
-  const base_url = process.env.API_BASE_URL + "/invoices/" + id;
+  const base_url = BASE_API_URL + "/invoices/" + id;
   try {
     let res = await fetch(base_url);
     res = await res.json();
