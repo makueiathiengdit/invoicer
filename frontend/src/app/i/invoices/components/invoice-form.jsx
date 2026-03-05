@@ -5,6 +5,7 @@ import InputAmount from "../../components/inputs/input-amount";
 import InputFile from "../../components/inputs/input-file";
 import InputSelectBox from "../../components/inputs/input-select-box";
 import { useRouter } from "next/navigation";
+import { BASE_API_URL } from "@/app/constants/constants";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +74,8 @@ const InvoiceForm = () => {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/invoices/", {
+      const url = BASE_API_URL + "/invoices";
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

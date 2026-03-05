@@ -7,6 +7,7 @@ import { Search } from "lucide-react";
 import { delayRequest } from "@/app/utils/utils";
 import InputAmount from "../../components/inputs/input-amount";
 import { useRouter } from "next/navigation";
+import { BASE_API_URL } from "@/app/constants/constants";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [formData, setFormData] = useState({
@@ -60,7 +61,7 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
         currency: s_invoice?.currency,
       };
 
-      const url = "http://127.0.0.1:8000/received/invoices/";
+      const url = BASE_API_URL + "/received/invoices/";
       let res = await fetch(url, {
         method: "POST",
         headers: {
