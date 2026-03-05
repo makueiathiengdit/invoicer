@@ -4,3 +4,5 @@ export const INVOICE_STATUS = {
   PROCESSED: "PROCESSED", // has pr and po number but not received/submitted to finance
   COMPLETED: "COMPLETED", // received and submitted to finance
 };
+
+export const BASE_API_URL = "http://127.0.0.1:8000";

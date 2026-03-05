@@ -1,12 +1,13 @@
 import React from "react";
 import ReceivedInvoiceList from "./received-invoice-list";
 import { delayRequest } from "@/app/utils/utils";
+import { BASE_API_URL } from "@/app/constants/constants";
 
 const ReceivedInvoiceWrapper = async () => {
   let received_invoices = [];
 
   try {
-    const url = "http://127.0.0.1:8000/received/invoices";
+    const url = BASE_API_URL + "/received/invoices";
 
     await delayRequest(100);
 
