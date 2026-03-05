@@ -133,6 +133,7 @@ class Invoice(Base, Timed):
             "receipt_id": self.receipt_id,
             "pr_date": self.pr_date,
             "po_date": self.po_date,
+            "completed_date": self.completed_date,
         }
 
 
