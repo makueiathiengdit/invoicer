@@ -13,3 +13,8 @@ def get_received_invoices():
 @router.post("/")
 def create_received_invoice(invoice: ReceivedInvoiceSchema):
     return ReceivedInvoiceService.create_received_invoice(invoice)
+
+
+@router.get("/po/{po}")
+def get_reeceived_invoices_by_po(po):
+    return ReceivedInvoiceService.get_received_invoices_by_po(po)

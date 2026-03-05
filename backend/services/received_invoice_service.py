@@ -28,3 +28,9 @@ class ReceivedInvoiceService:
             return APIResponse(
                 success=True, message="found received invoices", data=r_invoices
             )
+
+    @classmethod
+    def get_received_invoices_by_po(cls, po_number):
+        with get_session() as db:
+            invoices = db.query(ReceivedInvoice).filter_by(po_number=po_number).all()
+            return APIResponse(success=True, message="fetched invoices", data=invoices)
