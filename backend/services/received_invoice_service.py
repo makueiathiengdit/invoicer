@@ -18,6 +18,9 @@ class ReceivedInvoiceService:
             received_invoice = ReceivedInvoice(**invoice.dict())
             db.add(received_invoice)
 
+            if original_invoice.balance is None:
+                original_invoice.balance = original_invoice.amount
+
             if original_invoice.balance - invoice.amount >= 0:
                 original_invoice.balance -= invoice.amount
 
