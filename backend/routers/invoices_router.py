@@ -25,6 +25,11 @@ def update_invoice(id: int, invoice: InvoiceDetailSchema):
     return InvoiceService.update_invoice(id, invoice)
 
 
+@router.delete("/{id}")
+def delete_invoice_by_id(id: int):
+    return InvoiceService.delete_invoice_by_id(id)
+
+
 @router.put("/{id}/prpo")
 def update_prpo(id: int, prpo: UpdatePRPOSchema):
     return InvoiceService.update_prpo(id, prpo)

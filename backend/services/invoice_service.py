@@ -157,24 +157,32 @@ class InvoiceService:
         fetch single invoice
         """
         with get_session() as db:
-            invoice = (
-                db.query(Invoice)
-                .filter_by(id=id)
-                .options(
-                    joinedload(Invoice.attachment), joinedload(Invoice.assigned_user)
+            try:
+
+                invoice = (
+                    db.query(Invoice)
+                    .filter_by(id=id)
+                    .options(
+                        joinedload(Invoice.attachment),
+                        joinedload(Invoice.assigned_user),
+                    )
+                    .first()
                 )
-                .first()
-            )
 
-            if invoice:
-                inv = invoice.to_dict()
-                inv["attachment"] = {
-                    "id": invoice.attachment.id,
-                    "name": invoice.attachment.name,
-                    "size": invoice.attachment.size,
-                }
+                if invoice:
+                    inv = invoice.to_dict()
+                    inv["attachment"] = {
+                        "id": invoice.attachment.id,
+                        "name": invoice.attachment.name,
+                        "size": invoice.attachment.size,
+                    }
 
-            return APIResponse(success=True, message="invoice fetched", data=[inv])
+                    return APIResponse(
+                        success=True, message="invoice fetched", data=[inv]
+                    )
+                return APIResponse(success=False, message="Could not find invoice")
+            except Exception as e:
+                return APIResponse(success=False, message="something went wrong")
 
     @classmethod
     def update_prpo(cls, id, prpo: UpdatePRPOSchema) -> APIResponse:
@@ -268,3 +276,13 @@ class InvoiceService:
                 )
             else:
                 return APIResponse(message="no received invoices found")
+
+    @classmethod
+    def delete_invoice_by_id(cls, id) -> APIResponse:
+        with get_session() as db:
+            db_inv = db.query(Invoice).filter_by(id=id).first()
+            if db_inv:
+                db.delete(db_inv)
+                db.commit()
+
+                return APIResponse(success=True, message="invoice deleted successfully")
