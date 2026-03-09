@@ -4,7 +4,7 @@ export const InvoiceFormSchema = z.object({
   invoice_id: z.string({
     required_error: "invoice ID is required",
   }),
-  invoice_date: z.date().optional(),
+  // invoice_date: z.date().optional(),
   amount: z.number({
     required_error: "amount is required",
   }),

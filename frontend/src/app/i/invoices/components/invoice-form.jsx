@@ -80,7 +80,10 @@ const InvoiceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validated_data = InvoiceFormSchema.safeParse(formData);
+    const validated_data = InvoiceFormSchema.safeParse({
+      ...formData,
+      ["amount"]: parseFloat(formData.amount),
+    });
 
     if (!validated_data.success) {
       const errors = convertZodErrorsToJSON(validated_data.error.issues);
@@ -88,6 +91,8 @@ const InvoiceForm = () => {
       setFormErrors(errors);
       return;
     }
+
+    console.log(validated_data);
 
     setLoading(true);
 
