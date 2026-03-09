@@ -71,6 +71,14 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     getReceivedInvoices();
   }, []);
 
+  const quoted_amount = invoice.amount;
+  let paid = 0;
+  for (let ri of receivedInvoices) {
+    paid += ri.amount;
+  }
+
+  const pending_amount = quoted_amount - paid;
+
   return (
     <div className="min-h-screen print:bg-white print:p-0 p-6">
       <div className="flex  gap-3 justify-end mb-2 max-w-4xl mx-auto">
@@ -201,6 +209,27 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               ) : (
                 <p className="p-4 text-gray-500">No received invoices yet...</p>
               )}
+
+              <li className="mt-4 px-4">
+                <div className="grid grid-cols-3 text-gray-500 text-xs">
+                  <div>
+                    Quoted:{" "}
+                    <span className="font-bold">
+                      {formatCurrency(quoted_amount)}
+                    </span>
+                  </div>
+                  <div>
+                    Paid:{" "}
+                    <span className="font-bold">{formatCurrency(paid)}</span>
+                  </div>
+                  <div>
+                    Pending:{" "}
+                    <span className="font-bold">
+                      {formatCurrency(pending_amount)}
+                    </span>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
