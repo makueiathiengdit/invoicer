@@ -7,3 +7,8 @@ class UserSchema(BaseModel):
     email: str
     password: str
     role: str | None = "USER"
+
+
+class UserLoginSchema(BaseModel):
+    email: str
+    password: str
