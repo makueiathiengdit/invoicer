@@ -5,6 +5,7 @@ import InvoiceTable from "../i/invoices/components/invoice-table";
 import { sample_invoices } from "../data/invoices";
 import InputFile from "../i/components/inputs/input-file";
 import InvoiceDetail from "../i/invoices/components/invoice-detail";
+import LoginForm from "../components/login-form";
 
 const Playground = () => {
   return (
@@ -17,7 +18,9 @@ const Playground = () => {
       {/* <button className="btn btn-primary">Button </button> */}
       {/* <InputFile /> */}
 
-      <InvoiceDetail />
+      {/* <InvoiceDetail /> */}
+
+      <LoginForm />
     </div>
   );
 };

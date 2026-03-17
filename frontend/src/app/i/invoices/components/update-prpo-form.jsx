@@ -52,7 +52,7 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
 
         router.refresh();
       } else {
-        console.log("nuts!!!");
+        console.log("something went wrong", res);
       }
     } catch (error) {
       console.log("nutsss", error);
