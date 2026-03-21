@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -8,6 +9,8 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+
+  const router = useRouter();
 
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -30,7 +33,7 @@ const LoginForm = () => {
         localStorage.setItem("token", result.data.token);
         localStorage.setItem("user", JSON.stringify(result.data.user));
         toast.success("Login successful");
-        window.location.href = "/i";
+        router.push("/i/invoices");
       } else {
         toast.error(result.message || "Login failed");
       }

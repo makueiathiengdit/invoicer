@@ -3,8 +3,6 @@ import LoginForm from "./components/login-form";
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans ">
-      <h1>Invoice Recorder</h1>
-
       <LoginForm />
     </div>
   );
