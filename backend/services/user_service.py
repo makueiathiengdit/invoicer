@@ -3,6 +3,7 @@ from db.core import get_session
 from db.models import User
 from utils.api_response import APIResponse
 from constants.constants import USER_ROLES
+from services.hash_service import HashService
 
 
 class UserService:
@@ -11,7 +12,9 @@ class UserService:
         with get_session() as db:
             response = APIResponse()
             try:
-                db_user = User(**user.dict())
+                user = user.dict()
+                user["password"] = HashService.hash(user["password"])
+                db_user = User(**user)
                 db.add(db_user)
                 db.commit()
                 if db_user:
@@ -76,3 +79,11 @@ class UserService:
                 return APIResponse(
                     success=True, message="user marked as invocie proccessor"
                 )
+
+    @classmethod
+    def get_user_by_email(cls, email: str) -> APIResponse:
+        with get_session() as db:
+            user = db.query(User).filter_by(email=email).first()
+            if user is None:
+                return APIResponse(success=False, message="user not found", data=[])
+            return APIResponse(success=True, message="user found", data=[user])

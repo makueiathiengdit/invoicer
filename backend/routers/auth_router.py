@@ -1,14 +1,15 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 from schemas.user_schema import UserLoginSchema
+from services.auth_service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post("/login")
 def login(user: UserLoginSchema):
-    pass
+    return AuthService.login(user)
 
 
-@router.get("/logout")
+@router.post("/logout")
 def logout():
-    pass
+    return {"message": "Logged out successfully"}
