@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,33 @@ const LoginForm = () => {
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.success) {
+        // Store session data
+        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("user", JSON.stringify(result.data.user));
+        toast.success("Login successful");
+        window.location.href = "/i";
+      } else {
+        toast.error(result.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center  sm:px-4">
       <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
@@ -31,7 +59,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div className="bg-white shadow p-4 py-6 space-y-8 sm:p-6 sm:rounded-lg">
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="font-medium">Email</label>
               <input
@@ -56,7 +84,10 @@ const LoginForm = () => {
                 placeholder="*********"
               />
             </div>
-            <button className="w-full px-4 py-2 text-white font-medium bg-teal-600 hover:bg-teal-500 active:bg-teal-600 rounded-lg duration-150">
+            <button
+              className="w-full px-4 py-2 text-white font-medium bg-teal-600 hover:bg-teal-500 active:bg-teal-600 rounded-lg duration-150"
+              onClick={handleSubmit}
+            >
               Sign in
             </button>
           </form>
