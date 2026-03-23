@@ -8,10 +8,7 @@ import { delayRequest } from "@/app/utils/utils";
 import InputAmount from "../../components/inputs/input-amount";
 import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "@/app/constants/constants";
-import {
-  createReceivedInvoice,
-  getReceivedInvoiceByPO,
-} from "@/actions/received-invoices";
+import { createReceivedInvoice } from "@/actions/received-invoices";
 import { getInvoiceByPO } from "@/actions/invoice";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
@@ -41,9 +38,6 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
 
       await delayRequest(2000);
 
-      // const url = BASE_API_URL + `/invoices/po/${po_number}`;
-      // let res = await fetch(url);
-
       let res = await getInvoiceByPO(po_number);
 
       res = JSON.parse(res);
@@ -68,15 +62,6 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
         amount: parseInt(formData.amount),
         currency: s_invoice?.currency,
       };
-
-      const url = BASE_API_URL + "/received/invoices/";
-      // let res = await fetch(url, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
 
       let res = await createReceivedInvoice(formData);
       res = await res.json();
