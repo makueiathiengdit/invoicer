@@ -8,6 +8,11 @@ import { delayRequest } from "@/app/utils/utils";
 import InputAmount from "../../components/inputs/input-amount";
 import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "@/app/constants/constants";
+import {
+  createReceivedInvoice,
+  getReceivedInvoiceByPO,
+} from "@/actions/received-invoices";
+import { getInvoiceByPO } from "@/actions/invoice";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [formData, setFormData] = useState({
@@ -36,13 +41,15 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
 
       await delayRequest(2000);
 
-      const url = BASE_API_URL + `/invoices/po/${po_number}`;
-      let res = await fetch(url);
+      // const url = BASE_API_URL + `/invoices/po/${po_number}`;
+      // let res = await fetch(url);
 
-      res = await res.json();
+      let res = await getInvoiceByPO(po_number);
 
-      if (res.success) {
-        setInvoice(res.data[0]);
+      res = JSON.parse(res);
+
+      if (res._success) {
+        setInvoice(res._data[0]);
       }
     } catch (error) {
     } finally {
@@ -63,17 +70,20 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
       };
 
       const url = BASE_API_URL + "/received/invoices/";
-      let res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // let res = await fetch(url, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
 
+      let res = await createReceivedInvoice(formData);
       res = await res.json();
 
-      if (res.success) {
+      res = JSON.parse(res);
+
+      if (res._success) {
         router.push("/i/receiving/");
       }
     } catch (error) {

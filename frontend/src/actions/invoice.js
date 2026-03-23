@@ -129,6 +129,30 @@ export async function getInvoiceAll(filter = {}) {
   return JSON.stringify(response);
 }
 
+export async function getInvoiceByPO(po) {
+  let response = new ServerActionResponse();
+
+  try {
+    await connectToDB();
+    let db_invoices = await Invoice.find({
+      po_number: po,
+    });
+    if (db_invoices) {
+      response.success = true;
+      response.message = "found invoices";
+      response.data = db_invoices;
+    } else {
+      response.message = "could not find invoices";
+    }
+  } catch (error) {
+    response.message = "something went wrong (500)";
+  }
+
+  //   console.log("response", response);
+
+  return JSON.stringify(response);
+}
+
 export async function updatePRPO(id, prpo) {
   let response = new ServerActionResponse();
 

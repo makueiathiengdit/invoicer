@@ -160,3 +160,6 @@ export const Attachment =
   mongoose.models?.Attachment || mongoose.model("Attachment", AttachmentSchema);
 export const Invoice =
   mongoose.models?.Invoice || mongoose.model("Invoice", InvoiceSchema);
+export const ReceivedInvoice =
+  mongoose.models?.ReceivedInvoice ||
+  mongoose.model("ReceivedInvoice", ReceivedInvoiceSchema);

@@ -15,7 +15,7 @@ const ReceivedInvoiceItem = ({ item = {} }) => {
           </div>
           <div className="text-gray-600 flex gap-2 text-sm">
             <span className="">
-              {formatCurrentDate(new Date(item.created_at) || null)}
+              {formatCurrentDate(new Date(item.createdAt) || null)}
             </span>{" "}
             -<span>{item.description}</span>
           </div>

@@ -10,6 +10,7 @@ import UpdatePRPOForm from "./update-prpo-form";
 import InvoiceTimeline from "./invoice-timeline";
 import { useEffect, useState } from "react";
 import { BASE_API_URL } from "@/app/constants/constants";
+import { getReceivedInvoiceByPO } from "@/actions/received-invoices";
 
 export const sampleInvoice = {
   id: 1,
@@ -57,13 +58,16 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     const getReceivedInvoices = async () => {
       try {
         const url = BASE_API_URL + "/received/invoices/po/" + invoice.po_number;
-        let res = await fetch(url);
-        res = await res.json();
+        // let res = await fetch(url);
+        // res = await res.json();
 
+        let res = await getReceivedInvoiceByPO(invoice.po_number);
+
+        res = JSON.parse(res);
         console.log("response", res);
 
-        if (res.success) {
-          setReceivedInvoices(res.data);
+        if (res._success) {
+          setReceivedInvoices(res._data);
         }
       } catch (error) {}
     };
