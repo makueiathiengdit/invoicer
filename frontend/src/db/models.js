@@ -20,6 +20,10 @@ const UserSchema = new Schema(
     password: {
       type: String,
     },
+    is_deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   {
@@ -37,6 +41,10 @@ const AttachmentSchema = new Schema(
     },
     file: {
       type: Buffer,
+    },
+    is_deleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -98,6 +106,10 @@ const InvoiceSchema = new Schema(
       type: Number,
       default: 0,
     },
+    is_deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -126,6 +138,10 @@ const ReceivedInvoiceSchema = new Schema(
     received_by: {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+    is_deleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
