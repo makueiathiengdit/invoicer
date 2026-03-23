@@ -1,3 +1,4 @@
+import { USER_ROLES } from "@/constants/constants";
 import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new Schema(
@@ -16,7 +17,7 @@ const UserSchema = new Schema(
 
     role: {
       type: String,
-      default: "PROCESSOR",
+      default: USER_ROLES.USER,
       uppercase: true,
     },
     password: {
