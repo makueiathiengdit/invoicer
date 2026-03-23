@@ -45,6 +45,9 @@ const AttachmentSchema = new Schema(
     file: {
       type: Buffer,
     },
+    file_type: {
+      type: String,
+    },
     is_deleted: {
       type: Boolean,
       default: false,
@@ -82,7 +85,7 @@ const InvoiceSchema = new Schema(
     },
     attachment: {
       type: Schema.Types.ObjectId,
-      ref: "Attachement",
+      ref: "Attachment",
     },
     pr_number: { type: String },
     po_number: { type: String },

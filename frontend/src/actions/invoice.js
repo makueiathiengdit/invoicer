@@ -3,10 +3,12 @@
 import { ServerActionResponse } from "@/app/utils/server-action-response";
 import { USER_ROLES } from "@/constants/constants";
 import { connectToDB } from "@/db/connect";
-import { Invoice, User } from "@/db/models";
+import { Attachment, Invoice, User } from "@/db/models";
 
 export async function createInvoice(invoice) {
   let response = new ServerActionResponse();
+
+  console.log("received this invoice payload", invoice);
 
   try {
     await connectToDB();
@@ -45,10 +47,26 @@ export async function createInvoice(invoice) {
     // set assigned user
     invoice.assigned_to = assigned_user._id;
 
+    // create attachement first
+
+    const arrayBuffer = await invoice.attachment.file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const attachment = new Attachment({
+      size: invoice.attachment.size,
+      name: invoice.attachment.name,
+      file_type: invoice.attachment.file.mimetype,
+      file: buffer,
+    });
+
+    // update invoice attachement to reference created attachment
+    invoice.attachment = attachment._id.toString();
+
     // now create invoice
-    db_inv = await Invoice.create(invoice);
+    const db_inv = await Invoice.create(invoice);
 
     if (db_inv) {
+      await attachment.save();
       response.success = true;
       response.message = "invoice created successfully";
     } else {
@@ -87,7 +105,9 @@ export async function getInvoiceAll(filter = {}) {
   try {
     await connectToDB();
 
-    db_invoices = await Invoice.find(filter);
+    const db_invoices = await Invoice.find(filter)
+      .populate("attachment")
+      .sort({ createdAt: -1 });
     if (db_invoices && db_invoices.length > 0) {
       response.success = true;
       response.message = "found invoices";
@@ -96,6 +116,8 @@ export async function getInvoiceAll(filter = {}) {
       response.message = "no invoices found";
     }
   } catch (error) {
+    console.log(error);
+
     response.message = "something went wrong (500)";
   }
 

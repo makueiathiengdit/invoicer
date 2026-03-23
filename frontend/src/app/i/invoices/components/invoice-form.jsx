@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "@/app/constants/constants";
 import { InvoiceFormSchema } from "@/app/schema/form-schema";
 import { convertZodErrorsToJSON } from "@/app/utils/utils";
+import { createInvoice } from "@/actions/invoice";
+import toast from "react-hot-toast";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -92,7 +94,7 @@ const InvoiceForm = () => {
       return;
     }
 
-    console.log(validated_data);
+    console.log("validated data", validated_data);
 
     setLoading(true);
 
@@ -104,34 +106,41 @@ const InvoiceForm = () => {
 
     try {
       const url = BASE_API_URL + "/invoices";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      // const response = await fetch(url, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(payload),
+      // });
 
-      const result = await response.json();
+      // const result = await response.json();
 
-      if (result.success) {
-        console.log("Success:", result.message);
+      let res = await createInvoice(formData);
+      const result = JSON.parse(res);
+
+      if (result._success) {
+        console.log("Success:", result._message);
 
         // reset
-        setFormData({
-          invoice_id: "",
-          invoice_date: new Date().toISOString().split("T")[0],
-          description: "",
-          amount: 0,
-          currency: "SSP",
-          attachment: null,
-        });
+        // setFormData({
+        //   invoice_id: "",
+        //   invoice_date: new Date().toISOString().split("T")[0],
+        //   description: "",
+        //   amount: 0,
+        //   currency: "SSP",
+        //   attachment: null,
+        // });
 
-        router.push("/i/invoices");
+        toast.success(result._message);
+
+        // router.push("/i/invoices");
       } else {
-        console.log("API Error:", result.message || "Unknown error occurred");
+        toast.error(result._message);
+        console.log("API Error:", result._message || "Unknown error occurred");
       }
     } catch (error) {
+      toast.error(error.message);
       console.log("Network or Server error:", error);
     } finally {
       setLoading(false);
