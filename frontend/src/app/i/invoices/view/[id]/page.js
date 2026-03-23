@@ -1,6 +1,7 @@
 import React from "react";
 import InvoiceDetail from "../../components/invoice-detail";
 import { BASE_API_URL } from "@/app/constants/constants";
+import { getInvoiceByID } from "@/actions/invoice";
 
 const ViewInvoicePage = async ({ params }) => {
   const { id } = await params;
@@ -8,11 +9,12 @@ const ViewInvoicePage = async ({ params }) => {
 
   const base_url = BASE_API_URL + "/invoices/" + id;
   try {
-    let res = await fetch(base_url);
-    res = await res.json();
+    // let res = await fetch(base_url);
+    let res = await getInvoiceByID(id);
+    res = JSON.parse(res);
 
-    if (res.success) {
-      invoice = res.data[0];
+    if (res._success) {
+      invoice = res._data[0];
     }
   } catch (error) {
     console.log(error);

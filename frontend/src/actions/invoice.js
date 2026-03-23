@@ -85,17 +85,21 @@ export async function getInvoiceByID(id) {
   try {
     await connectToDB();
 
-    db_invoices = await Invoice.findById(id);
-    if (db_invoices) {
+    let db_inv = await Invoice.findById(id)
+      .populate("attachment")
+      .populate("assigned_to");
+    if (db_inv) {
       response.success = true;
       response.message = "found invoice";
-      response.data = [db_invoices];
+      response.data = [db_inv];
     } else {
       response.message = "no invoice found";
     }
   } catch (error) {
     response.message = "something went wrong (500)";
   }
+
+  console.log("response", response);
 
   return JSON.stringify(response);
 }

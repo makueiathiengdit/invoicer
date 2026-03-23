@@ -23,7 +23,7 @@ export const sampleInvoice = {
   vendor: "NileTech Solutions Ltd",
   po_number: "PO-45892",
   pr_number: "PR-77451",
-  created_at: new Date(),
+  createdAt: new Date(),
   attachment: {
     id: 23,
     file_name: "network_upgrade_invoice.pdf",
@@ -39,13 +39,13 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
     }).format(amount);
   const [receivedInvoices, setReceivedInvoices] = useState([]);
 
-  const assigned_user = invoice?.assigned_user
-    ? invoice.assigned_user.first_name + " " + invoice.assigned_user.last_name
+  const assigned_user = invoice?.assigned_to
+    ? invoice.assigned_to.first_name + " " + invoice.assigned_to.last_name
     : "Not assigned";
 
   // timeline
   const timeline = {
-    created_at: invoice.created_at,
+    createdAt: invoice.createdAt,
     pr_date: invoice.pr_date,
     po_date: invoice.po_date,
     received_date: invoice?.completed_date,
@@ -122,7 +122,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
               <InfoItem
                 icon={<Calendar size={18} />}
                 label="Date"
-                value={formatCurrentDate(new Date(invoice.created_at))}
+                value={formatCurrentDate(new Date(invoice.createdAt))}
               />
 
               <InfoItem
@@ -277,7 +277,7 @@ function ReceivedItem({ item = {} }) {
     <li className="list-row">
       <div>
         <div className="text-gray-700 text-xs font-semibold">
-          {new Date(item.created_at).toDateString()}
+          {new Date(item.createdAt).toDateString()}
           {" . "}
           {item.invoice_id}
         </div>

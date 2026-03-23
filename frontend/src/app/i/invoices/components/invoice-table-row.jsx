@@ -4,13 +4,13 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 const InvoiceTableRow = ({ item = {} }) => {
-  const url = "/i/invoices/view/" + item.id;
+  const url = "/i/invoices/view/" + item._id;
 
   return (
     <>
       <tr className="border-b border-gray-300 hover:bg-emerald-50">
         <th scope="row" className="px-4 py-3 font-medium whitespace-nowrap ">
-          {new Date(item?.created_at).toLocaleDateString() || item.invoice_date}
+          {new Date(item?.createdAt).toLocaleDateString() || item.invoice_date}
         </th>
         <td className="px-4 py-3">{item.invoice_id}</td>
         {/* <td className="px-4 py-3">{item.invoice_date}</td> */}
