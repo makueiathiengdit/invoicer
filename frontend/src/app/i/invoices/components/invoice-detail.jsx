@@ -9,7 +9,6 @@ import { Calendar, User, Hash, Paperclip, BadgeCheck } from "lucide-react";
 import UpdatePRPOForm from "./update-prpo-form";
 import InvoiceTimeline from "./invoice-timeline";
 import { useEffect, useState } from "react";
-import { BASE_API_URL } from "@/app/constants/constants";
 import { getReceivedInvoiceByPO } from "@/actions/received-invoices";
 
 export const sampleInvoice = {
@@ -59,8 +58,6 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
   useEffect(() => {
     const getReceivedInvoices = async () => {
       try {
-        // const url = BASE_API_URL + "/received/invoices/po/" + invoice.po_number;
-
         setLoading(true);
         let res = await getReceivedInvoiceByPO(invoice.po_number);
 

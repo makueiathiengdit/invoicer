@@ -101,8 +101,6 @@ export async function getInvoiceByID(id) {
     response.message = "something went wrong (500)";
   }
 
-  //   console.log("response", response);
-
   return JSON.stringify(response);
 }
 export async function getInvoiceAll(filter = {}) {
