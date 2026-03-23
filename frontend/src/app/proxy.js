@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { decodeToken } from "./actions/auth";
 
 // this our gateman to check if user is logged in or not
-export async function middleware(request) {
+export async function proxy(request) {
   const token = request.cookies.get("token");
   const user = await decodeToken(token);
 
