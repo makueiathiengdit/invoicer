@@ -94,7 +94,7 @@ const InvoiceForm = () => {
       return;
     }
 
-    console.log("validated data", validated_data);
+    // console.log("validated data", validated_data);
 
     setLoading(true);
 

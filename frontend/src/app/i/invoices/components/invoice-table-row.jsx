@@ -1,7 +1,7 @@
 "use client";
 import { getInvoiceStatusColor } from "@/app/utils/utils";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 
 const InvoiceTableRow = ({ item = {} }) => {
   const url = "/i/invoices/view/" + item._id;

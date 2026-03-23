@@ -5,7 +5,6 @@ import { getInvoiceAll } from "@/actions/invoice";
 const InvoiceWrapper = async () => {
   let invoices = [];
 
-  // const base_url = process.env.API_BASE_URL + "/invoices/";
   try {
     let res = await getInvoiceAll();
     res = JSON.parse(res);
