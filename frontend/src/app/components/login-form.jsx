@@ -29,9 +29,6 @@ const LoginForm = () => {
       const result = await response.json();
 
       if (response.success) {
-        // Store session data
-        localStorage.setItem("token", result.data.token);
-        localStorage.setItem("user", JSON.stringify(result.data.user));
         toast.success("Login successful");
         router.push("/i/invoices");
       } else {
