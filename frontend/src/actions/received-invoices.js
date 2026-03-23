@@ -35,7 +35,7 @@ export async function getReceivedInvoiceByPO(po) {
     if (db_invoices) {
       response.success = true;
       response.message = "found received invoices";
-      response.data = [db_invoices];
+      response.data = db_invoices;
     } else {
       response.message = "could not find received invoices";
     }
