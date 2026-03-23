@@ -10,7 +10,7 @@ export async function createUser(user) {
   try {
     await connectToDB();
 
-    const db_user = await User.create();
+    const db_user = await User.create(user);
 
     if (db_user) {
       response.success = true;

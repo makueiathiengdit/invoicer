@@ -11,11 +11,13 @@ const UserSchema = new Schema(
     email: {
       type: String,
       unique: true,
+      lowercase: true,
     },
 
     role: {
       type: String,
       default: "PROCESSOR",
+      uppercase: true,
     },
     password: {
       type: String,
@@ -153,4 +155,4 @@ export const User = mongoose.models?.User || mongoose.model("User", UserSchema);
 export const Attachment =
   mongoose.models?.Attachment || mongoose.model("Attachment", AttachmentSchema);
 export const Invoice =
-  mongoose.models?.Invoice || mongoose.model("Invoice", Invoice);
+  mongoose.models?.Invoice || mongoose.model("Invoice", InvoiceSchema);
