@@ -8,7 +8,7 @@ import { Attachment, Invoice, User } from "@/db/models";
 export async function createInvoice(invoice) {
   let response = new ServerActionResponse();
 
-  console.log("received this invoice payload", invoice);
+  //   console.log("received this invoice payload", invoice);
 
   try {
     await connectToDB();
@@ -48,9 +48,8 @@ export async function createInvoice(invoice) {
     invoice.assigned_to = assigned_user._id;
 
     // create attachement first
-
-    const arrayBuffer = await invoice.attachment.file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    // const arrayBuffer = await invoice.attachment.file.arrayBuffer();
+    const buffer = Buffer.from(invoice.attachment.file);
 
     const attachment = new Attachment({
       size: invoice.attachment.size,
@@ -73,6 +72,8 @@ export async function createInvoice(invoice) {
       response.message = "failed to create invoice";
     }
   } catch (error) {
+    console.log(error);
+
     response.message = "something went wrong (500)";
   }
 
@@ -99,7 +100,7 @@ export async function getInvoiceByID(id) {
     response.message = "something went wrong (500)";
   }
 
-  console.log("response", response);
+  //   console.log("response", response);
 
   return JSON.stringify(response);
 }
@@ -110,7 +111,7 @@ export async function getInvoiceAll(filter = {}) {
     await connectToDB();
 
     const db_invoices = await Invoice.find(filter)
-      .populate("attachment")
+      //   .populate("attachment")
       .sort({ createdAt: -1 });
     if (db_invoices && db_invoices.length > 0) {
       response.success = true;
@@ -131,8 +132,14 @@ export async function getInvoiceAll(filter = {}) {
 function get_assigned_user(last_assigned_user, users) {
   let assigned_user = last_assigned_user;
 
+  console.log("last user", last_assigned_user);
+  console.log("users pool", users);
+
   for (let user of users) {
-    if (last_assigned_user && user._id === last_assigned_user._id) {
+    if (
+      last_assigned_user &&
+      user._id.toString() === last_assigned_user._id.toString()
+    ) {
       continue;
     }
     assigned_user = user;

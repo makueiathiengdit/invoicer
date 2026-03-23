@@ -134,7 +134,7 @@ const InvoiceForm = () => {
 
         toast.success(result._message);
 
-        // router.push("/i/invoices");
+        router.push("/i/invoices");
       } else {
         toast.error(result._message);
         console.log("API Error:", result._message || "Unknown error occurred");

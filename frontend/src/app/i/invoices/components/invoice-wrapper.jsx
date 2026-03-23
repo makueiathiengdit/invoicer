@@ -1,7 +1,6 @@
 import React from "react";
 import InvoiceTable from "./invoice-table";
 import { getInvoiceAll } from "@/actions/invoice";
-import { JsonWebTokenError } from "jsonwebtoken";
 
 const InvoiceWrapper = async () => {
   let invoices = [];
@@ -12,7 +11,7 @@ const InvoiceWrapper = async () => {
 
     let res = await getInvoiceAll();
     res = JSON.parse(res);
-    console.log("res", res);
+    // console.log("res", res);
 
     if (res._success) {
       invoices = res._data;
