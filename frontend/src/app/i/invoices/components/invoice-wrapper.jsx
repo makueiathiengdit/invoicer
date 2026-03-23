@@ -11,8 +11,6 @@ const InvoiceWrapper = async () => {
 
     if (res._success) {
       invoices = res._data;
-
-      console.log("response data", res);
     }
   } catch (error) {
     console.log("somethng went wrong, mate", error);
