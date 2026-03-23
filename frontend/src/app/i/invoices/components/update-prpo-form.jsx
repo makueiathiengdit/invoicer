@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputText from "../../components/inputs/input-text";
 import { useRouter } from "next/navigation";
 import { BASE_API_URL } from "@/app/constants/constants";
+import { updatePRPO } from "@/actions/invoice";
 const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const [selected, setSelected] = useState("");
 
@@ -32,20 +33,11 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const base_url = BASE_API_URL + "/invoices/" + invoice.id + "/prpo";
-
     try {
-      let res = await fetch(base_url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      let res = await updatePRPO(invoice._id, formData);
+      res = JSON.parse(res);
 
-      res = await res.json();
-
-      if (res.success) {
+      if (res._success) {
         console.log("success");
 
         handleCancel();

@@ -137,13 +137,13 @@ export async function updatePRPO(id, prpo) {
     const db_inv = await Invoice.findById(id);
 
     if (db_inv) {
-      if (prpo.hasProperty("pr_number") && prpo.pr_number) {
+      if (prpo.hasOwnProperty("pr_number") && prpo.pr_number) {
         db_inv.pr_number = prpo.pr_number;
         db_inv.pr_date = new Date();
         db_inv.status = INVOICE_STATUS.PARTIAL;
       }
 
-      if (prpo.hasProperty("po_number") && prpo.po_number) {
+      if (prpo.hasOwnProperty("po_number") && prpo.po_number) {
         db_inv.po_number = prpo.po_number;
         db_inv.po_date = new Date();
         db_inv.status = INVOICE_STATUS.PROCESSED;
