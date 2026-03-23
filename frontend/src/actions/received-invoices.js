@@ -31,6 +31,7 @@ export async function createReceivedInvoice(r_invoice) {
       db_invoice.completed_date = new Date();
     }
 
+    // create received invoice
     let db_recieved = await ReceivedInvoice.create(r_invoice);
 
     if (db_recieved) {
