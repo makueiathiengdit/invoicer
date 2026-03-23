@@ -1,5 +1,6 @@
 "use client";
 
+import { login } from "@/actions/auth";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -20,19 +21,14 @@ const LoginForm = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      let res = await login(formData);
+      res = JSON.parse(res);
 
-      const result = await response.json();
-
-      if (response.success) {
+      if (res._success) {
         toast.success("Login successful");
         router.push("/i/invoices");
       } else {
-        toast.error(result.message || "Login failed");
+        toast.error(res._message || "Login failed");
       }
     } catch (error) {
       console.error("Login error:", error);

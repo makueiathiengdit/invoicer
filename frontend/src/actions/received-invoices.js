@@ -1,17 +1,40 @@
 "use server";
 
 import { ServerActionResponse } from "@/app/utils/server-action-response";
-import { ReceivedInvoice } from "@/db/models";
+import { Invoice, ReceivedInvoice } from "@/db/models";
 import { connectToDB } from "../db/connect";
+import { INVOICE_STATUS } from "@/constants/constants";
 
 export async function createReceivedInvoice(r_invoice) {
   let response = new ServerActionResponse();
 
   try {
     await connectToDB();
+
+    let db_invoice = await Invoice.findOne({
+      po_number: r_invoice.po_number,
+    });
+
+    // invoice already paid canoot receive any further
+    if (db_invoice.amount - db_invoice.amount_paid <= 0) {
+      response.message = "invoice payment already cleared";
+      return JSON.stringify(response);
+    }
+
+    // receive invoice
+
+    db_invoice.amount_paid += r_invoice.amount;
+
+    // check if invoice can be mark complete
+    if (db_invoice.amount === db_invoice.amount_paid) {
+      db_invoice.status = INVOICE_STATUS.COMPLETED;
+      db_invoice.completed_date = new Date();
+    }
+
     let db_recieved = await ReceivedInvoice.create(r_invoice);
 
     if (db_recieved) {
+      await db_invoice.save();
       response.success = true;
       response.message = "invoice received successfully";
     } else {
