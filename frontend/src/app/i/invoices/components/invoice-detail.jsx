@@ -33,6 +33,8 @@ export const sampleInvoice = {
 };
 
 export default function InvoiceDetail({ invoice = sampleInvoice }) {
+  const [loading, setLoading] = useState(false);
+
   const formatCurrency = (amount) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -57,10 +59,9 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
   useEffect(() => {
     const getReceivedInvoices = async () => {
       try {
-        const url = BASE_API_URL + "/received/invoices/po/" + invoice.po_number;
-        // let res = await fetch(url);
-        // res = await res.json();
+        // const url = BASE_API_URL + "/received/invoices/po/" + invoice.po_number;
 
+        setLoading(true);
         let res = await getReceivedInvoiceByPO(invoice.po_number);
 
         res = JSON.parse(res);
@@ -69,7 +70,10 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
         if (res._success) {
           setReceivedInvoices(res._data);
         }
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
     };
 
     getReceivedInvoices();
@@ -189,7 +193,7 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
                   <div className="flex justify-end items-end">
                     <a
-                      href={`/i/files/${invoice?.attachment.id}`}
+                      href={`/i/attachments/${invoice?.attachment._id}`}
                       target="_blank"
                       className="btn btn-primary btn-sm rounded-md text-white"
                     >
@@ -206,7 +210,9 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
                 Received invoices
               </li>
 
-              {receivedInvoices.length > 0 ? (
+              {loading ? (
+                <span>fetching received invoices...</span>
+              ) : receivedInvoices.length > 0 ? (
                 receivedInvoices.map((item, id) => (
                   <ReceivedItem item={item} key={id} />
                 ))
@@ -218,17 +224,19 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
                 <div className="grid grid-cols-3 text-gray-500 text-xs">
                   <div>
                     Quoted:{" "}
-                    <span className="font-bold">
+                    <span className="font-bold text-blue-500">
                       {formatCurrency(quoted_amount)}
                     </span>
                   </div>
                   <div>
                     Paid:{" "}
-                    <span className="font-bold">{formatCurrency(paid)}</span>
+                    <span className="font-bold text-green-500">
+                      {formatCurrency(paid)}
+                    </span>
                   </div>
                   <div>
                     Pending:{" "}
-                    <span className="font-bold">
+                    <span className="font-bold text-yellow-400">
                       {formatCurrency(pending_amount)}
                     </span>
                   </div>

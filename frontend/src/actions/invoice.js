@@ -86,7 +86,8 @@ export async function getInvoiceByID(id) {
 
     let db_inv = await Invoice.findById(id)
       .populate("attachment")
-      .populate("assigned_to");
+      .populate("assigned_to")
+      .lean();
     if (db_inv) {
       response.success = true;
       response.message = "found invoice";
