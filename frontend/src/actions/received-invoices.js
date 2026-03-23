@@ -16,14 +16,14 @@ export async function createReceivedInvoice(r_invoice) {
     });
 
     // invoice already paid canoot receive any further
-    if (db_invoice.amount - db_invoice.amount_paid <= 0) {
+    if (parseInt(db_invoice.amount) - parseInt(db_invoice.amount_paid) <= 0) {
       response.message = "invoice payment already cleared";
       return JSON.stringify(response);
     }
 
     // receive invoice
-
-    db_invoice.amount_paid += r_invoice.amount;
+    db_invoice.amount_paid =
+      parseInt(db_invoice.amount_paid) + parseInt(r_invoice.amount);
 
     // check if invoice can be mark complete
     if (db_invoice.amount === db_invoice.amount_paid) {
