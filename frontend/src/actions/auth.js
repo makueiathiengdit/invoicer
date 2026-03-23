@@ -1,13 +1,11 @@
 "use server";
 
 import { connectToDB } from "@/db/connect";
-import { User } from "@/models/models";
+import { User } from "@/db/models";
 import { ServerActionResponse } from "@/app/utils/server-action-response";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-// import { after } from "next/server";
-// import { logMessage } from "./log";
 
 // auth server actions
 
@@ -72,8 +70,6 @@ export const login = async (user) => {
       response.message = "User account does not exist";
       response.status_code = 404;
     } else {
-      console.log("found user");
-
       const password_match = await verifyPassword(
         user.password,
         db_user.password,
@@ -110,11 +106,6 @@ export const login = async (user) => {
           url: "/",
           message: "USER LOGIN SUCCESSFUL",
         };
-
-        // log
-        // after(async () => {
-        //   await logMessage(log_payload);
-        // });
       }
     }
   } catch (error) {

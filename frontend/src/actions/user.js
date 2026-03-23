@@ -3,12 +3,18 @@
 import { ServerActionResponse } from "@/app/utils/server-action-response";
 import { connectToDB } from "@/db/connect";
 import { User } from "@/db/models";
+import { hashPassword } from "./auth";
 
 export async function createUser(user) {
   let response = new ServerActionResponse();
 
   try {
     await connectToDB();
+
+    const raw_password = user.password;
+
+    // hash user password
+    user.password = await hashPassword(user.password);
 
     const db_user = await User.create(user);
 
