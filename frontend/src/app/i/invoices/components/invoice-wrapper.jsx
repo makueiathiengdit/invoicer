@@ -7,11 +7,8 @@ const InvoiceWrapper = async () => {
 
   const base_url = process.env.API_BASE_URL + "/invoices/";
   try {
-    // let res = await fetch(base_url);
-
     let res = await getInvoiceAll();
     res = JSON.parse(res);
-    // console.log("res", res);
 
     if (res._success) {
       invoices = res._data;

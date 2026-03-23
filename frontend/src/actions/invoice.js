@@ -1,7 +1,7 @@
 "use server";
 
 import { ServerActionResponse } from "@/app/utils/server-action-response";
-import { USER_ROLES } from "@/constants/constants";
+import { INVOICE_STATUS, USER_ROLES } from "@/constants/constants";
 import { connectToDB } from "@/db/connect";
 import { Attachment, Invoice, User } from "@/db/models";
 
@@ -124,6 +124,40 @@ export async function getInvoiceAll(filter = {}) {
     console.log(error);
 
     response.message = "something went wrong (500)";
+  }
+
+  return JSON.stringify(response);
+}
+
+export async function updatePRPO(id, prpo) {
+  let response = new ServerActionResponse();
+
+  try {
+    await connectToDB();
+    const db_inv = await Invoice.findById(id);
+
+    if (db_inv) {
+      if (prpo.hasProperty("pr_number") && prpo.pr_number) {
+        db_inv.pr_number = prpo.pr_number;
+        db_inv.pr_date = new Date();
+        db_inv.status = INVOICE_STATUS.PARTIAL;
+      }
+
+      if (prpo.hasProperty("po_number") && prpo.po_number) {
+        db_inv.po_number = prpo.po_number;
+        db_inv.po_date = new Date();
+        db_inv.status = INVOICE_STATUS.PROCESSED;
+      }
+
+      await db_inv.save();
+
+      response.success = true;
+      response.message = "invoice updated succesfully";
+    } else {
+      response.message = "cannot find invoice with id";
+    }
+  } catch (error) {
+    response.message = "somethin wwent wrong (500)";
   }
 
   return JSON.stringify(response);
