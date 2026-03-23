@@ -8,8 +8,6 @@ import { Attachment, Invoice, User } from "@/db/models";
 export async function createInvoice(invoice) {
   let response = new ServerActionResponse();
 
-  //   console.log("received this invoice payload", invoice);
-
   try {
     await connectToDB();
 
@@ -97,6 +95,8 @@ export async function getInvoiceByID(id) {
       response.message = "no invoice found";
     }
   } catch (error) {
+    console.log(error);
+
     response.message = "something went wrong (500)";
   }
 
@@ -131,9 +131,6 @@ export async function getInvoiceAll(filter = {}) {
 
 function get_assigned_user(last_assigned_user, users) {
   let assigned_user = last_assigned_user;
-
-  console.log("last user", last_assigned_user);
-  console.log("users pool", users);
 
   for (let user of users) {
     if (
