@@ -67,8 +67,6 @@ export async function getReceivedInvoiceByPO(po) {
     response.message = "something went wrong (500)";
   }
 
-  console.log("response", response);
-
   return JSON.stringify(response);
 }
 
