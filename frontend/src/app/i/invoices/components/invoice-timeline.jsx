@@ -62,8 +62,8 @@ const InvoiceTimeline = ({
   };
 
   return (
-    <div className="max-w-sm mx-auto bg-white rounded-tr-2xl rounded-br-2xl shadow-md  overflow-hidden">
-      <div className="bg-slate-50 border-b border-slate-200 p-6">
+    <div className="max-w-sm mx-auto bg-white   overflow-hidden">
+      <div className="bg-slate-50  p-6">
         <h2 className="text-xl font-bold text-slate-800">Invoice Tracking</h2>
         <p className="text-sm text-slate-500 mt-1">
           Status of procurement lifecycle
