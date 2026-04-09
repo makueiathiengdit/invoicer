@@ -1,58 +1,32 @@
 import { connectToDB } from "@/db/connect";
 import { Attachment } from "@/db/models";
+export const runtime = "nodejs";
+
 export async function GET(request, { params }) {
-  try {
-    await connectToDB();
+  await connectToDB();
 
-    const { id } = await params;
+  const { id } = await params;
 
-    if (!id) {
-      return new Response("Not found", { status: 404 });
-    }
+  const doc = await Attachment.findById(id);
 
-    const doc = await Attachment.findById(id);
-    if (!doc) {
-      return new Response("Not found", { status: 404 });
-    }
-
-    let fileBuffer;
-
-    if (doc.file) {
-      // if it's already a Buffer
-      if (Buffer.isBuffer(doc.file)) {
-        fileBuffer = doc.file;
-      }
-
-      // BSON Binary objects
-      else if (
-        doc.file.buffer instanceof Uint8Array ||
-        Buffer.isBuffer(doc.file.buffer)
-      ) {
-        fileBuffer = Buffer.from(doc.file.buffer);
-      }
-      // for other object types
-      else {
-        fileBuffer = Buffer.from(doc.file.toString(), "base64");
-      }
-    }
-
-    if (!fileBuffer) {
-      return new Response("No file data found", { status: 500 });
-    }
-
-    const filename = doc.file_name ? `${doc.file_name}.pdf` : "file.pdf";
-    const contentType = "application/pdf";
-
-    return new Response(fileBuffer, {
-      status: 200,
-      headers: {
-        "Content-Type": contentType,
-        "Content-Disposition": `inline; filename="${filename}"`,
-        "Content-Length": String(fileBuffer.length),
-      },
-    });
-  } catch (err) {
-    console.error("GET /files/:id error:", err);
-    return new Response("Server error", { status: 500 });
+  if (!doc || !doc.file) {
+    return new Response("Not found", { status: 404 });
   }
+
+  let fileBuffer;
+
+  if (doc.file?.buffer) {
+    fileBuffer = Buffer.from(doc.file.buffer);
+  } else if (Buffer.isBuffer(doc.file)) {
+    fileBuffer = doc.file;
+  } else {
+    fileBuffer = Buffer.from(doc.file, "base64");
+  }
+
+  return new Response(new Uint8Array(fileBuffer), {
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `inline; filename="${doc.name}"`,
+    },
+  });
 }

@@ -47,7 +47,7 @@ export async function createInvoice(invoice) {
 
     // create attachement first
     // const arrayBuffer = await invoice.attachment.file.arrayBuffer();
-    const buffer = Buffer.from(invoice.attachment.file);
+    const buffer = Buffer.from(invoice.attachment.file, "base64");
 
     const attachment = new Attachment({
       size: invoice.attachment.size,
