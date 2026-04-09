@@ -10,7 +10,7 @@ export async function GET(request, { params }) {
   const doc = await Attachment.findById(id);
 
   if (!doc || !doc.file) {
-    return new Response("Not found", { status: 404 });
+    return new Response("Attachment Not found", { status: 404 });
   }
 
   let fileBuffer;
