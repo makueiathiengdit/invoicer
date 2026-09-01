@@ -1,17 +1,16 @@
 import React from "react";
 import InvoiceDetail from "../../components/invoice-detail";
-import { getInvoiceByID } from "@/actions/invoice";
+import { getInvoiceById } from "@/lib/api-server";
 
 const ViewInvoicePage = async ({ params }) => {
   const { id } = await params;
   let invoice = null;
 
   try {
-    let res = await getInvoiceByID(id);
-    res = JSON.parse(res);
+    const res = await getInvoiceById(id);
 
-    if (res._success) {
-      invoice = res._data[0];
+    if (res.success) {
+      invoice = res.data[0];
     }
   } catch (error) {
     console.log(error);

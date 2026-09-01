@@ -7,9 +7,8 @@ import { Search } from "lucide-react";
 import { delayRequest } from "@/app/utils/utils";
 import InputAmount from "../../components/inputs/input-amount";
 import { useRouter } from "next/navigation";
-import { BASE_API_URL } from "@/app/constants/constants";
-import { createReceivedInvoice } from "@/actions/received-invoices";
-import { getInvoiceByPO } from "@/actions/invoice";
+import toast from "react-hot-toast";
+import { createReceivedInvoice, getInvoicesByPO } from "@/lib/api-client";
 
 const ReceivedInvoiceForm = ({ invoice = {} }) => {
   const [formData, setFormData] = useState({
@@ -19,8 +18,9 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
     amount: 0,
   });
   const [s_invoice, setInvoice] = useState(null);
-  const [po_number, setPoNumber] = useState(null);
+  const [po_number, setPoNumber] = useState("");
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const router = useRouter();
 
   const handleSearchInputChange = (event) => {
@@ -31,21 +31,26 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleSearch = async (event) => {
+    event.preventDefault();
+
     setInvoice(null);
+
+    if (!po_number) {
+      return;
+    }
 
     try {
       setLoading(true);
 
       await delayRequest(2000);
 
-      let res = await getInvoiceByPO(po_number);
+      const res = await getInvoicesByPO(po_number);
 
-      res = JSON.parse(res);
-
-      if (res._success) {
-        setInvoice(res._data[0]);
+      if (res.success) {
+        setInvoice(res.data[0]);
       }
     } catch (error) {
+      console.log("could not search for the invoice", error);
     } finally {
       setLoading(false);
     }
@@ -55,26 +60,28 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
     event.preventDefault();
 
     try {
-      setLoading(true);
+      setSaving(true);
 
       const payload = {
         ...formData,
         amount: parseInt(formData.amount),
-        currency: s_invoice?.currency,
       };
 
-      let res = await createReceivedInvoice(formData);
-      res = await res.json();
+      const res = await createReceivedInvoice(payload);
 
-      res = JSON.parse(res);
+      if (res.success) {
+        toast.success(res.message);
 
-      if (res._success) {
         router.push("/i/receiving/");
+        router.refresh();
+      } else {
+        toast.error(res.message || "could not record the received invoice");
       }
     } catch (error) {
       console.log(error);
+      toast.error("could not record the received invoice");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
@@ -158,8 +165,9 @@ const ReceivedInvoiceForm = ({ invoice = {} }) => {
             <button
               className="btn btn-sm rounded bg-teal-600 text-white"
               onClick={handleSubmit}
+              disabled={saving}
             >
-              {loading ? <span>Creating...</span> : <span>Create</span>}
+              {saving ? <span>Creating...</span> : <span>Create</span>}
             </button>
           </div>
         </div>

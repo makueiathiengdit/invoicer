@@ -5,10 +5,9 @@ import InputAmount from "../../components/inputs/input-amount";
 import InputFile from "../../components/inputs/input-file";
 import InputSelectBox from "../../components/inputs/input-select-box";
 import { useRouter } from "next/navigation";
-import { BASE_API_URL } from "@/app/constants/constants";
 import { InvoiceFormSchema } from "@/app/schema/form-schema";
 import { convertZodErrorsToJSON } from "@/app/utils/utils";
-import { createInvoice } from "@/actions/invoice";
+import { createInvoice } from "@/lib/api-client";
 import toast from "react-hot-toast";
 
 const InvoiceForm = () => {
@@ -56,6 +55,8 @@ const InvoiceForm = () => {
       return;
     }
 
+    setFileError("");
+
     const reader = new FileReader();
     reader.onloadend = () => {
       // extra base64 data
@@ -66,6 +67,7 @@ const InvoiceForm = () => {
         attachment: {
           name: file.name,
           size: file.size,
+          file_type: file.type || "application/pdf",
           file: base64String,
         },
       });
@@ -94,50 +96,34 @@ const InvoiceForm = () => {
       return;
     }
 
-    // console.log("validated data", validated_data);
+    if (!formData.attachment) {
+      setFileError("An attachment is required.");
+      return;
+    }
 
     setLoading(true);
+    setFormErrors({});
 
     const payload = {
       ...formData,
       amount: parseFloat(formData.amount),
-      balance: parseFloat(formData.amount),
     };
 
+    // the api derives the balance from amount/amount_paid
+    delete payload.balance;
+
     try {
-      const url = BASE_API_URL + "/invoices";
-      // const response = await fetch(url, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(payload),
-      // });
+      const result = await createInvoice(payload);
 
-      // const result = await response.json();
-
-      let res = await createInvoice(formData);
-      const result = JSON.parse(res);
-
-      if (result._success) {
-        console.log("Success:", result._message);
-
-        // reset
-        // setFormData({
-        //   invoice_id: "",
-        //   invoice_date: new Date().toISOString().split("T")[0],
-        //   description: "",
-        //   amount: 0,
-        //   currency: "SSP",
-        //   attachment: null,
-        // });
-
-        toast.success(result._message);
+      if (result.success) {
+        toast.success(result.message);
 
         router.push("/i/invoices");
+        router.refresh();
       } else {
-        toast.error(result._message);
-        console.log("API Error:", result._message || "Unknown error occurred");
+        setFormErrors(result.errors || {});
+        toast.error(result.message);
+        console.log("API Error:", result.message || "Unknown error occurred");
       }
     } catch (error) {
       toast.error(error.message);

@@ -1,16 +1,15 @@
 import React from "react";
 import InvoiceTable from "./invoice-table";
-import { getInvoiceAll } from "@/actions/invoice";
+import { getInvoices } from "@/lib/api-server";
 
 const InvoiceWrapper = async () => {
   let invoices = [];
 
   try {
-    let res = await getInvoiceAll();
-    res = JSON.parse(res);
+    const res = await getInvoices();
 
-    if (res._success) {
-      invoices = res._data;
+    if (res.success) {
+      invoices = res.data;
     }
   } catch (error) {
     console.log("somethng went wrong, mate", error);

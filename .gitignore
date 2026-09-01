@@ -5,10 +5,9 @@
 # db
 *.db
 
-/__pycache__
-
-# virtual env
-/i-env
+# node
+node_modules
+npm-debug.log*
 
 .vscode
 

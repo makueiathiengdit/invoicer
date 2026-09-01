@@ -1,10 +1,14 @@
+"use client";
+
 import React, { useState } from "react";
 import InputText from "../../components/inputs/input-text";
 import { useRouter } from "next/navigation";
-import { BASE_API_URL } from "@/app/constants/constants";
-import { updatePRPO } from "@/actions/invoice";
+import toast from "react-hot-toast";
+import { updatePRPO } from "@/lib/api-client";
+
 const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const [selected, setSelected] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
     pr_number: "",
@@ -33,21 +37,31 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      let res = await updatePRPO(invoice._id, formData);
-      res = JSON.parse(res);
+    // only send the field that is actually being updated
+    const payload =
+      selected === "pr"
+        ? { pr_number: formData.pr_number }
+        : { po_number: formData.po_number };
 
-      if (res._success) {
-        console.log("success");
+    try {
+      setSaving(true);
+
+      const res = await updatePRPO(invoice._id, payload);
+
+      if (res.success) {
+        toast.success(res.message);
 
         handleCancel();
 
         router.refresh();
       } else {
-        console.log("something went wrong", res);
+        toast.error(res.message || "could not update the invoice");
       }
     } catch (error) {
-      console.log("nutsss", error);
+      console.log("could not update the invoice", error);
+      toast.error("could not update the invoice");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -106,8 +120,9 @@ const UpdatePRPOForm = ({ invoice = { id: "" } }) => {
                 className="btn btn-sm rounded bg-teal-600 text-white"
                 onClick={handleSubmit}
                 type="button"
+                disabled={saving}
               >
-                Save
+                {saving ? "Saving..." : "Save"}
               </button>
             </div>
           )}

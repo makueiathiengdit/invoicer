@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/actions/auth";
+import { login } from "@/lib/api-client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -21,17 +22,24 @@ const LoginForm = () => {
     event.preventDefault();
 
     try {
-      let res = await login(formData);
-      res = JSON.parse(res);
+      setLoading(true);
 
-      if (res._success) {
-        toast.success("Login successful");
+      const res = await login(formData);
+
+      if (res.success) {
+        toast.success(res.message || "Login successful");
+
+        // the api set the session cookie; refresh so the middleware sees it
         router.push("/i/invoices");
+        router.refresh();
       } else {
-        toast.error(res._message || "Login failed");
+        toast.error(res.message || "Login failed");
       }
     } catch (error) {
       console.error("Login error:", error);
+      toast.error("Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,8 +91,9 @@ const LoginForm = () => {
             <button
               className="w-full px-4 py-2 text-white font-medium bg-teal-600 hover:bg-teal-500 active:bg-teal-600 rounded-lg duration-150"
               onClick={handleSubmit}
+              disabled={loading}
             >
-              Sign in
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </form>
         </div>

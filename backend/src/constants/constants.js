@@ -11,4 +11,4 @@ export const INVOICE_STATUS = {
   COMPLETED: "COMPLETED", // received and submitted to finance
 };
 
-// the api base url lives in @/lib/api-client (NEXT_PUBLIC_API_BASE_URL)
+export const TOKEN_COOKIE = "token";

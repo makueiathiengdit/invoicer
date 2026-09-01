@@ -9,7 +9,7 @@ import { Calendar, User, Hash, Paperclip, BadgeCheck } from "lucide-react";
 import UpdatePRPOForm from "./update-prpo-form";
 import InvoiceTimeline from "./invoice-timeline";
 import { useEffect, useState } from "react";
-import { getReceivedInvoiceByPO } from "@/actions/received-invoices";
+import { getReceivedInvoicesByPO } from "@/lib/api-client";
 
 export const sampleInvoice = {
   id: 1,
@@ -56,25 +56,29 @@ export default function InvoiceDetail({ invoice = sampleInvoice }) {
 
   // auto fetch received invoices
   useEffect(() => {
-    const getReceivedInvoices = async () => {
+    // nothing has been received against an invoice without a PO number yet
+    if (!invoice.po_number) {
+      return;
+    }
+
+    const loadReceivedInvoices = async () => {
       try {
         setLoading(true);
-        let res = await getReceivedInvoiceByPO(invoice.po_number);
 
-        res = JSON.parse(res);
-        console.log("response", res);
+        const res = await getReceivedInvoicesByPO(invoice.po_number);
 
-        if (res._success) {
-          setReceivedInvoices(res._data);
+        if (res.success) {
+          setReceivedInvoices(res.data);
         }
       } catch (error) {
+        console.log("could not load received invoices", error);
       } finally {
         setLoading(false);
       }
     };
 
-    getReceivedInvoices();
-  }, []);
+    loadReceivedInvoices();
+  }, [invoice.po_number]);
 
   const quoted_amount = invoice.amount;
   let paid = 0;

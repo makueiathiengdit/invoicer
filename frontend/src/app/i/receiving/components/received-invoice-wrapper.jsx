@@ -1,17 +1,19 @@
 import React from "react";
 import ReceivedInvoiceList from "./received-invoice-list";
-import { getReceivedInvoicesAll } from "@/actions/received-invoices";
+import { getReceivedInvoices } from "@/lib/api-server";
 
 const ReceivedInvoiceWrapper = async () => {
   let received_invoices = [];
 
   try {
-    let res = await getReceivedInvoicesAll();
-    res = JSON.parse(res);
-    if (res._success) {
-      received_invoices = res._data;
+    const res = await getReceivedInvoices();
+
+    if (res.success) {
+      received_invoices = res.data;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("could not load received invoices", error);
+  }
 
   return (
     <>

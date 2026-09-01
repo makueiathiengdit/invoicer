@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import InputText from "../i/components/inputs/input-text";
 import InputPassword from "../i/components/inputs/input-password";
-import { createUser } from "@/actions/user";
+import { createUser } from "@/lib/api-client";
 import toast from "react-hot-toast";
 
 const SignUpForm = () => {
@@ -15,6 +15,7 @@ const SignUpForm = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
   const handleInputChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -25,14 +26,22 @@ const SignUpForm = () => {
 
     try {
       setLoading(true);
+      setFormErrors({});
 
-      let res = await createUser(formData);
-      res = JSON.parse(res);
+      const res = await createUser(formData);
 
-      if (res._success) {
-        toast.success(res._message);
+      if (res.success) {
+        toast.success(res.message);
+
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          password: "",
+        });
       } else {
-        toast.error(res._message);
+        setFormErrors(res.errors || {});
+        toast.error(res.message);
       }
     } catch (error) {
       toast.error(error.message);
@@ -49,6 +58,7 @@ const SignUpForm = () => {
         value={formData.first_name}
         placeholder={"e.g Awet"}
         onChange={handleInputChange}
+        error_message={formErrors.first_name}
       />
       <br />
       <InputText
@@ -57,6 +67,7 @@ const SignUpForm = () => {
         value={formData.last_name}
         placeholder={"e.g Thon"}
         onChange={handleInputChange}
+        error_message={formErrors.last_name}
       />
       <br />
       <InputText
@@ -65,6 +76,7 @@ const SignUpForm = () => {
         value={formData.email}
         placeholder={"e.g awet@awet.com"}
         onChange={handleInputChange}
+        error_message={formErrors.email}
       />
 
       <br />
@@ -74,6 +86,7 @@ const SignUpForm = () => {
         value={formData.password}
         placeholder={"should at least 6 characters"}
         onChange={handleInputChange}
+        error_message={formErrors.password}
       />
 
       <div className="flex justify-end gap-2 mt-4">
