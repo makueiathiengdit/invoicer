@@ -59,7 +59,7 @@ export function setTokenCookie(res, token) {
   res.cookie(TOKEN_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: config.is_production,
+    secure: config.cookie_secure,
     maxAge: 1000 * 60 * 60 * 4, // 4hrs
     path: "/",
   });

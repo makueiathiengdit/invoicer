@@ -6,7 +6,7 @@ async function main() {
   await connectToDB();
 
   const server = createApp().listen(config.port, () => {
-    console.log(`API listening on http://127.0.0.1:${config.port}`);
+    console.log(`API listening on http://localhost:${config.port}`);
   });
 
   for (const signal of ["SIGINT", "SIGTERM"]) {
