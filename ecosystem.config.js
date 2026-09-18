@@ -18,6 +18,9 @@
   `next build`, so setting it here does nothing. It has to be in frontend/.env
   *before* you build. Only API_BASE_URL (used by server components at runtime)
   can be set from pm2.
+
+  and frontend/.env is only read if nothing shadows it — next prefers
+  .env.production over .env, so never leave a .env.production on the box.
 */
 
 const BACKEND_PORT = 5100;
