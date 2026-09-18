@@ -1,4 +1,4 @@
-import { INVOICE_STATUS } from "../constants/constants";
+import { INVOICE_STATUS, USER_ROLES } from "../constants/constants";
 
 export function convertAmountToWords(num) {
   if (num === 0) return "zero";
@@ -117,6 +117,28 @@ export function getInvoiceStatusColor(status) {
       break;
     case INVOICE_STATUS.COMPLETED:
       color = "text-blue-600";
+      break;
+
+    default:
+      color = "text-gray-600";
+      break;
+  }
+
+  return color;
+}
+
+export function getUserRoleColor(role) {
+  let color = "";
+
+  switch (role) {
+    case USER_ROLES.ADMIN:
+      color = "text-purple-600";
+      break;
+    case USER_ROLES.PROCESSOR:
+      color = "text-teal-600";
+      break;
+    case USER_ROLES.USER:
+      color = "text-gray-600";
       break;
 
     default:

@@ -1,6 +1,7 @@
 import React from "react";
-import { FileText, Folder, FolderInput, Home } from "lucide-react";
+import { FileText, Folder, FolderInput, Home, Users } from "lucide-react";
 import SideBarItem from "./sidebar-item";
+import { USER_ROLES } from "@/app/constants/constants";
 
 const SIDEBAR_LINKS = [
   {
@@ -44,9 +45,32 @@ const SIDEBAR_LINKS = [
     icon: <FolderInput />,
     submenu: [],
   },
+  {
+    title: "Users",
+    link: "/i/users",
+    icon: <Users />,
+    // a link with roles is only drawn for those roles
+    roles: [USER_ROLES.ADMIN],
+    submenu: [
+      {
+        title: "All",
+        link: "/i/users",
+        icon: "",
+      },
+      {
+        title: "Add user",
+        link: "/i/users/create",
+        icon: "",
+      },
+    ],
+  },
 ];
 
-const SideBar = () => {
+const SideBar = ({ role = "" }) => {
+  const links = SIDEBAR_LINKS.filter(
+    (item) => !item.roles || item.roles.includes(role),
+  );
+
   return (
     <>
       <aside
@@ -56,7 +80,7 @@ const SideBar = () => {
       >
         <div className="overflow-y-auto py-5 px-3 h-full  bg-teal-600">
           <ul className="space-y-2">
-            {SIDEBAR_LINKS.map((item, id) => (
+            {links.map((item, id) => (
               <SideBarItem item={item} key={id} />
             ))}
           </ul>

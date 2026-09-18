@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 const SideBarItem = ({
   item = {
@@ -49,26 +50,27 @@ const SideBarItem = ({
           >
             {item.submenu.map((si, id) => (
               <li key={id}>
-                <a
+                {/* next/link, not <a>: a raw href skips the basePath and 404s */}
+                <Link
                   href={si.link}
                   className="flex items-center p-2 pl-11 w-full text-base font-medium  rounded-lg transition duration-75 group  text-white hover:bg-gray-700"
                 >
                   {si.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </li>
       ) : (
         <li>
-          <a
+          <Link
             href={item.link}
             className="flex items-center p-2 text-base font-medium  rounded-lg text-white  hover:bg-gray-700 group"
           >
             {item.icon}
 
             <span className="ml-3">{item.title}</span>
-          </a>
+          </Link>
         </li>
       )}
     </>

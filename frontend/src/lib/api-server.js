@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { readSession } from "./session";
 
 /*
   api client for server components.
@@ -54,10 +55,20 @@ export async function apiFetch(path, { method = "GET", body, headers } = {}) {
   }
 }
 
+/*
+  the token payload of whoever is asking, straight off the cookie — no round
+  trip to the api, because this only decides what to render. every endpoint the
+  page then calls checks the real token for itself.
+*/
+export async function getSession() {
+  return readSession((await cookies()).get("token")?.value);
+}
+
 export const getInvoices = () => apiFetch("/invoices");
 
 export const getInvoiceById = (id) => apiFetch(`/invoices/${id}`);
 
 export const getReceivedInvoices = () => apiFetch("/received-invoices");
 
-export const getUsers = () => apiFetch("/users");
+export const getUsers = (role) =>
+  apiFetch(role ? `/users?role=${encodeURIComponent(role)}` : "/users");

@@ -1,12 +1,18 @@
 import React from "react";
 import BaseFormLayout from "../../components/base-form-layout";
-import SignUpForm from "@/app/components/sign-up-form";
+import AdminOnly from "../components/admin-only";
+import CreateUserForm from "../components/create-user-form";
+
+// the admin check reads the session cookie, so this page is per request
+export const dynamic = "force-dynamic";
 
 const CreateUserPage = () => {
   return (
-    <BaseFormLayout title={"Create user"}>
-      <SignUpForm />
-    </BaseFormLayout>
+    <AdminOnly>
+      <BaseFormLayout title={"Create user"}>
+        <CreateUserForm />
+      </BaseFormLayout>
+    </AdminOnly>
   );
 };
 

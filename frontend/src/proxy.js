@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { USER_ROLES } from "@/app/constants/constants";
+import { readSession } from "@/lib/session";
 
 // this our gateman to check if user is logged in or not
 export async function proxy(request) {
@@ -7,53 +9,48 @@ export async function proxy(request) {
 
   // If user is logged in and trying to access the login page, redirect to /i/invoices
   if (user && request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/i/invoices", request.url));
+    return NextResponse.redirect(routeTo(request, "/i/invoices"));
   }
 
   // For protected routes, redirect unauthenticated users to login which is /
   if (!user && isProtectedRoute(request.nextUrl.pathname)) {
-    const loginUrl = new URL("/", request.url);
+    const loginUrl = routeTo(request, "/");
     loginUrl.searchParams.set("next", request.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  // user administration is an admin-only corner of the dashboard
+  if (
+    isAdminRoute(request.nextUrl.pathname) &&
+    user?.role !== USER_ROLES.ADMIN
+  ) {
+    return NextResponse.redirect(routeTo(request, "/i/invoices"));
   }
 
   return NextResponse.next();
 }
 
 /*
-  reads the jwt payload without verifying it — this only decides which screen to
-  show. the express api verifies the signature on every request, so a forged
-  token gets someone a redirect and nothing else.
+  paths in here are app paths, the way nextUrl.pathname reports them — with no
+  basePath on the front. cloning nextUrl carries the basePath back into the
+  redirect; `new URL(path, request.url)` would drop it and send the browser to a
+  404 on a deployment served under one.
 */
-function readSession(token) {
-  if (!token) {
-    return null;
-  }
+function routeTo(request, pathname) {
+  const url = request.nextUrl.clone();
 
-  try {
-    const [, payload] = token.split(".");
+  url.pathname = pathname;
+  url.search = "";
 
-    if (!payload) {
-      return null;
-    }
-
-    const json = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-    const user = JSON.parse(json);
-
-    // treat an expired token as logged out
-    if (user.exp && user.exp * 1000 < Date.now()) {
-      return null;
-    }
-
-    return user;
-  } catch (error) {
-    console.log("could not read the session token", error);
-    return null;
-  }
+  return url;
 }
 
 function isProtectedRoute(pathname) {
   return ["/i", "/account"].some((route) => pathname.startsWith(route));
+}
+
+function isAdminRoute(pathname) {
+  return pathname.startsWith("/i/users");
 }
 
 export const config = {

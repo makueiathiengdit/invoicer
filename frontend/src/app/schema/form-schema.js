@@ -1,4 +1,14 @@
 import z from "zod";
+import { USER_ROLES } from "../constants/constants";
+
+// mirrors CreateUserSchema on the api, so the form catches what it would reject
+export const CreateUserFormSchema = z.object({
+  first_name: z.string().min(1, "first name is required"),
+  last_name: z.string().min(1, "last name is required"),
+  email: z.string().min(1, "email is required").email("enter a valid email"),
+  password: z.string().min(6, "password must be at least 6 characters"),
+  role: z.enum(Object.values(USER_ROLES)),
+});
 
 export const InvoiceFormSchema = z.object({
   invoice_id: z.string({
