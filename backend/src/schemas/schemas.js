@@ -14,6 +14,10 @@ export const CreateUserSchema = z.object({
   role: z.enum(Object.values(USER_ROLES)).optional(),
 });
 
+export const UpdateUserRoleSchema = z.object({
+  role: z.enum(Object.values(USER_ROLES), { message: "pick a valid role" }),
+});
+
 const AttachmentSchema = z.object({
   name: z.string().min(1, "attachment name is required"),
   size: z.number().int().positive(),

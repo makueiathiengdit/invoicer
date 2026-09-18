@@ -66,6 +66,9 @@ export const createUser = (user) =>
 
 export const getUsers = () => apiFetch("/users");
 
+export const updateUserRole = (id, role) =>
+  apiFetch(`/users/${id}/role`, { method: "PATCH", body: { role } });
+
 // invoices
 export const createInvoice = (invoice) =>
   apiFetch("/invoices", { method: "POST", body: invoice });

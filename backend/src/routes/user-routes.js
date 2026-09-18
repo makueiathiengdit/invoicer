@@ -1,8 +1,14 @@
 import { Router } from "express";
 import { USER_ROLES } from "../constants/constants.js";
-import { requireAuth } from "../middleware/auth.js";
-import { CreateUserSchema } from "../schemas/schemas.js";
-import { createUser, getUserById, getUsers } from "../services/user-service.js";
+import { requireAuth, requireRole } from "../middleware/auth.js";
+import { CreateUserSchema, UpdateUserRoleSchema } from "../schemas/schemas.js";
+import {
+  countAdmins,
+  createUser,
+  getUserById,
+  getUsers,
+  updateUserRole,
+} from "../services/user-service.js";
 import { asyncHandler, fail, ok } from "../utils/api-response.js";
 import { validateBody } from "../utils/validate.js";
 
@@ -48,6 +54,58 @@ router.get(
     }
 
     return ok(res, { message: "found users", data: users });
+  }),
+);
+
+/*
+  promoting a user to PROCESSOR (or ADMIN) and back. admin only, and fenced so
+  the last way in cannot be closed from here:
+
+  - an admin cannot change their own role, which is the easy way to lock
+    yourself out of the screen you are standing on.
+  - the final admin cannot be demoted by anyone, which would leave an install
+    with nobody who can hand out roles — back to `npm run create-admin`.
+*/
+router.patch(
+  "/:id/role",
+  requireRole(USER_ROLES.ADMIN),
+  validateBody(UpdateUserRoleSchema),
+  asyncHandler(async (req, res) => {
+    const db_user = await getUserById(req.params.id);
+
+    if (!db_user || db_user.is_deleted) {
+      return fail(res, { message: "no user found", status: 404 });
+    }
+
+    if (db_user.id === req.user.user_id) {
+      return fail(res, {
+        message: "you cannot change your own role",
+        status: 409,
+      });
+    }
+
+    const { role } = req.body;
+
+    if (db_user.role === role) {
+      return ok(res, {
+        message: `${db_user.email} is already ${role}`,
+        data: [db_user],
+      });
+    }
+
+    if (db_user.role === USER_ROLES.ADMIN && (await countAdmins()) <= 1) {
+      return fail(res, {
+        message: "this is the last admin — promote someone else first",
+        status: 409,
+      });
+    }
+
+    const updated_user = await updateUserRole(db_user.id, role);
+
+    return ok(res, {
+      message: `${updated_user.email} is now ${role}`,
+      data: [updated_user],
+    });
   }),
 );
 

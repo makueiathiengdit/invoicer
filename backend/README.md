@@ -97,6 +97,7 @@ domains in production means switching the cookie to `SameSite=none; Secure`.
 | POST | `/api/users` | – | sign up; only an admin may set `role` |
 | GET | `/api/users` | yes | `?role=PROCESSOR` to filter |
 | GET | `/api/users/:id` | yes | |
+| PATCH | `/api/users/:id/role` | admin | promote/demote; never yourself or the last admin |
 | POST | `/api/invoices` | yes | attachment posted as base64 |
 | GET | `/api/invoices` | yes | `?status=` / `?assigned_to=` |
 | GET | `/api/invoices/:id` | yes | attachment + assignee populated |

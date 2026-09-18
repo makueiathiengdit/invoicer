@@ -14,6 +14,10 @@ const UserTable = ({ data = [], current_user_id = "" }) => {
                 ({data.length})
               </span>
             </h1>
+            <p className="text-sm text-gray-500">
+              Pick a role in the table to change it. New invoices are handed out
+              round robin to everyone with the PROCESSOR role.
+            </p>
           </div>
           <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 shrink-0">
             <Link
