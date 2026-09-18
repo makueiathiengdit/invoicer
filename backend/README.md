@@ -15,6 +15,37 @@ npm run dev            # http://localhost:8000
 MongoDB has to be reachable at `LOCAL_DB_URL` (`MONGO_DB_URL` when
 `NODE_ENV=production`).
 
+## The first admin
+
+Sign up through the API always lands as a plain `USER` — only an admin may hand
+out a role — so a fresh database has nobody who can promote anyone. Bootstrap
+the first one from the server shell:
+
+```bash
+cd backend
+npm run create-admin                              # prompts for each field
+npm run create-admin -- \
+  --email you@example.com --first-name Ada \
+  --last-name Lovelace --password 'a-real-password'
+```
+
+On the deployed box prefix it with `NODE_ENV=production`, or it writes to
+`LOCAL_DB_URL` instead of `MONGO_DB_URL`:
+
+```bash
+NODE_ENV=production npm run create-admin -- --email you@example.com ...
+```
+
+It prints the database it is about to touch, so check that line before
+trusting the result. Each field may also come from `ADMIN_EMAIL`,
+`ADMIN_FIRST_NAME`, `ADMIN_LAST_NAME` and `ADMIN_PASSWORD`; a field that is
+neither a flag nor an env var is prompted for, and the password is not echoed.
+
+The script is a bootstrap, so it refuses once any admin exists. `--force` runs
+it anyway: with a fresh email that adds another admin, and with an email that
+is already taken it promotes that account to `ADMIN` and resets its password —
+which is also the way back in after a forgotten one.
+
 ## Layout
 
 ```
